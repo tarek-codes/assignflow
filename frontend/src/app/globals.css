@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Outfit:wght@600;700;800;900&display=swap');
+
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans-brand: "Plus Jakarta Sans", "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  html,
+  body {
+    height: 100%;
+    font-family: var(--font-sans-brand);
+    @apply bg-[#f6f8fc] text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen transition-colors duration-200;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    @apply bg-blue-200 text-blue-950 dark:bg-blue-800 dark:text-blue-50;
+  }
+}
+
+/* Fullscreen F11 Top Spacing Offsets */
+:fullscreen main,
+:-webkit-full-screen main,
+:-moz-full-screen main,
+:ms-fullscreen main {
+  padding-top: 2.25rem !important;
+}
+
+:fullscreen .sidebar-header,
+:-webkit-full-screen .sidebar-header,
+:-moz-full-screen .sidebar-header,
+:ms-fullscreen .sidebar-header {
+  padding-top: 3.25rem !important;
+}
+
+.font-sans-brand {
+  font-family: var(--font-sans-brand);
+}
+
+@keyframes flowGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-flow-text {
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa, #1d4ed8, #2563eb);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flowGradient 4s ease infinite;
+}

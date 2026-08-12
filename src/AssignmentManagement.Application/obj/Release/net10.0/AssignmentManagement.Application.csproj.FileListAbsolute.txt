@@ -1,0 +1,15 @@
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\bin\Release\net10.0\AssignmentManagement.Application.deps.json
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\bin\Release\net10.0\AssignmentManagement.Application.dll
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\bin\Release\net10.0\AssignmentManagement.Application.pdb
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\bin\Release\net10.0\AssignmentManagement.Domain.dll
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\bin\Release\net10.0\AssignmentManagement.Domain.pdb
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.csproj.AssemblyReference.cache
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.AssemblyInfoInputs.cache
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.AssemblyInfo.cs
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.csproj.CoreCompileInputs.cache
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\Assignme.C661ACA7.Up2Date
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.dll
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\refint\AssignmentManagement.Application.dll
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\AssignmentManagement.Application.pdb
+C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\obj\Release\net10.0\ref\AssignmentManagement.Application.dll

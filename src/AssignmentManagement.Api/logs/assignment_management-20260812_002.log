@@ -1,0 +1,919 @@
+2026-08-12 13:17:15.393 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?' (DbType = Int32), @p6='?', @p7='?', @p8='?' (DbType = DateTime), @p9='?' (DbType = Int32), @p10='?' (DbType = DateTime), @p11='?' (DbType = DateTime), @p12='?', @p13='?', @p14='?' (DbType = Int32), @p15='?', @p16='?', @p17='?' (DbType = DateTime), @p18='?' (DbType = Boolean), @p19='?' (DbType = Int32), @p20='?' (DbType = DateTime), @p21='?' (DbType = DateTime), @p22='?', @p23='?', @p24='?' (DbType = Int32), @p25='?', @p26='?', @p27='?' (DbType = DateTime), @p28='?' (DbType = Int32), @p29='?' (DbType = DateTime), @p30='?' (DbType = DateTime), @p31='?', @p32='?', @p33='?' (DbType = Int32), @p34='?', @p35='?', @p36='?' (DbType = DateTime), @p37='?' (DbType = Int32), @p38='?' (DbType = DateTime), @p39='?' (DbType = DateTime), @p40='?', @p41='?', @p42='?' (DbType = Int32), @p43='?', @p44='?', @p45='?' (DbType = DateTime), @p46='?' (DbType = Int32), @p47='?' (DbType = DateTime), @p48='?' (DbType = DateTime), @p49='?', @p50='?', @p51='?' (DbType = Int32), @p52='?', @p53='?', @p54='?' (DbType = DateTime), @p55='?' (DbType = Int32), @p56='?' (DbType = DateTime), @p57='?' (DbType = DateTime), @p58='?', @p59='?', @p60='?' (DbType = Int32), @p61='?', @p62='?', @p63='?' (DbType = DateTime), @p64='?' (DbType = Boolean), @p65='?' (DbType = Int32), @p66='?' (DbType = DateTime), @p67='?' (DbType = DateTime), @p68='?', @p69='?', @p70='?' (DbType = Int32), @p71='?', @p72='?', @p73='?' (DbType = DateTime), @p74='?' (DbType = Int32), @p75='?' (DbType = DateTime), @p76='?' (DbType = DateTime), @p77='?', @p78='?', @p79='?' (DbType = Int32), @p80='?', @p81='?', @p82='?' (DbType = DateTime), @p83='?' (DbType = Int32), @p84='?' (DbType = DateTime), @p85='?' (DbType = DateTime), @p86='?', @p87='?', @p88='?' (DbType = Int32), @p89='?', @p90='?', @p91='?' (DbType = DateTime), @p92='?' (DbType = Int32), @p93='?' (DbType = DateTime), @p94='?' (DbType = DateTime), @p95='?', @p96='?', @p97='?' (DbType = Int32), @p98='?', @p99='?', @p100='?' (DbType = DateTime), @p101='?' (DbType = Boolean), @p102='?' (DbType = Int32), @p103='?' (DbType = DateTime), @p104='?' (DbType = DateTime), @p105='?', @p106='?', @p107='?' (DbType = Int32), @p108='?', @p109='?', @p110='?' (DbType = DateTime), @p111='?' (DbType = Int32), @p112='?' (DbType = DateTime), @p113='?' (DbType = DateTime), @p114='?', @p115='?', @p116='?' (DbType = Int32), @p117='?', @p118='?', @p119='?' (DbType = DateTime), @p120='?' (DbType = Int32), @p121='?' (DbType = DateTime), @p122='?' (DbType = DateTime), @p123='?', @p124='?', @p125='?' (DbType = Int32), @p126='?', @p127='?', @p128='?' (DbType = DateTime), @p129='?' (DbType = Int32), @p130='?' (DbType = DateTime), @p131='?' (DbType = DateTime), @p132='?', @p133='?', @p134='?' (DbType = Int32), @p135='?', @p136='?', @p137='?' (DbType = DateTime), @p138='?' (DbType = Boolean), @p139='?' (DbType = Int32), @p140='?' (DbType = DateTime), @p141='?' (DbType = DateTime), @p142='?', @p143='?', @p144='?' (DbType = Int32), @p145='?', @p146='?', @p147='?' (DbType = DateTime), @p148='?' (DbType = Int32), @p149='?' (DbType = DateTime), @p150='?' (DbType = DateTime), @p151='?', @p152='?', @p153='?' (DbType = Int32), @p154='?', @p155='?', @p156='?' (DbType = DateTime), @p157='?' (DbType = Int32), @p158='?' (DbType = DateTime), @p159='?' (DbType = DateTime), @p160='?', @p161='?', @p162='?' (DbType = Int32), @p163='?', @p164='?', @p165='?' (DbType = DateTime), @p166='?' (DbType = Int32), @p167='?' (DbType = DateTime), @p168='?' (DbType = DateTime), @p169='?', @p170='?', @p171='?' (DbType = Int32), @p172='?', @p173='?', @p174='?' (DbType = DateTime), @p175='?' (DbType = Boolean), @p176='?' (DbType = Int32), @p177='?' (DbType = DateTime), @p178='?' (DbType = DateTime), @p179='?', @p180='?', @p181='?' (DbType = Int32), @p182='?', @p183='?', @p184='?' (DbType = DateTime), @p185='?' (DbType = Int32), @p186='?' (DbType = DateTime), @p187='?' (DbType = DateTime), @p188='?', @p189='?', @p190='?' (DbType = Int32), @p191='?', @p192='?', @p193='?' (DbType = DateTime), @p194='?' (DbType = Int32), @p195='?' (DbType = DateTime), @p196='?' (DbType = DateTime), @p197='?', @p198='?', @p199='?' (DbType = Int32), @p200='?', @p201='?', @p202='?' (DbType = DateTime), @p203='?' (DbType = Int32), @p204='?' (DbType = DateTime), @p205='?' (DbType = DateTime), @p206='?', @p207='?', @p208='?' (DbType = Int32), @p209='?', @p210='?', @p211='?' (DbType = DateTime), @p212='?' (DbType = Boolean), @p213='?' (DbType = Int32), @p214='?' (DbType = DateTime), @p215='?' (DbType = DateTime), @p216='?', @p217='?', @p218='?' (DbType = Int32), @p219='?', @p220='?', @p221='?' (DbType = DateTime), @p222='?' (DbType = Int32), @p223='?' (DbType = DateTime), @p224='?' (DbType = DateTime), @p225='?', @p226='?', @p227='?' (DbType = Int32), @p228='?', @p229='?', @p230='?' (DbType = DateTime), @p231='?' (DbType = Int32), @p232='?' (DbType = DateTime), @p233='?' (DbType = DateTime), @p234='?', @p235='?', @p236='?' (DbType = Int32), @p237='?', @p238='?', @p239='?' (DbType = DateTime), @p240='?' (DbType = Int32), @p241='?' (DbType = DateTime), @p242='?' (DbType = DateTime), @p243='?', @p244='?', @p245='?' (DbType = Int32), @p246='?', @p247='?', @p248='?' (DbType = DateTime), @p249='?' (DbType = Boolean), @p250='?' (DbType = Int32), @p251='?' (DbType = DateTime), @p252='?' (DbType = DateTime), @p253='?', @p254='?', @p255='?' (DbType = Int32), @p256='?', @p257='?', @p258='?' (DbType = DateTime), @p259='?' (DbType = Int32), @p260='?' (DbType = DateTime), @p261='?' (DbType = DateTime), @p262='?', @p263='?', @p264='?' (DbType = Int32), @p265='?', @p266='?', @p267='?' (DbType = DateTime), @p268='?' (DbType = Int32), @p269='?' (DbType = DateTime), @p270='?' (DbType = DateTime), @p271='?', @p272='?', @p273='?' (DbType = Int32), @p274='?', @p275='?', @p276='?' (DbType = DateTime), @p277='?' (DbType = Int32), @p278='?' (DbType = DateTime), @p279='?' (DbType = DateTime), @p280='?', @p281='?', @p282='?' (DbType = Int32), @p283='?', @p284='?', @p285='?' (DbType = DateTime), @p286='?' (DbType = Boolean), @p287='?' (DbType = Int32), @p288='?' (DbType = DateTime), @p289='?' (DbType = DateTime), @p290='?', @p291='?', @p292='?' (DbType = Int32), @p293='?', @p294='?', @p295='?' (DbType = DateTime), @p296='?' (DbType = Int32), @p297='?' (DbType = DateTime), @p298='?' (DbType = DateTime), @p299='?', @p300='?', @p301='?' (DbType = Int32), @p302='?', @p303='?', @p304='?' (DbType = DateTime), @p305='?' (DbType = Int32), @p306='?' (DbType = DateTime), @p307='?' (DbType = DateTime), @p308='?', @p309='?', @p310='?' (DbType = Int32), @p311='?', @p312='?', @p313='?' (DbType = DateTime), @p314='?' (DbType = Int32), @p315='?' (DbType = DateTime), @p316='?' (DbType = DateTime), @p317='?', @p318='?', @p319='?' (DbType = Int32), @p320='?', @p321='?', @p322='?' (DbType = DateTime), @p323='?' (DbType = Int32), @p324='?' (DbType = DateTime), @p325='?' (DbType = DateTime), @p326='?', @p327='?', @p328='?' (DbType = Int32), @p329='?', @p330='?', @p331='?' (DbType = DateTime), @p332='?' (DbType = Boolean), @p333='?' (DbType = Int32), @p334='?' (DbType = DateTime), @p335='?' (DbType = DateTime), @p336='?', @p337='?', @p338='?' (DbType = Int32), @p339='?', @p340='?', @p341='?' (DbType = DateTime), @p342='?' (DbType = Int32), @p343='?' (DbType = DateTime), @p344='?' (DbType = DateTime), @p345='?', @p346='?', @p347='?' (DbType = Int32), @p348='?', @p349='?', @p350='?' (DbType = DateTime), @p351='?' (DbType = Int32), @p352='?' (DbType = DateTime), @p353='?' (DbType = DateTime), @p354='?', @p355='?', @p356='?' (DbType = Int32), @p357='?', @p358='?', @p359='?' (DbType = DateTime), @p360='?' (DbType = Int32), @p361='?' (DbType = DateTime), @p362='?' (DbType = DateTime), @p363='?', @p364='?', @p365='?' (DbType = Int32), @p366='?', @p367='?', @p368='?' (DbType = DateTime), @p369='?' (DbType = Boolean), @p370='?' (DbType = Int32), @p371='?' (DbType = DateTime), @p372='?' (DbType = DateTime), @p373='?', @p374='?', @p375='?' (DbType = Int32), @p376='?', @p377='?', @p378='?' (DbType = DateTime), @p379='?' (DbType = Int32), @p380='?' (DbType = DateTime), @p381='?' (DbType = DateTime), @p382='?', @p383='?', @p384='?' (DbType = Int32), @p385='?', @p386='?', @p387='?' (DbType = DateTime), @p388='?' (DbType = Int32), @p389='?' (DbType = DateTime), @p390='?' (DbType = DateTime), @p391='?', @p392='?', @p393='?' (DbType = Int32), @p394='?', @p395='?', @p396='?' (DbType = DateTime), @p397='?' (DbType = Int32), @p398='?' (DbType = DateTime), @p399='?' (DbType = DateTime), @p400='?', @p401='?', @p402='?' (DbType = Int32), @p403='?', @p404='?', @p405='?' (DbType = DateTime), @p406='?' (DbType = Boolean), @p407='?' (DbType = Int32), @p408='?' (DbType = DateTime), @p409='?' (DbType = DateTime), @p410='?', @p411='?', @p412='?' (DbType = Int32), @p413='?', @p414='?', @p415='?' (DbType = DateTime), @p416='?' (DbType = Int32), @p417='?' (DbType = DateTime), @p418='?' (DbType = DateTime), @p419='?', @p420='?', @p421='?' (DbType = Int32), @p422='?', @p423='?', @p424='?' (DbType = DateTime), @p425='?' (DbType = Int32), @p426='?' (DbType = DateTime), @p427='?' (DbType = DateTime), @p428='?', @p429='?', @p430='?' (DbType = Int32), @p431='?', @p432='?', @p433='?' (DbType = DateTime), @p434='?' (DbType = Int32), @p435='?' (DbType = DateTime), @p436='?' (DbType = DateTime), @p437='?', @p438='?', @p439='?' (DbType = Int32), @p440='?', @p441='?', @p442='?' (DbType = DateTime), @p443='?' (DbType = Boolean), @p444='?' (DbType = Int32), @p445='?' (DbType = DateTime), @p446='?' (DbType = DateTime), @p447='?', @p448='?', @p449='?' (DbType = Int32), @p450='?', @p451='?', @p452='?' (DbType = DateTime), @p453='?' (DbType = Int32), @p454='?' (DbType = DateTime), @p455='?' (DbType = DateTime), @p456='?', @p457='?', @p458='?' (DbType = Int32), @p459='?', @p460='?', @p461='?' (DbType = DateTime), @p462='?' (DbType = Int32), @p463='?' (DbType = DateTime), @p464='?' (DbType = DateTime), @p465='?', @p466='?', @p467='?' (DbType = Int32), @p468='?', @p469='?', @p470='?' (DbType = DateTime), @p471='?' (DbType = Int32), @p472='?' (DbType = DateTime), @p473='?' (DbType = DateTime), @p474='?', @p475='?', @p476='?' (DbType = Int32), @p477='?', @p478='?', @p479='?' (DbType = DateTime), @p480='?' (DbType = Boolean), @p481='?' (DbType = Int32), @p482='?' (DbType = DateTime), @p483='?' (DbType = DateTime), @p484='?', @p485='?', @p486='?' (DbType = Int32), @p487='?', @p488='?', @p489='?' (DbType = DateTime), @p490='?' (DbType = Int32), @p491='?' (DbType = DateTime), @p492='?' (DbType = DateTime), @p493='?', @p494='?', @p495='?' (DbType = Int32), @p496='?', @p497='?', @p498='?' (DbType = DateTime), @p499='?' (DbType = Int32), @p500='?' (DbType = DateTime), @p501='?' (DbType = DateTime), @p502='?', @p503='?', @p504='?' (DbType = Int32), @p505='?', @p506='?', @p507='?' (DbType = DateTime), @p508='?' (DbType = Int32), @p509='?' (DbType = DateTime), @p510='?' (DbType = DateTime), @p511='?', @p512='?', @p513='?' (DbType = Int32), @p514='?', @p515='?', @p516='?' (DbType = DateTime), @p517='?' (DbType = Boolean), @p518='?' (DbType = Int32), @p519='?' (DbType = DateTime), @p520='?' (DbType = DateTime), @p521='?', @p522='?', @p523='?' (DbType = Int32), @p524='?', @p525='?', @p526='?' (DbType = DateTime), @p527='?' (DbType = Int32), @p528='?' (DbType = DateTime), @p529='?' (DbType = DateTime), @p530='?', @p531='?', @p532='?' (DbType = Int32), @p533='?', @p534='?', @p535='?' (DbType = DateTime), @p536='?' (DbType = Int32), @p537='?' (DbType = DateTime), @p538='?' (DbType = DateTime), @p539='?', @p540='?', @p541='?' (DbType = Int32), @p542='?', @p543='?', @p544='?' (DbType = DateTime), @p545='?' (DbType = Int32), @p546='?' (DbType = DateTime), @p547='?' (DbType = DateTime), @p548='?', @p549='?', @p550='?' (DbType = Int32), @p551='?', @p552='?', @p553='?' (DbType = DateTime), @p554='?' (DbType = Boolean), @p555='?' (DbType = Int32), @p556='?' (DbType = DateTime), @p557='?' (DbType = DateTime), @p558='?', @p559='?', @p560='?' (DbType = Int32), @p561='?', @p562='?', @p563='?' (DbType = DateTime), @p564='?' (DbType = Int32), @p565='?' (DbType = DateTime), @p566='?' (DbType = DateTime), @p567='?', @p568='?', @p569='?' (DbType = Int32), @p570='?', @p571='?', @p572='?' (DbType = DateTime), @p573='?' (DbType = Int32), @p574='?' (DbType = DateTime), @p575='?' (DbType = DateTime), @p576='?', @p577='?', @p578='?' (DbType = Int32), @p579='?', @p580='?', @p581='?' (DbType = DateTime), @p582='?' (DbType = Int32), @p583='?' (DbType = DateTime), @p584='?' (DbType = DateTime), @p585='?', @p586='?', @p587='?' (DbType = Int32), @p588='?', @p589='?', @p590='?' (DbType = DateTime), @p591='?' (DbType = Int32), @p592='?' (DbType = DateTime), @p593='?' (DbType = DateTime), @p594='?', @p595='?', @p596='?' (DbType = Int32), @p597='?', @p598='?', @p599='?' (DbType = DateTime), @p600='?' (DbType = Boolean), @p601='?' (DbType = Int32), @p602='?' (DbType = DateTime), @p603='?' (DbType = DateTime), @p604='?', @p605='?', @p606='?' (DbType = Int32), @p607='?', @p608='?', @p609='?' (DbType = DateTime), @p610='?' (DbType = Int32), @p611='?' (DbType = DateTime), @p612='?' (DbType = DateTime), @p613='?', @p614='?', @p615='?' (DbType = Int32), @p616='?', @p617='?', @p618='?' (DbType = DateTime), @p619='?' (DbType = Int32), @p620='?' (DbType = DateTime), @p621='?' (DbType = DateTime), @p622='?', @p623='?', @p624='?' (DbType = Int32), @p625='?', @p626='?', @p627='?' (DbType = DateTime), @p628='?' (DbType = Int32), @p629='?' (DbType = DateTime), @p630='?' (DbType = DateTime), @p631='?', @p632='?', @p633='?' (DbType = Int32), @p634='?', @p635='?', @p636='?' (DbType = DateTime), @p637='?' (DbType = Boolean), @p638='?' (DbType = Int32), @p639='?' (DbType = DateTime), @p640='?' (DbType = DateTime), @p641='?', @p642='?', @p643='?' (DbType = Int32), @p644='?', @p645='?', @p646='?' (DbType = DateTime), @p647='?' (DbType = Int32), @p648='?' (DbType = DateTime), @p649='?' (DbType = DateTime), @p650='?', @p651='?', @p652='?' (DbType = Int32), @p653='?', @p654='?', @p655='?' (DbType = DateTime), @p656='?' (DbType = Int32), @p657='?' (DbType = DateTime), @p658='?' (DbType = DateTime), @p659='?', @p660='?', @p661='?' (DbType = Int32), @p662='?', @p663='?', @p664='?' (DbType = DateTime), @p665='?' (DbType = Int32), @p666='?' (DbType = DateTime), @p667='?' (DbType = DateTime), @p668='?', @p669='?', @p670='?' (DbType = Int32), @p671='?', @p672='?', @p673='?' (DbType = DateTime), @p674='?' (DbType = Boolean), @p675='?' (DbType = Int32), @p676='?' (DbType = DateTime), @p677='?' (DbType = DateTime), @p678='?', @p679='?', @p680='?' (DbType = Int32), @p681='?', @p682='?', @p683='?' (DbType = DateTime), @p684='?' (DbType = Int32), @p685='?' (DbType = DateTime), @p686='?' (DbType = DateTime), @p687='?', @p688='?', @p689='?' (DbType = Int32), @p690='?', @p691='?', @p692='?' (DbType = DateTime), @p693='?' (DbType = Int32), @p694='?' (DbType = DateTime), @p695='?' (DbType = DateTime), @p696='?', @p697='?', @p698='?' (DbType = Int32), @p699='?', @p700='?', @p701='?' (DbType = DateTime), @p702='?' (DbType = Int32), @p703='?' (DbType = DateTime), @p704='?' (DbType = DateTime), @p705='?', @p706='?', @p707='?' (DbType = Int32), @p708='?', @p709='?', @p710='?' (DbType = DateTime), @p711='?' (DbType = Boolean), @p712='?' (DbType = Int32), @p713='?' (DbType = DateTime), @p714='?' (DbType = DateTime), @p715='?', @p716='?', @p717='?' (DbType = Int32), @p718='?', @p719='?', @p720='?' (DbType = DateTime), @p721='?' (DbType = Int32), @p722='?' (DbType = DateTime), @p723='?' (DbType = DateTime), @p724='?', @p725='?', @p726='?' (DbType = Int32), @p727='?', @p728='?', @p729='?' (DbType = DateTime), @p730='?' (DbType = Int32), @p731='?' (DbType = DateTime), @p732='?' (DbType = DateTime), @p733='?', @p734='?', @p735='?' (DbType = Int32), @p736='?', @p737='?', @p738='?' (DbType = DateTime), @p739='?' (DbType = Int32), @p740='?' (DbType = DateTime), @p741='?' (DbType = DateTime), @p742='?', @p743='?', @p744='?' (DbType = Int32), @p745='?', @p746='?', @p747='?' (DbType = DateTime), @p748='?' (DbType = Boolean), @p749='?' (DbType = Int32), @p750='?' (DbType = DateTime), @p751='?' (DbType = DateTime), @p752='?', @p753='?', @p754='?' (DbType = Int32), @p755='?', @p756='?', @p757='?' (DbType = DateTime), @p758='?' (DbType = Int32), @p759='?' (DbType = DateTime), @p760='?' (DbType = DateTime), @p761='?', @p762='?', @p763='?' (DbType = Int32), @p764='?', @p765='?', @p766='?' (DbType = DateTime), @p767='?' (DbType = Int32), @p768='?' (DbType = DateTime), @p769='?' (DbType = DateTime), @p770='?', @p771='?', @p772='?' (DbType = Int32), @p773='?', @p774='?', @p775='?' (DbType = DateTime), @p776='?' (DbType = Int32), @p777='?' (DbType = DateTime), @p778='?' (DbType = DateTime), @p779='?', @p780='?', @p781='?' (DbType = Int32), @p782='?', @p783='?', @p784='?' (DbType = DateTime), @p785='?' (DbType = Boolean), @p786='?' (DbType = Int32), @p787='?' (DbType = DateTime), @p788='?' (DbType = DateTime), @p789='?', @p790='?', @p791='?' (DbType = Int32), @p792='?', @p793='?', @p794='?' (DbType = DateTime), @p795='?' (DbType = Int32), @p796='?' (DbType = DateTime), @p797='?' (DbType = DateTime), @p798='?', @p799='?', @p800='?' (DbType = Int32), @p801='?', @p802='?', @p803='?' (DbType = DateTime), @p804='?' (DbType = Int32), @p805='?' (DbType = DateTime), @p806='?' (DbType = DateTime), @p807='?', @p808='?', @p809='?' (DbType = Int32), @p810='?', @p811='?', @p812='?' (DbType = DateTime), @p813='?' (DbType = Int32), @p814='?' (DbType = DateTime), @p815='?' (DbType = DateTime), @p816='?', @p817='?', @p818='?' (DbType = Int32), @p819='?', @p820='?', @p821='?' (DbType = DateTime), @p822='?' (DbType = Boolean), @p823='?' (DbType = Int32), @p824='?' (DbType = DateTime), @p825='?' (DbType = DateTime), @p826='?', @p827='?', @p828='?' (DbType = Int32), @p829='?', @p830='?', @p831='?' (DbType = DateTime), @p832='?' (DbType = Int32), @p833='?' (DbType = DateTime), @p834='?' (DbType = DateTime), @p835='?', @p836='?', @p837='?' (DbType = Int32), @p838='?', @p839='?', @p840='?' (DbType = DateTime), @p841='?' (DbType = Int32), @p842='?' (DbType = DateTime), @p843='?' (DbType = DateTime), @p844='?', @p845='?', @p846='?' (DbType = Int32), @p847='?', @p848='?', @p849='?' (DbType = DateTime), @p850='?' (DbType = Int32), @p851='?' (DbType = DateTime), @p852='?' (DbType = DateTime), @p853='?', @p854='?', @p855='?' (DbType = Int32), @p856='?', @p857='?', @p858='?' (DbType = DateTime), @p859='?' (DbType = Int32), @p860='?' (DbType = DateTime), @p861='?' (DbType = DateTime), @p862='?', @p863='?', @p864='?' (DbType = Int32), @p865='?', @p866='?', @p867='?' (DbType = DateTime), @p868='?' (DbType = Boolean), @p869='?' (DbType = Int32), @p870='?' (DbType = DateTime), @p871='?' (DbType = DateTime), @p872='?', @p873='?', @p874='?' (DbType = Int32), @p875='?', @p876='?', @p877='?' (DbType = DateTime), @p878='?' (DbType = Int32), @p879='?' (DbType = DateTime), @p880='?' (DbType = DateTime), @p881='?', @p882='?', @p883='?' (DbType = Int32), @p884='?', @p885='?', @p886='?' (DbType = DateTime), @p887='?' (DbType = Int32), @p888='?' (DbType = DateTime), @p889='?' (DbType = DateTime), @p890='?', @p891='?', @p892='?' (DbType = Int32), @p893='?', @p894='?', @p895='?' (DbType = DateTime), @p896='?' (DbType = Int32), @p897='?' (DbType = DateTime), @p898='?' (DbType = DateTime), @p899='?', @p900='?', @p901='?' (DbType = Int32), @p902='?', @p903='?', @p904='?' (DbType = DateTime), @p905='?' (DbType = Boolean), @p906='?' (DbType = Int32), @p907='?' (DbType = DateTime), @p908='?' (DbType = DateTime), @p909='?', @p910='?', @p911='?' (DbType = Int32), @p912='?', @p913='?', @p914='?' (DbType = DateTime), @p915='?' (DbType = Int32), @p916='?' (DbType = DateTime), @p917='?' (DbType = DateTime), @p918='?', @p919='?', @p920='?' (DbType = Int32), @p921='?', @p922='?', @p923='?' (DbType = DateTime), @p924='?' (DbType = Int32), @p925='?' (DbType = DateTime), @p926='?' (DbType = DateTime), @p927='?', @p928='?', @p929='?' (DbType = Int32), @p930='?', @p931='?', @p932='?' (DbType = DateTime), @p933='?' (DbType = Int32), @p934='?' (DbType = DateTime), @p935='?' (DbType = DateTime), @p936='?', @p937='?', @p938='?' (DbType = Int32), @p939='?', @p940='?', @p941='?' (DbType = DateTime), @p942='?' (DbType = Boolean), @p943='?' (DbType = Int32), @p944='?' (DbType = DateTime), @p945='?' (DbType = DateTime), @p946='?', @p947='?', @p948='?' (DbType = Int32), @p949='?', @p950='?', @p951='?' (DbType = DateTime), @p952='?' (DbType = Int32), @p953='?' (DbType = DateTime), @p954='?' (DbType = DateTime), @p955='?', @p956='?', @p957='?' (DbType = Int32), @p958='?', @p959='?', @p960='?' (DbType = DateTime), @p961='?' (DbType = Int32), @p962='?' (DbType = DateTime), @p963='?' (DbType = DateTime), @p964='?', @p965='?', @p966='?' (DbType = Int32), @p967='?', @p968='?', @p969='?' (DbType = DateTime), @p970='?' (DbType = Int32), @p971='?' (DbType = DateTime), @p972='?' (DbType = DateTime), @p973='?', @p974='?', @p975='?' (DbType = Int32), @p976='?', @p977='?', @p978='?' (DbType = DateTime), @p979='?' (DbType = Boolean), @p980='?' (DbType = Int32), @p981='?' (DbType = DateTime), @p982='?' (DbType = DateTime), @p983='?', @p984='?', @p985='?' (DbType = Int32), @p986='?', @p987='?', @p988='?' (DbType = DateTime), @p989='?' (DbType = Int32), @p990='?' (DbType = DateTime), @p991='?' (DbType = DateTime), @p992='?', @p993='?', @p994='?' (DbType = Int32), @p995='?', @p996='?', @p997='?' (DbType = DateTime), @p998='?' (DbType = Int32), @p999='?' (DbType = DateTime), @p1000='?' (DbType = DateTime), @p1001='?', @p1002='?', @p1003='?' (DbType = Int32), @p1004='?', @p1005='?', @p1006='?' (DbType = DateTime), @p1007='?' (DbType = Int32), @p1008='?' (DbType = DateTime), @p1009='?' (DbType = DateTime), @p1010='?', @p1011='?', @p1012='?' (DbType = Int32), @p1013='?', @p1014='?', @p1015='?' (DbType = DateTime), @p1016='?' (DbType = Boolean), @p1017='?' (DbType = Int32), @p1018='?' (DbType = DateTime), @p1019='?' (DbType = DateTime), @p1020='?', @p1021='?', @p1022='?' (DbType = Int32), @p1023='?', @p1024='?', @p1025='?' (DbType = DateTime), @p1026='?' (DbType = Int32), @p1027='?' (DbType = DateTime), @p1028='?' (DbType = DateTime), @p1029='?', @p1030='?', @p1031='?' (DbType = Int32), @p1032='?', @p1033='?', @p1034='?' (DbType = DateTime), @p1035='?' (DbType = Int32), @p1036='?' (DbType = DateTime), @p1037='?' (DbType = DateTime), @p1038='?', @p1039='?', @p1040='?' (DbType = Int32), @p1041='?', @p1042='?', @p1043='?' (DbType = DateTime), @p1044='?' (DbType = Int32), @p1045='?' (DbType = DateTime), @p1046='?' (DbType = DateTime), @p1047='?', @p1048='?', @p1049='?' (DbType = Int32), @p1050='?', @p1051='?', @p1052='?' (DbType = DateTime), @p1053='?' (DbType = Boolean), @p1054='?' (DbType = Int32), @p1055='?' (DbType = DateTime), @p1056='?' (DbType = DateTime), @p1057='?', @p1058='?', @p1059='?' (DbType = Int32), @p1060='?', @p1061='?', @p1062='?' (DbType = DateTime), @p1063='?' (DbType = Int32), @p1064='?' (DbType = DateTime), @p1065='?' (DbType = DateTime), @p1066='?', @p1067='?', @p1068='?' (DbType = Int32), @p1069='?', @p1070='?', @p1071='?' (DbType = DateTime), @p1072='?' (DbType = Int32), @p1073='?' (DbType = DateTime), @p1074='?' (DbType = DateTime), @p1075='?', @p1076='?', @p1077='?' (DbType = Int32), @p1078='?', @p1079='?', @p1080='?' (DbType = DateTime), @p1081='?' (DbType = Int32), @p1082='?' (DbType = DateTime), @p1083='?' (DbType = DateTime), @p1084='?', @p1085='?', @p1086='?' (DbType = Int32), @p1087='?', @p1088='?', @p1089='?' (DbType = DateTime), @p1090='?' (DbType = Boolean), @p1091='?' (DbType = Int32), @p1092='?' (DbType = DateTime), @p1093='?' (DbType = DateTime), @p1094='?', @p1095='?', @p1096='?' (DbType = Int32), @p1097='?', @p1098='?', @p1099='?' (DbType = DateTime), @p1100='?' (DbType = Int32), @p1101='?' (DbType = DateTime), @p1102='?' (DbType = DateTime), @p1103='?', @p1104='?', @p1105='?' (DbType = Int32), @p1106='?', @p1107='?', @p1108='?' (DbType = DateTime), @p1109='?' (DbType = Int32), @p1110='?' (DbType = DateTime), @p1111='?' (DbType = DateTime), @p1112='?', @p1113='?', @p1114='?' (DbType = Int32), @p1115='?', @p1116='?', @p1117='?' (DbType = DateTime), @p1118='?' (DbType = Int32), @p1119='?' (DbType = DateTime), @p1120='?' (DbType = DateTime), @p1121='?', @p1122='?', @p1123='?' (DbType = Int32), @p1124='?', @p1125='?', @p1126='?' (DbType = DateTime), @p1127='?' (DbType = Int32), @p1128='?' (DbType = DateTime), @p1129='?' (DbType = DateTime), @p1130='?', @p1131='?', @p1132='?' (DbType = Int32), @p1133='?', @p1134='?', @p1135='?' (DbType = DateTime), @p1136='?' (DbType = Boolean), @p1137='?' (DbType = Int32), @p1138='?' (DbType = DateTime), @p1139='?' (DbType = DateTime), @p1140='?', @p1141='?', @p1142='?' (DbType = Int32), @p1143='?', @p1144='?', @p1145='?' (DbType = DateTime), @p1146='?' (DbType = Int32), @p1147='?' (DbType = DateTime), @p1148='?' (DbType = DateTime), @p1149='?', @p1150='?', @p1151='?' (DbType = Int32), @p1152='?', @p1153='?', @p1154='?' (DbType = DateTime), @p1155='?' (DbType = Int32), @p1156='?' (DbType = DateTime), @p1157='?' (DbType = DateTime), @p1158='?', @p1159='?', @p1160='?' (DbType = Int32), @p1161='?', @p1162='?', @p1163='?' (DbType = DateTime), @p1164='?' (DbType = Int32), @p1165='?' (DbType = DateTime), @p1166='?' (DbType = DateTime), @p1167='?', @p1168='?', @p1169='?' (DbType = Int32), @p1170='?', @p1171='?', @p1172='?' (DbType = DateTime), @p1173='?' (DbType = Boolean), @p1174='?' (DbType = Int32), @p1175='?' (DbType = DateTime), @p1176='?' (DbType = DateTime), @p1177='?', @p1178='?', @p1179='?' (DbType = Int32), @p1180='?', @p1181='?', @p1182='?' (DbType = DateTime), @p1183='?' (DbType = Int32), @p1184='?' (DbType = DateTime), @p1185='?' (DbType = DateTime), @p1186='?', @p1187='?', @p1188='?' (DbType = Int32), @p1189='?', @p1190='?', @p1191='?' (DbType = DateTime), @p1192='?' (DbType = Int32), @p1193='?' (DbType = DateTime), @p1194='?' (DbType = DateTime), @p1195='?', @p1196='?', @p1197='?' (DbType = Int32), @p1198='?', @p1199='?', @p1200='?' (DbType = DateTime), @p1201='?' (DbType = Int32), @p1202='?' (DbType = DateTime), @p1203='?' (DbType = DateTime), @p1204='?', @p1205='?', @p1206='?' (DbType = Int32), @p1207='?', @p1208='?', @p1209='?' (DbType = DateTime), @p1210='?' (DbType = Boolean), @p1211='?' (DbType = Int32), @p1212='?' (DbType = DateTime), @p1213='?' (DbType = DateTime), @p1214='?', @p1215='?', @p1216='?' (DbType = Int32), @p1217='?', @p1218='?', @p1219='?' (DbType = DateTime), @p1220='?' (DbType = Int32), @p1221='?' (DbType = DateTime), @p1222='?' (DbType = DateTime), @p1223='?', @p1224='?', @p1225='?' (DbType = Int32), @p1226='?', @p1227='?', @p1228='?' (DbType = DateTime), @p1229='?' (DbType = Int32), @p1230='?' (DbType = DateTime), @p1231='?' (DbType = DateTime), @p1232='?', @p1233='?', @p1234='?' (DbType = Int32), @p1235='?', @p1236='?', @p1237='?' (DbType = DateTime), @p1238='?' (DbType = Int32), @p1239='?' (DbType = DateTime), @p1240='?' (DbType = DateTime), @p1241='?', @p1242='?', @p1243='?' (DbType = Int32), @p1244='?', @p1245='?', @p1246='?' (DbType = DateTime), @p1247='?' (DbType = Boolean), @p1248='?' (DbType = Int32), @p1249='?' (DbType = DateTime), @p1250='?' (DbType = DateTime), @p1251='?', @p1252='?', @p1253='?' (DbType = Int32), @p1254='?', @p1255='?', @p1256='?' (DbType = DateTime), @p1257='?' (DbType = Int32), @p1258='?' (DbType = DateTime), @p1259='?' (DbType = DateTime), @p1260='?', @p1261='?', @p1262='?' (DbType = Int32), @p1263='?', @p1264='?', @p1265='?' (DbType = DateTime), @p1266='?' (DbType = Int32), @p1267='?' (DbType = DateTime), @p1268='?' (DbType = DateTime), @p1269='?', @p1270='?', @p1271='?' (DbType = Int32), @p1272='?', @p1273='?', @p1274='?' (DbType = DateTime), @p1275='?' (DbType = Int32), @p1276='?' (DbType = DateTime), @p1277='?' (DbType = DateTime), @p1278='?', @p1279='?', @p1280='?' (DbType = Int32), @p1281='?', @p1282='?', @p1283='?' (DbType = DateTime), @p1284='?' (DbType = Boolean), @p1285='?' (DbType = Int32), @p1286='?' (DbType = DateTime), @p1287='?' (DbType = DateTime), @p1288='?', @p1289='?', @p1290='?' (DbType = Int32), @p1291='?', @p1292='?', @p1293='?' (DbType = DateTime), @p1294='?' (DbType = Int32), @p1295='?' (DbType = DateTime), @p1296='?' (DbType = DateTime), @p1297='?', @p1298='?', @p1299='?' (DbType = Int32), @p1300='?', @p1301='?', @p1302='?' (DbType = DateTime), @p1303='?' (DbType = Int32), @p1304='?' (DbType = DateTime), @p1305='?' (DbType = DateTime), @p1306='?', @p1307='?', @p1308='?' (DbType = Int32), @p1309='?', @p1310='?', @p1311='?' (DbType = DateTime), @p1312='?' (DbType = Int32), @p1313='?' (DbType = DateTime), @p1314='?' (DbType = DateTime), @p1315='?', @p1316='?', @p1317='?' (DbType = Int32), @p1318='?', @p1319='?', @p1320='?' (DbType = DateTime), @p1321='?' (DbType = Boolean), @p1322='?' (DbType = Int32), @p1323='?' (DbType = DateTime), @p1324='?' (DbType = DateTime), @p1325='?', @p1326='?', @p1327='?' (DbType = Int32), @p1328='?', @p1329='?', @p1330='?' (DbType = DateTime), @p1331='?' (DbType = Int32), @p1332='?' (DbType = DateTime), @p1333='?' (DbType = DateTime), @p1334='?', @p1335='?', @p1336='?' (DbType = Int32), @p1337='?', @p1338='?', @p1339='?' (DbType = DateTime), @p1340='?' (DbType = Int32), @p1341='?' (DbType = DateTime), @p1342='?' (DbType = DateTime), @p1343='?', @p1344='?', @p1345='?' (DbType = Int32), @p1346='?', @p1347='?', @p1348='?' (DbType = DateTime), @p1349='?' (DbType = Int32), @p1350='?' (DbType = DateTime), @p1351='?' (DbType = DateTime), @p1352='?', @p1353='?', @p1354='?' (DbType = Int32), @p1355='?', @p1356='?', @p1357='?' (DbType = DateTime), @p1358='?' (DbType = Boolean), @p1359='?' (DbType = Int32), @p1360='?' (DbType = DateTime), @p1361='?' (DbType = DateTime), @p1362='?', @p1363='?', @p1364='?' (DbType = Int32), @p1365='?', @p1366='?', @p1367='?' (DbType = DateTime), @p1368='?' (DbType = Int32), @p1369='?' (DbType = DateTime), @p1370='?' (DbType = DateTime), @p1371='?', @p1372='?', @p1373='?' (DbType = Int32), @p1374='?', @p1375='?', @p1376='?' (DbType = DateTime), @p1377='?' (DbType = Int32), @p1378='?' (DbType = DateTime), @p1379='?' (DbType = DateTime), @p1380='?', @p1381='?', @p1382='?' (DbType = Int32), @p1383='?', @p1384='?', @p1385='?' (DbType = DateTime), @p1386='?' (DbType = Int32), @p1387='?' (DbType = DateTime), @p1388='?' (DbType = DateTime), @p1389='?', @p1390='?', @p1391='?' (DbType = Int32), @p1392='?', @p1393='?', @p1394='?' (DbType = DateTime), @p1395='?' (DbType = Int32), @p1396='?' (DbType = DateTime), @p1397='?' (DbType = DateTime), @p1398='?', @p1399='?', @p1400='?' (DbType = Int32), @p1401='?', @p1402='?', @p1403='?' (DbType = DateTime), @p1404='?' (DbType = Boolean), @p1405='?' (DbType = Int32), @p1406='?' (DbType = DateTime), @p1407='?' (DbType = DateTime), @p1408='?', @p1409='?', @p1410='?' (DbType = Int32), @p1411='?', @p1412='?', @p1413='?' (DbType = DateTime), @p1414='?' (DbType = Int32), @p1415='?' (DbType = DateTime), @p1416='?' (DbType = DateTime), @p1417='?', @p1418='?', @p1419='?' (DbType = Int32), @p1420='?', @p1421='?', @p1422='?' (DbType = DateTime), @p1423='?' (DbType = Int32), @p1424='?' (DbType = DateTime), @p1425='?' (DbType = DateTime), @p1426='?', @p1427='?', @p1428='?' (DbType = Int32), @p1429='?', @p1430='?', @p1431='?' (DbType = DateTime), @p1432='?' (DbType = Int32), @p1433='?' (DbType = DateTime), @p1434='?' (DbType = DateTime), @p1435='?', @p1436='?', @p1437='?' (DbType = Int32), @p1438='?', @p1439='?', @p1440='?' (DbType = DateTime), @p1441='?' (DbType = Boolean), @p1442='?' (DbType = Int32), @p1443='?' (DbType = DateTime), @p1444='?' (DbType = DateTime), @p1445='?', @p1446='?', @p1447='?' (DbType = Int32), @p1448='?', @p1449='?', @p1450='?' (DbType = DateTime), @p1451='?' (DbType = Int32), @p1452='?' (DbType = DateTime), @p1453='?' (DbType = DateTime), @p1454='?', @p1455='?', @p1456='?' (DbType = Int32), @p1457='?', @p1458='?', @p1459='?' (DbType = DateTime), @p1460='?' (DbType = Int32), @p1461='?' (DbType = DateTime), @p1462='?' (DbType = DateTime), @p1463='?', @p1464='?', @p1465='?' (DbType = Int32), @p1466='?', @p1467='?', @p1468='?' (DbType = DateTime), @p1469='?' (DbType = Int32), @p1470='?' (DbType = DateTime), @p1471='?' (DbType = DateTime), @p1472='?', @p1473='?', @p1474='?' (DbType = Int32), @p1475='?', @p1476='?', @p1477='?' (DbType = DateTime), @p1478='?' (DbType = Boolean), @p1479='?' (DbType = Int32), @p1480='?' (DbType = DateTime), @p1481='?' (DbType = DateTime), @p1482='?', @p1483='?', @p1484='?' (DbType = Int32), @p1485='?', @p1486='?', @p1487='?' (DbType = DateTime), @p1488='?' (DbType = Int32), @p1489='?' (DbType = DateTime), @p1490='?' (DbType = DateTime), @p1491='?', @p1492='?', @p1493='?' (DbType = Int32), @p1494='?', @p1495='?', @p1496='?' (DbType = DateTime), @p1497='?' (DbType = Int32), @p1498='?' (DbType = DateTime), @p1499='?' (DbType = DateTime), @p1500='?', @p1501='?', @p1502='?' (DbType = Int32), @p1503='?', @p1504='?', @p1505='?' (DbType = DateTime), @p1506='?' (DbType = Int32), @p1507='?' (DbType = DateTime), @p1508='?' (DbType = DateTime), @p1509='?', @p1510='?', @p1511='?' (DbType = Int32), @p1512='?', @p1513='?', @p1514='?' (DbType = DateTime), @p1515='?' (DbType = Boolean), @p1516='?' (DbType = Int32), @p1517='?' (DbType = DateTime), @p1518='?' (DbType = DateTime), @p1519='?', @p1520='?', @p1521='?' (DbType = Int32), @p1522='?', @p1523='?', @p1524='?' (DbType = DateTime), @p1525='?' (DbType = Int32), @p1526='?' (DbType = DateTime), @p1527='?' (DbType = DateTime), @p1528='?', @p1529='?', @p1530='?' (DbType = Int32), @p1531='?', @p1532='?', @p1533='?' (DbType = DateTime), @p1534='?' (DbType = Int32), @p1535='?' (DbType = DateTime), @p1536='?' (DbType = DateTime), @p1537='?', @p1538='?', @p1539='?' (DbType = Int32), @p1540='?', @p1541='?', @p1542='?' (DbType = DateTime), @p1543='?' (DbType = Int32), @p1544='?' (DbType = DateTime), @p1545='?' (DbType = DateTime), @p1546='?', @p1547='?', @p1548='?' (DbType = Int32), @p1549='?', @p1550='?', @p1551='?' (DbType = DateTime), @p1552='?' (DbType = Boolean), @p1553='?' (DbType = Int32), @p1554='?' (DbType = DateTime), @p1555='?' (DbType = DateTime), @p1556='?', @p1557='?', @p1558='?' (DbType = Int32), @p1559='?', @p1560='?', @p1561='?' (DbType = DateTime), @p1562='?' (DbType = Int32), @p1563='?' (DbType = DateTime), @p1564='?' (DbType = DateTime), @p1565='?', @p1566='?', @p1567='?' (DbType = Int32), @p1568='?', @p1569='?', @p1570='?' (DbType = DateTime), @p1571='?' (DbType = Int32), @p1572='?' (DbType = DateTime), @p1573='?' (DbType = DateTime), @p1574='?', @p1575='?', @p1576='?' (DbType = Int32), @p1577='?', @p1578='?', @p1579='?' (DbType = DateTime), @p1580='?' (DbType = Int32), @p1581='?' (DbType = DateTime), @p1582='?' (DbType = DateTime), @p1583='?', @p1584='?', @p1585='?' (DbType = Int32), @p1586='?', @p1587='?', @p1588='?' (DbType = DateTime), @p1589='?' (DbType = Boolean), @p1590='?' (DbType = Int32), @p1591='?' (DbType = DateTime), @p1592='?' (DbType = DateTime), @p1593='?', @p1594='?', @p1595='?' (DbType = Int32), @p1596='?', @p1597='?', @p1598='?' (DbType = DateTime), @p1599='?' (DbType = Int32), @p1600='?' (DbType = DateTime), @p1601='?' (DbType = DateTime), @p1602='?', @p1603='?', @p1604='?' (DbType = Int32), @p1605='?', @p1606='?', @p1607='?' (DbType = DateTime), @p1608='?' (DbType = Int32), @p1609='?' (DbType = DateTime), @p1610='?' (DbType = DateTime), @p1611='?', @p1612='?', @p1613='?' (DbType = Int32), @p1614='?', @p1615='?', @p1616='?' (DbType = DateTime), @p1617='?' (DbType = Int32), @p1618='?' (DbType = DateTime), @p1619='?' (DbType = DateTime), @p1620='?', @p1621='?', @p1622='?' (DbType = Int32), @p1623='?', @p1624='?', @p1625='?' (DbType = DateTime), @p1626='?' (DbType = Boolean), @p1627='?' (DbType = Int32), @p1628='?' (DbType = DateTime), @p1629='?' (DbType = DateTime), @p1630='?', @p1631='?', @p1632='?' (DbType = Int32), @p1633='?', @p1634='?', @p1635='?' (DbType = DateTime), @p1636='?' (DbType = Int32), @p1637='?' (DbType = DateTime), @p1638='?' (DbType = DateTime), @p1639='?', @p1640='?', @p1641='?' (DbType = Int32), @p1642='?', @p1643='?', @p1644='?' (DbType = DateTime), @p1645='?' (DbType = Int32), @p1646='?' (DbType = DateTime), @p1647='?' (DbType = DateTime), @p1648='?', @p1649='?', @p1650='?' (DbType = Int32), @p1651='?', @p1652='?', @p1653='?' (DbType = DateTime), @p1654='?' (DbType = Int32), @p1655='?' (DbType = DateTime), @p1656='?' (DbType = DateTime), @p1657='?', @p1658='?', @p1659='?' (DbType = Int32), @p1660='?', @p1661='?', @p1662='?' (DbType = DateTime), @p1663='?' (DbType = Int32), @p1664='?' (DbType = DateTime), @p1665='?' (DbType = DateTime), @p1666='?', @p1667='?', @p1668='?' (DbType = Int32), @p1669='?', @p1670='?', @p1671='?' (DbType = DateTime), @p1672='?' (DbType = Boolean), @p1673='?' (DbType = Int32), @p1674='?' (DbType = DateTime), @p1675='?' (DbType = DateTime), @p1676='?', @p1677='?', @p1678='?' (DbType = Int32), @p1679='?', @p1680='?', @p1681='?' (DbType = DateTime), @p1682='?' (DbType = Int32), @p1683='?' (DbType = DateTime), @p1684='?' (DbType = DateTime), @p1685='?', @p1686='?', @p1687='?' (DbType = Int32), @p1688='?', @p1689='?', @p1690='?' (DbType = DateTime), @p1691='?' (DbType = Int32), @p1692='?' (DbType = DateTime), @p1693='?' (DbType = DateTime), @p1694='?', @p1695='?', @p1696='?' (DbType = Int32), @p1697='?', @p1698='?', @p1699='?' (DbType = DateTime), @p1700='?' (DbType = Int32), @p1701='?' (DbType = DateTime), @p1702='?' (DbType = DateTime), @p1703='?', @p1704='?', @p1705='?' (DbType = Int32), @p1706='?', @p1707='?', @p1708='?' (DbType = DateTime), @p1709='?' (DbType = Boolean), @p1710='?' (DbType = Int32), @p1711='?' (DbType = DateTime), @p1712='?' (DbType = DateTime), @p1713='?', @p1714='?', @p1715='?' (DbType = Int32), @p1716='?', @p1717='?', @p1718='?' (DbType = DateTime), @p1719='?' (DbType = Int32), @p1720='?' (DbType = DateTime), @p1721='?' (DbType = DateTime), @p1722='?', @p1723='?', @p1724='?' (DbType = Int32), @p1725='?', @p1726='?', @p1727='?' (DbType = DateTime), @p1728='?' (DbType = Int32), @p1729='?' (DbType = DateTime), @p1730='?' (DbType = DateTime), @p1731='?', @p1732='?', @p1733='?' (DbType = Int32), @p1734='?', @p1735='?', @p1736='?' (DbType = DateTime), @p1737='?' (DbType = Int32), @p1738='?' (DbType = DateTime), @p1739='?' (DbType = DateTime), @p1740='?', @p1741='?', @p1742='?' (DbType = Int32), @p1743='?', @p1744='?', @p1745='?' (DbType = DateTime), @p1746='?' (DbType = Boolean), @p1747='?' (DbType = Int32), @p1748='?' (DbType = DateTime), @p1749='?' (DbType = DateTime), @p1750='?', @p1751='?', @p1752='?' (DbType = Int32), @p1753='?', @p1754='?', @p1755='?' (DbType = DateTime), @p1756='?' (DbType = Int32), @p1757='?' (DbType = DateTime), @p1758='?' (DbType = DateTime), @p1759='?', @p1760='?', @p1761='?' (DbType = Int32), @p1762='?', @p1763='?', @p1764='?' (DbType = DateTime), @p1765='?' (DbType = Int32), @p1766='?' (DbType = DateTime), @p1767='?' (DbType = DateTime), @p1768='?', @p1769='?', @p1770='?' (DbType = Int32), @p1771='?', @p1772='?', @p1773='?' (DbType = DateTime), @p1774='?' (DbType = Int32), @p1775='?' (DbType = DateTime), @p1776='?' (DbType = DateTime), @p1777='?', @p1778='?', @p1779='?' (DbType = Int32), @p1780='?', @p1781='?', @p1782='?' (DbType = DateTime), @p1783='?' (DbType = Boolean), @p1784='?' (DbType = Int32), @p1785='?' (DbType = DateTime), @p1786='?' (DbType = DateTime), @p1787='?', @p1788='?', @p1789='?' (DbType = Int32), @p1790='?', @p1791='?', @p1792='?' (DbType = DateTime), @p1793='?' (DbType = Int32), @p1794='?' (DbType = DateTime), @p1795='?' (DbType = DateTime), @p1796='?', @p1797='?', @p1798='?' (DbType = Int32), @p1799='?', @p1800='?', @p1801='?' (DbType = DateTime), @p1802='?' (DbType = Int32), @p1803='?' (DbType = DateTime), @p1804='?' (DbType = DateTime), @p1805='?', @p1806='?', @p1807='?' (DbType = Int32), @p1808='?', @p1809='?', @p1810='?' (DbType = DateTime), @p1811='?' (DbType = Int32), @p1812='?' (DbType = DateTime), @p1813='?' (DbType = DateTime), @p1814='?', @p1815='?', @p1816='?' (DbType = Int32), @p1817='?', @p1818='?', @p1819='?' (DbType = DateTime), @p1820='?' (DbType = Boolean), @p1821='?' (DbType = Int32), @p1822='?' (DbType = DateTime), @p1823='?' (DbType = DateTime), @p1824='?', @p1825='?', @p1826='?' (DbType = Int32), @p1827='?', @p1828='?', @p1829='?' (DbType = DateTime), @p1830='?' (DbType = Int32), @p1831='?' (DbType = DateTime), @p1832='?' (DbType = DateTime), @p1833='?', @p1834='?', @p1835='?' (DbType = Int32), @p1836='?', @p1837='?', @p1838='?' (DbType = DateTime), @p1839='?' (DbType = Int32), @p1840='?' (DbType = DateTime), @p1841='?' (DbType = DateTime), @p1842='?', @p1843='?', @p1844='?' (DbType = Int32), @p1845='?', @p1846='?', @p1847='?' (DbType = DateTime), @p1848='?' (DbType = Int32), @p1849='?' (DbType = DateTime), @p1850='?' (DbType = DateTime), @p1851='?', @p1852='?', @p1853='?' (DbType = Int32), @p1854='?', @p1855='?', @p1856='?' (DbType = DateTime), @p1857='?' (DbType = Boolean), @p1858='?' (DbType = Int32), @p1859='?' (DbType = DateTime), @p1860='?' (DbType = DateTime), @p1861='?', @p1862='?', @p1863='?' (DbType = Int32), @p1864='?', @p1865='?', @p1866='?' (DbType = DateTime), @p1867='?' (DbType = Int32), @p1868='?' (DbType = DateTime), @p1869='?' (DbType = DateTime), @p1870='?', @p1871='?', @p1872='?' (DbType = Int32), @p1873='?', @p1874='?', @p1875='?' (DbType = DateTime), @p1876='?' (DbType = Int32), @p1877='?' (DbType = DateTime), @p1878='?' (DbType = DateTime), @p1879='?', @p1880='?', @p1881='?' (DbType = Int32), @p1882='?', @p1883='?', @p1884='?' (DbType = DateTime), @p1885='?' (DbType = Int32), @p1886='?' (DbType = DateTime), @p1887='?' (DbType = DateTime), @p1888='?', @p1889='?', @p1890='?' (DbType = Int32), @p1891='?', @p1892='?', @p1893='?' (DbType = DateTime), @p1894='?' (DbType = Boolean), @p1895='?' (DbType = Int32), @p1896='?' (DbType = DateTime), @p1897='?' (DbType = DateTime), @p1898='?', @p1899='?', @p1900='?' (DbType = Int32), @p1901='?', @p1902='?', @p1903='?' (DbType = DateTime), @p1904='?' (DbType = Int32), @p1905='?' (DbType = DateTime), @p1906='?' (DbType = DateTime), @p1907='?', @p1908='?', @p1909='?' (DbType = Int32), @p1910='?', @p1911='?', @p1912='?' (DbType = DateTime), @p1913='?' (DbType = Int32), @p1914='?' (DbType = DateTime), @p1915='?' (DbType = DateTime), @p1916='?', @p1917='?', @p1918='?' (DbType = Int32), @p1919='?', @p1920='?', @p1921='?' (DbType = DateTime), @p1922='?' (DbType = Int32), @p1923='?' (DbType = DateTime), @p1924='?' (DbType = DateTime), @p1925='?', @p1926='?', @p1927='?' (DbType = Int32), @p1928='?', @p1929='?', @p1930='?' (DbType = DateTime), @p1931='?' (DbType = Int32), @p1932='?' (DbType = DateTime), @p1933='?' (DbType = DateTime), @p1934='?', @p1935='?', @p1936='?' (DbType = Int32), @p1937='?', @p1938='?', @p1939='?' (DbType = DateTime), @p1940='?' (DbType = Boolean), @p1941='?' (DbType = Int32), @p1942='?' (DbType = DateTime), @p1943='?' (DbType = DateTime), @p1944='?', @p1945='?', @p1946='?' (DbType = Int32), @p1947='?', @p1948='?', @p1949='?' (DbType = DateTime), @p1950='?' (DbType = Int32), @p1951='?' (DbType = DateTime), @p1952='?' (DbType = DateTime), @p1953='?', @p1954='?', @p1955='?' (DbType = Int32), @p1956='?', @p1957='?', @p1958='?' (DbType = DateTime), @p1959='?' (DbType = Int32), @p1960='?' (DbType = DateTime), @p1961='?' (DbType = DateTime), @p1962='?', @p1963='?', @p1964='?' (DbType = Int32), @p1965='?', @p1966='?', @p1967='?' (DbType = DateTime), @p1968='?' (DbType = Int32), @p1969='?' (DbType = DateTime), @p1970='?' (DbType = DateTime), @p1971='?', @p1972='?', @p1973='?' (DbType = Int32), @p1974='?', @p1975='?', @p1976='?' (DbType = DateTime), @p1977='?' (DbType = Boolean), @p1978='?' (DbType = Int32), @p1979='?' (DbType = DateTime), @p1980='?' (DbType = DateTime), @p1981='?', @p1982='?', @p1983='?' (DbType = Int32), @p1984='?', @p1985='?', @p1986='?' (DbType = DateTime), @p1987='?' (DbType = Int32), @p1988='?' (DbType = DateTime), @p1989='?' (DbType = DateTime), @p1990='?', @p1991='?', @p1992='?' (DbType = Int32), @p1993='?', @p1994='?', @p1995='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p64, @p65, @p66, @p67, @p68, @p69, @p70, @p71, @p72, @p73)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p74, @p75, @p76, @p77, @p78, @p79, @p80, @p81, @p82)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p83, @p84, @p85, @p86, @p87, @p88, @p89, @p90, @p91)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p92, @p93, @p94, @p95, @p96, @p97, @p98, @p99, @p100)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p101, @p102, @p103, @p104, @p105, @p106, @p107, @p108, @p109, @p110)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p111, @p112, @p113, @p114, @p115, @p116, @p117, @p118, @p119)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p120, @p121, @p122, @p123, @p124, @p125, @p126, @p127, @p128)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p129, @p130, @p131, @p132, @p133, @p134, @p135, @p136, @p137)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p138, @p139, @p140, @p141, @p142, @p143, @p144, @p145, @p146, @p147)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p148, @p149, @p150, @p151, @p152, @p153, @p154, @p155, @p156)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p157, @p158, @p159, @p160, @p161, @p162, @p163, @p164, @p165)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p166, @p167, @p168, @p169, @p170, @p171, @p172, @p173, @p174)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p175, @p176, @p177, @p178, @p179, @p180, @p181, @p182, @p183, @p184)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p185, @p186, @p187, @p188, @p189, @p190, @p191, @p192, @p193)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p194, @p195, @p196, @p197, @p198, @p199, @p200, @p201, @p202)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p203, @p204, @p205, @p206, @p207, @p208, @p209, @p210, @p211)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p212, @p213, @p214, @p215, @p216, @p217, @p218, @p219, @p220, @p221)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p222, @p223, @p224, @p225, @p226, @p227, @p228, @p229, @p230)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p231, @p232, @p233, @p234, @p235, @p236, @p237, @p238, @p239)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p240, @p241, @p242, @p243, @p244, @p245, @p246, @p247, @p248)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p249, @p250, @p251, @p252, @p253, @p254, @p255, @p256, @p257, @p258)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p259, @p260, @p261, @p262, @p263, @p264, @p265, @p266, @p267)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p268, @p269, @p270, @p271, @p272, @p273, @p274, @p275, @p276)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p277, @p278, @p279, @p280, @p281, @p282, @p283, @p284, @p285)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p286, @p287, @p288, @p289, @p290, @p291, @p292, @p293, @p294, @p295)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p296, @p297, @p298, @p299, @p300, @p301, @p302, @p303, @p304)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p305, @p306, @p307, @p308, @p309, @p310, @p311, @p312, @p313)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p314, @p315, @p316, @p317, @p318, @p319, @p320, @p321, @p322)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p323, @p324, @p325, @p326, @p327, @p328, @p329, @p330, @p331)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p332, @p333, @p334, @p335, @p336, @p337, @p338, @p339, @p340, @p341)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p342, @p343, @p344, @p345, @p346, @p347, @p348, @p349, @p350)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p351, @p352, @p353, @p354, @p355, @p356, @p357, @p358, @p359)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p360, @p361, @p362, @p363, @p364, @p365, @p366, @p367, @p368)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p369, @p370, @p371, @p372, @p373, @p374, @p375, @p376, @p377, @p378)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p379, @p380, @p381, @p382, @p383, @p384, @p385, @p386, @p387)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p388, @p389, @p390, @p391, @p392, @p393, @p394, @p395, @p396)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p397, @p398, @p399, @p400, @p401, @p402, @p403, @p404, @p405)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p406, @p407, @p408, @p409, @p410, @p411, @p412, @p413, @p414, @p415)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p416, @p417, @p418, @p419, @p420, @p421, @p422, @p423, @p424)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p425, @p426, @p427, @p428, @p429, @p430, @p431, @p432, @p433)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p434, @p435, @p436, @p437, @p438, @p439, @p440, @p441, @p442)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p443, @p444, @p445, @p446, @p447, @p448, @p449, @p450, @p451, @p452)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p453, @p454, @p455, @p456, @p457, @p458, @p459, @p460, @p461)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p462, @p463, @p464, @p465, @p466, @p467, @p468, @p469, @p470)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p471, @p472, @p473, @p474, @p475, @p476, @p477, @p478, @p479)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p480, @p481, @p482, @p483, @p484, @p485, @p486, @p487, @p488, @p489)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p490, @p491, @p492, @p493, @p494, @p495, @p496, @p497, @p498)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p499, @p500, @p501, @p502, @p503, @p504, @p505, @p506, @p507)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p508, @p509, @p510, @p511, @p512, @p513, @p514, @p515, @p516)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p517, @p518, @p519, @p520, @p521, @p522, @p523, @p524, @p525, @p526)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p527, @p528, @p529, @p530, @p531, @p532, @p533, @p534, @p535)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p536, @p537, @p538, @p539, @p540, @p541, @p542, @p543, @p544)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p545, @p546, @p547, @p548, @p549, @p550, @p551, @p552, @p553)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p554, @p555, @p556, @p557, @p558, @p559, @p560, @p561, @p562, @p563)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p564, @p565, @p566, @p567, @p568, @p569, @p570, @p571, @p572)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p573, @p574, @p575, @p576, @p577, @p578, @p579, @p580, @p581)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p582, @p583, @p584, @p585, @p586, @p587, @p588, @p589, @p590)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p591, @p592, @p593, @p594, @p595, @p596, @p597, @p598, @p599)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p600, @p601, @p602, @p603, @p604, @p605, @p606, @p607, @p608, @p609)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p610, @p611, @p612, @p613, @p614, @p615, @p616, @p617, @p618)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p619, @p620, @p621, @p622, @p623, @p624, @p625, @p626, @p627)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p628, @p629, @p630, @p631, @p632, @p633, @p634, @p635, @p636)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p637, @p638, @p639, @p640, @p641, @p642, @p643, @p644, @p645, @p646)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p647, @p648, @p649, @p650, @p651, @p652, @p653, @p654, @p655)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p656, @p657, @p658, @p659, @p660, @p661, @p662, @p663, @p664)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p665, @p666, @p667, @p668, @p669, @p670, @p671, @p672, @p673)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p674, @p675, @p676, @p677, @p678, @p679, @p680, @p681, @p682, @p683)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p684, @p685, @p686, @p687, @p688, @p689, @p690, @p691, @p692)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p693, @p694, @p695, @p696, @p697, @p698, @p699, @p700, @p701)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p702, @p703, @p704, @p705, @p706, @p707, @p708, @p709, @p710)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p711, @p712, @p713, @p714, @p715, @p716, @p717, @p718, @p719, @p720)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p721, @p722, @p723, @p724, @p725, @p726, @p727, @p728, @p729)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p730, @p731, @p732, @p733, @p734, @p735, @p736, @p737, @p738)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p739, @p740, @p741, @p742, @p743, @p744, @p745, @p746, @p747)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p748, @p749, @p750, @p751, @p752, @p753, @p754, @p755, @p756, @p757)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p758, @p759, @p760, @p761, @p762, @p763, @p764, @p765, @p766)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p767, @p768, @p769, @p770, @p771, @p772, @p773, @p774, @p775)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p776, @p777, @p778, @p779, @p780, @p781, @p782, @p783, @p784)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p785, @p786, @p787, @p788, @p789, @p790, @p791, @p792, @p793, @p794)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p795, @p796, @p797, @p798, @p799, @p800, @p801, @p802, @p803)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p804, @p805, @p806, @p807, @p808, @p809, @p810, @p811, @p812)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p813, @p814, @p815, @p816, @p817, @p818, @p819, @p820, @p821)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p822, @p823, @p824, @p825, @p826, @p827, @p828, @p829, @p830, @p831)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p832, @p833, @p834, @p835, @p836, @p837, @p838, @p839, @p840)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p841, @p842, @p843, @p844, @p845, @p846, @p847, @p848, @p849)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p850, @p851, @p852, @p853, @p854, @p855, @p856, @p857, @p858)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p859, @p860, @p861, @p862, @p863, @p864, @p865, @p866, @p867)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p868, @p869, @p870, @p871, @p872, @p873, @p874, @p875, @p876, @p877)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p878, @p879, @p880, @p881, @p882, @p883, @p884, @p885, @p886)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p887, @p888, @p889, @p890, @p891, @p892, @p893, @p894, @p895)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p896, @p897, @p898, @p899, @p900, @p901, @p902, @p903, @p904)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p905, @p906, @p907, @p908, @p909, @p910, @p911, @p912, @p913, @p914)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p915, @p916, @p917, @p918, @p919, @p920, @p921, @p922, @p923)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p924, @p925, @p926, @p927, @p928, @p929, @p930, @p931, @p932)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p933, @p934, @p935, @p936, @p937, @p938, @p939, @p940, @p941)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p942, @p943, @p944, @p945, @p946, @p947, @p948, @p949, @p950, @p951)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p952, @p953, @p954, @p955, @p956, @p957, @p958, @p959, @p960)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p961, @p962, @p963, @p964, @p965, @p966, @p967, @p968, @p969)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p970, @p971, @p972, @p973, @p974, @p975, @p976, @p977, @p978)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p979, @p980, @p981, @p982, @p983, @p984, @p985, @p986, @p987, @p988)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p989, @p990, @p991, @p992, @p993, @p994, @p995, @p996, @p997)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p998, @p999, @p1000, @p1001, @p1002, @p1003, @p1004, @p1005, @p1006)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1007, @p1008, @p1009, @p1010, @p1011, @p1012, @p1013, @p1014, @p1015)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1016, @p1017, @p1018, @p1019, @p1020, @p1021, @p1022, @p1023, @p1024, @p1025)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1026, @p1027, @p1028, @p1029, @p1030, @p1031, @p1032, @p1033, @p1034)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1035, @p1036, @p1037, @p1038, @p1039, @p1040, @p1041, @p1042, @p1043)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1044, @p1045, @p1046, @p1047, @p1048, @p1049, @p1050, @p1051, @p1052)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1053, @p1054, @p1055, @p1056, @p1057, @p1058, @p1059, @p1060, @p1061, @p1062)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1063, @p1064, @p1065, @p1066, @p1067, @p1068, @p1069, @p1070, @p1071)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1072, @p1073, @p1074, @p1075, @p1076, @p1077, @p1078, @p1079, @p1080)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1081, @p1082, @p1083, @p1084, @p1085, @p1086, @p1087, @p1088, @p1089)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1090, @p1091, @p1092, @p1093, @p1094, @p1095, @p1096, @p1097, @p1098, @p1099)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1100, @p1101, @p1102, @p1103, @p1104, @p1105, @p1106, @p1107, @p1108)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1109, @p1110, @p1111, @p1112, @p1113, @p1114, @p1115, @p1116, @p1117)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1118, @p1119, @p1120, @p1121, @p1122, @p1123, @p1124, @p1125, @p1126)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1127, @p1128, @p1129, @p1130, @p1131, @p1132, @p1133, @p1134, @p1135)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1136, @p1137, @p1138, @p1139, @p1140, @p1141, @p1142, @p1143, @p1144, @p1145)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1146, @p1147, @p1148, @p1149, @p1150, @p1151, @p1152, @p1153, @p1154)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1155, @p1156, @p1157, @p1158, @p1159, @p1160, @p1161, @p1162, @p1163)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1164, @p1165, @p1166, @p1167, @p1168, @p1169, @p1170, @p1171, @p1172)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1173, @p1174, @p1175, @p1176, @p1177, @p1178, @p1179, @p1180, @p1181, @p1182)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1183, @p1184, @p1185, @p1186, @p1187, @p1188, @p1189, @p1190, @p1191)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1192, @p1193, @p1194, @p1195, @p1196, @p1197, @p1198, @p1199, @p1200)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1201, @p1202, @p1203, @p1204, @p1205, @p1206, @p1207, @p1208, @p1209)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1210, @p1211, @p1212, @p1213, @p1214, @p1215, @p1216, @p1217, @p1218, @p1219)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1220, @p1221, @p1222, @p1223, @p1224, @p1225, @p1226, @p1227, @p1228)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1229, @p1230, @p1231, @p1232, @p1233, @p1234, @p1235, @p1236, @p1237)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1238, @p1239, @p1240, @p1241, @p1242, @p1243, @p1244, @p1245, @p1246)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1247, @p1248, @p1249, @p1250, @p1251, @p1252, @p1253, @p1254, @p1255, @p1256)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1257, @p1258, @p1259, @p1260, @p1261, @p1262, @p1263, @p1264, @p1265)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1266, @p1267, @p1268, @p1269, @p1270, @p1271, @p1272, @p1273, @p1274)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1275, @p1276, @p1277, @p1278, @p1279, @p1280, @p1281, @p1282, @p1283)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1284, @p1285, @p1286, @p1287, @p1288, @p1289, @p1290, @p1291, @p1292, @p1293)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1294, @p1295, @p1296, @p1297, @p1298, @p1299, @p1300, @p1301, @p1302)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1303, @p1304, @p1305, @p1306, @p1307, @p1308, @p1309, @p1310, @p1311)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1312, @p1313, @p1314, @p1315, @p1316, @p1317, @p1318, @p1319, @p1320)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1321, @p1322, @p1323, @p1324, @p1325, @p1326, @p1327, @p1328, @p1329, @p1330)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1331, @p1332, @p1333, @p1334, @p1335, @p1336, @p1337, @p1338, @p1339)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1340, @p1341, @p1342, @p1343, @p1344, @p1345, @p1346, @p1347, @p1348)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1349, @p1350, @p1351, @p1352, @p1353, @p1354, @p1355, @p1356, @p1357)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1358, @p1359, @p1360, @p1361, @p1362, @p1363, @p1364, @p1365, @p1366, @p1367)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1368, @p1369, @p1370, @p1371, @p1372, @p1373, @p1374, @p1375, @p1376)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1377, @p1378, @p1379, @p1380, @p1381, @p1382, @p1383, @p1384, @p1385)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1386, @p1387, @p1388, @p1389, @p1390, @p1391, @p1392, @p1393, @p1394)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1395, @p1396, @p1397, @p1398, @p1399, @p1400, @p1401, @p1402, @p1403)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1404, @p1405, @p1406, @p1407, @p1408, @p1409, @p1410, @p1411, @p1412, @p1413)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1414, @p1415, @p1416, @p1417, @p1418, @p1419, @p1420, @p1421, @p1422)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1423, @p1424, @p1425, @p1426, @p1427, @p1428, @p1429, @p1430, @p1431)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1432, @p1433, @p1434, @p1435, @p1436, @p1437, @p1438, @p1439, @p1440)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1441, @p1442, @p1443, @p1444, @p1445, @p1446, @p1447, @p1448, @p1449, @p1450)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1451, @p1452, @p1453, @p1454, @p1455, @p1456, @p1457, @p1458, @p1459)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1460, @p1461, @p1462, @p1463, @p1464, @p1465, @p1466, @p1467, @p1468)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1469, @p1470, @p1471, @p1472, @p1473, @p1474, @p1475, @p1476, @p1477)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1478, @p1479, @p1480, @p1481, @p1482, @p1483, @p1484, @p1485, @p1486, @p1487)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1488, @p1489, @p1490, @p1491, @p1492, @p1493, @p1494, @p1495, @p1496)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1497, @p1498, @p1499, @p1500, @p1501, @p1502, @p1503, @p1504, @p1505)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1506, @p1507, @p1508, @p1509, @p1510, @p1511, @p1512, @p1513, @p1514)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1515, @p1516, @p1517, @p1518, @p1519, @p1520, @p1521, @p1522, @p1523, @p1524)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1525, @p1526, @p1527, @p1528, @p1529, @p1530, @p1531, @p1532, @p1533)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1534, @p1535, @p1536, @p1537, @p1538, @p1539, @p1540, @p1541, @p1542)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1543, @p1544, @p1545, @p1546, @p1547, @p1548, @p1549, @p1550, @p1551)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1552, @p1553, @p1554, @p1555, @p1556, @p1557, @p1558, @p1559, @p1560, @p1561)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1562, @p1563, @p1564, @p1565, @p1566, @p1567, @p1568, @p1569, @p1570)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1571, @p1572, @p1573, @p1574, @p1575, @p1576, @p1577, @p1578, @p1579)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1580, @p1581, @p1582, @p1583, @p1584, @p1585, @p1586, @p1587, @p1588)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1589, @p1590, @p1591, @p1592, @p1593, @p1594, @p1595, @p1596, @p1597, @p1598)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1599, @p1600, @p1601, @p1602, @p1603, @p1604, @p1605, @p1606, @p1607)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1608, @p1609, @p1610, @p1611, @p1612, @p1613, @p1614, @p1615, @p1616)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1617, @p1618, @p1619, @p1620, @p1621, @p1622, @p1623, @p1624, @p1625)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1626, @p1627, @p1628, @p1629, @p1630, @p1631, @p1632, @p1633, @p1634, @p1635)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1636, @p1637, @p1638, @p1639, @p1640, @p1641, @p1642, @p1643, @p1644)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1645, @p1646, @p1647, @p1648, @p1649, @p1650, @p1651, @p1652, @p1653)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1654, @p1655, @p1656, @p1657, @p1658, @p1659, @p1660, @p1661, @p1662)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1663, @p1664, @p1665, @p1666, @p1667, @p1668, @p1669, @p1670, @p1671)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1672, @p1673, @p1674, @p1675, @p1676, @p1677, @p1678, @p1679, @p1680, @p1681)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1682, @p1683, @p1684, @p1685, @p1686, @p1687, @p1688, @p1689, @p1690)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1691, @p1692, @p1693, @p1694, @p1695, @p1696, @p1697, @p1698, @p1699)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1700, @p1701, @p1702, @p1703, @p1704, @p1705, @p1706, @p1707, @p1708)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1709, @p1710, @p1711, @p1712, @p1713, @p1714, @p1715, @p1716, @p1717, @p1718)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1719, @p1720, @p1721, @p1722, @p1723, @p1724, @p1725, @p1726, @p1727)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1728, @p1729, @p1730, @p1731, @p1732, @p1733, @p1734, @p1735, @p1736)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1737, @p1738, @p1739, @p1740, @p1741, @p1742, @p1743, @p1744, @p1745)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1746, @p1747, @p1748, @p1749, @p1750, @p1751, @p1752, @p1753, @p1754, @p1755)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1756, @p1757, @p1758, @p1759, @p1760, @p1761, @p1762, @p1763, @p1764)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1765, @p1766, @p1767, @p1768, @p1769, @p1770, @p1771, @p1772, @p1773)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1774, @p1775, @p1776, @p1777, @p1778, @p1779, @p1780, @p1781, @p1782)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1783, @p1784, @p1785, @p1786, @p1787, @p1788, @p1789, @p1790, @p1791, @p1792)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1793, @p1794, @p1795, @p1796, @p1797, @p1798, @p1799, @p1800, @p1801)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1802, @p1803, @p1804, @p1805, @p1806, @p1807, @p1808, @p1809, @p1810)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1811, @p1812, @p1813, @p1814, @p1815, @p1816, @p1817, @p1818, @p1819)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1820, @p1821, @p1822, @p1823, @p1824, @p1825, @p1826, @p1827, @p1828, @p1829)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1830, @p1831, @p1832, @p1833, @p1834, @p1835, @p1836, @p1837, @p1838)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1839, @p1840, @p1841, @p1842, @p1843, @p1844, @p1845, @p1846, @p1847)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1848, @p1849, @p1850, @p1851, @p1852, @p1853, @p1854, @p1855, @p1856)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1857, @p1858, @p1859, @p1860, @p1861, @p1862, @p1863, @p1864, @p1865, @p1866)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1867, @p1868, @p1869, @p1870, @p1871, @p1872, @p1873, @p1874, @p1875)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1876, @p1877, @p1878, @p1879, @p1880, @p1881, @p1882, @p1883, @p1884)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1885, @p1886, @p1887, @p1888, @p1889, @p1890, @p1891, @p1892, @p1893)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1894, @p1895, @p1896, @p1897, @p1898, @p1899, @p1900, @p1901, @p1902, @p1903)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1904, @p1905, @p1906, @p1907, @p1908, @p1909, @p1910, @p1911, @p1912)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1913, @p1914, @p1915, @p1916, @p1917, @p1918, @p1919, @p1920, @p1921)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1922, @p1923, @p1924, @p1925, @p1926, @p1927, @p1928, @p1929, @p1930)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1931, @p1932, @p1933, @p1934, @p1935, @p1936, @p1937, @p1938, @p1939)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1940, @p1941, @p1942, @p1943, @p1944, @p1945, @p1946, @p1947, @p1948, @p1949)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1950, @p1951, @p1952, @p1953, @p1954, @p1955, @p1956, @p1957, @p1958)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1959, @p1960, @p1961, @p1962, @p1963, @p1964, @p1965, @p1966, @p1967)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1968, @p1969, @p1970, @p1971, @p1972, @p1973, @p1974, @p1975, @p1976)
+RETURNING assignment_id, allow_resubmission;
+INSERT INTO assignments (allow_resubmission, class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1977, @p1978, @p1979, @p1980, @p1981, @p1982, @p1983, @p1984, @p1985, @p1986)
+RETURNING assignment_id;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, status, title, updated_at)
+VALUES (@p1987, @p1988, @p1989, @p1990, @p1991, @p1992, @p1993, @p1994, @p1995)
+RETURNING assignment_id, allow_resubmission;
+2026-08-12 13:17:15.446 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'AssignmentManagement.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=Unspecified to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options, IDbTypeResolver dbTypeResolver)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(ReloadableState reloadableState, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> System.ArgumentException: Cannot write DateTime with Kind=Unspecified to PostgreSQL type 'timestamp with time zone', only UTC is supported. Note that it's not possible to mix DateTimes with different Kinds in an array, range, or multirange. (Parameter 'value')
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(DateTime value, Nullable`1 expectedPgTypeId, Boolean validateOnly)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver.<>c.<CreateResolver>b__0_0(DateTimeConverterResolver`1 resolver, DateTime value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.Converters.DateTimeConverterResolver`1.Get(T value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgConverterResolver`1.GetAsObjectInternal(PgTypeInfo typeInfo, Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgResolverTypeInfo.GetResolutionAsObject(Object value, Nullable`1 expectedPgTypeId)
+   at Npgsql.Internal.PgTypeInfo.GetObjectResolution(Object value)
+   at Npgsql.NpgsqlParameter.ResolveConverter(PgTypeInfo typeInfo)
+   at Npgsql.NpgsqlParameter.ResolveTypeInfo(PgSerializerOptions options, IDbTypeResolver dbTypeResolver)
+   at Npgsql.NpgsqlParameterCollection.ProcessParameters(ReloadableState reloadableState, Boolean validateValues, CommandType commandType)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-08-12 13:18:33.200 +06:00 [ERR] [Microsoft.Extensions.Hosting.Internal.Host] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.DefaultAddressStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-08-12 13:19:12.064 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-12 13:19:12.093 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-12 13:19:12.093 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-12 13:19:12.093 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-12 13:19:20.195 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-12 14:12:05.841 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1574 (admin@example.com) logged out
+2026-08-12 14:12:07.375 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@example.com' (length 12)
+2026-08-12 14:12:07.515 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1816 (admin@example.com) logged in successfully with role "Admin"
+2026-08-12 14:12:19.644 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1816 (admin@example.com) logged out
+2026-08-12 14:15:04.683 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@example.com' (length 12)
+2026-08-12 14:15:04.802 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1816 (admin@example.com) logged in successfully with role "Admin"
+2026-08-12 14:32:19.520 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1816 (admin@example.com) logged out
+2026-08-12 14:32:22.743 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 14:32:22.859 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1843 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:32:29.544 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1843 (student7@school.edu.bd) logged out
+2026-08-12 14:32:32.387 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student8@school.edu.bd' (length 12)
+2026-08-12 14:32:32.503 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1844 (student8@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:32:34.577 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1844 (student8@school.edu.bd) logged out
+2026-08-12 14:32:37.603 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student9@school.edu.bd' (length 12)
+2026-08-12 14:32:37.719 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1845 (student9@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:32:38.719 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1845 (student9@school.edu.bd) logged out
+2026-08-12 14:32:41.813 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student11@school.edu.bd' (length 12)
+2026-08-12 14:32:41.929 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1847 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:33:09.474 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1847 (student11@school.edu.bd) logged out
+2026-08-12 14:33:13.667 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student11@school.edu.bd' (length 12)
+2026-08-12 14:33:13.782 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1847 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:33:20.912 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1847 (student11@school.edu.bd) logged out
+2026-08-12 14:34:54.501 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 14:34:54.644 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1843 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 14:34:58.139 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher4@school.edu.bd' (length 12)
+2026-08-12 14:34:58.259 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1820 (teacher4@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 14:35:30.195 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/78532/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:35:30.212 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/78532/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:36:09.670 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79956/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:36:09.679 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79956/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:36:33.097 +06:00 [INF] [AssignmentManagement.Application.Services.SubmissionService] Submission 79956 graded with 24/25 marks by User 1820
+2026-08-12 14:36:33.121 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79956/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:36:33.128 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79956/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:40:50.311 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79918/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:40:50.316 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/79918/preview
+AssignmentManagement.Application.Common.NotFoundException: The specified submission file does not exist on disk.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 139
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 230
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in c:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-12 14:41:31.608 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1820 (teacher4@school.edu.bd) logged out
+2026-08-12 14:41:34.187 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher4@school.edu.bd' (length 12)
+2026-08-12 14:41:34.303 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1820 (teacher4@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 14:42:07.840 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1820 (teacher4@school.edu.bd) logged out
+2026-08-12 14:42:10.314 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@example.com' (length 12)
+2026-08-12 14:42:10.430 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1816 (admin@example.com) logged in successfully with role "Admin"

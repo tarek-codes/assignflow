@@ -1,0 +1,1046 @@
+"use client";
+
+import React, { useEffect, useState, useMemo } from "react";
+import {
+  Users,
+  GraduationCap,
+  BookOpen,
+  ClipboardList,
+  ArrowRight,
+  ArrowUpRight,
+  Activity,
+  Inbox,
+  ShieldCheck,
+  Search,
+  Filter,
+  Calendar,
+  ArrowUpDown,
+} from "lucide-react";
+import { dashboardService } from "@/services/dashboardService";
+import { userService, UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
+import { assignmentService } from "@/services/assignmentService";
+import { submissionService } from "@/services/submissionService";
+import { AdminDashboardData } from "@/types/dashboard";
+import { AssignmentListItem } from "@/types/assignment";
+import { SubmissionListItem } from "@/types/submission";
+import { PagedResult } from "@/types/api";
+import {
+  AssignmentsBarChart,
+  SubmissionPieChart,
+} from "./DashboardCharts";
+import { RecentActivityCard } from "./RecentActivityCard";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { Modal } from "@/components/ui/Modal";
+import { Badge } from "@/components/ui/Badge";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
+import { Button } from "@/components/ui/Button";
+import { formatDate } from "@/utils/formatters";
+import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
+import { Avatar } from "@/components/ui/Avatar";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { getCurriculumSubjectsForClass } from "@/utils/classLevelConfig";
+import { Pagination } from "@/components/common/Pagination";
+
+type ActiveModalType = "users" | "teachers" | "students" | "assignments" | "submissions" | null;
+
+export function AdminDashboardView() {
+  const { user } = useAuth();
+  const { t } = useLanguage();
+  const [data, setData] = useState<AdminDashboardData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Filter state for Assignments Created (Bar Chart) card
+  const [barClassFilter, setBarClassFilter] = useState("all");
+  const [barSubjectFilter, setBarSubjectFilter] = useState("all");
+
+  // Filter state for Submission Status (Pie Chart) card
+  const [pieClassFilter, setPieClassFilter] = useState("all");
+  const [pieSubjectFilter, setPieSubjectFilter] = useState("all");
+
+  // Raw dataset for chart filtering
+  const [rawAssignments, setRawAssignments] = useState<AssignmentListItem[]>([]);
+  const [rawSubmissions, setRawSubmissions] = useState<SubmissionListItem[]>([]);
+
+  const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalPage, setModalPage] = useState(1);
+
+  // Search, Filter & Sorting state for modals
+  const [modalSearch, setModalSearch] = useState("");
+  const [modalFilter, setModalFilter] = useState("all");
+  const [modalSortBy, setModalSortBy] = useState("default");
+  const [modalSortOrder, setModalSortOrder] = useState<"asc" | "desc">("asc");
+
+  const [usersData, setUsersData] = useState<PagedResult<UserListItem> | null>(null);
+  const [teachersData, setTeachersData] = useState<PagedResult<TeacherListItem> | null>(null);
+  const [studentsData, setStudentsData] = useState<PagedResult<StudentListItem> | null>(null);
+  const [assignmentsData, setAssignmentsData] = useState<PagedResult<AssignmentListItem> | null>(null);
+  const [submissionsData, setSubmissionsData] = useState<PagedResult<SubmissionListItem> | null>(null);
+
+  useEffect(() => {
+    dashboardService
+      .getAdminDashboard()
+      .then((res) => setData(res))
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
+
+    assignmentService.getAllAssignments().then((res) => setRawAssignments(res || [])).catch(() => {});
+    submissionService.getAllSubmissionsFull().then((res) => setRawSubmissions(res || [])).catch(() => {});
+  }, []);
+
+  // Helper for flexible subject matching (e.g. "Bangla" <-> "Bengali Literature", "Math" <-> "General Mathematics")
+  const isSameSubject = (subA: string, subB: string): boolean => {
+    if (!subA || !subB) return false;
+    if (subB === "all" || subA === "all") return true;
+    const a = subA.toLowerCase().trim();
+    const b = subB.toLowerCase().trim();
+    if (a === b) return true;
+    if (a.includes(b) || b.includes(a)) return true;
+
+    if ((a.includes("bangla") || a.includes("bengali")) && (b.includes("bangla") || b.includes("bengali"))) return true;
+    if (a.includes("english") && b.includes("english")) return true;
+    if (a.includes("math") && b.includes("math")) return true;
+    if ((a.includes("ict") || a.includes("digital") || a.includes("information")) && (b.includes("ict") || b.includes("digital") || b.includes("information"))) return true;
+    if (a.includes("physics") && b.includes("physics")) return true;
+    if (a.includes("chemistry") && b.includes("chemistry")) return true;
+    if (a.includes("biology") && b.includes("biology")) return true;
+
+    return false;
+  };
+
+  // Available subjects for Bar Chart card
+  const barAvailableSubjects = useMemo(() => {
+    if (barClassFilter !== "all") {
+      const classLevel = Number(barClassFilter);
+      const fromAssignments = rawAssignments
+        .filter((a) => Number(a.classLevel || 6) === classLevel)
+        .map((a) => a.subjectName)
+        .filter(Boolean);
+      const curriculum = getCurriculumSubjectsForClass(classLevel);
+      const set = new Set([...fromAssignments, ...curriculum]);
+      return Array.from(set).sort();
+    }
+
+    const set = new Set<string>();
+    rawAssignments.forEach((a) => {
+      if (a.subjectName) set.add(a.subjectName);
+    });
+    return Array.from(set).sort();
+  }, [barClassFilter, rawAssignments]);
+
+  // Available subjects for Pie Chart card
+  const pieAvailableSubjects = useMemo(() => {
+    const extractSub = (s: any) =>
+      s.subjectName ||
+      (s.classSubject?.includes(" - ") ? s.classSubject.split(" - ")[1]?.trim() : "") ||
+      (s.assignmentTitle?.includes(":") ? s.assignmentTitle.split(":")[0]?.trim() : "");
+
+    const extractClass = (s: any) =>
+      s.classLevel || (s.classSubject ? parseInt(s.classSubject.match(/\d+/)?.[0] || "6", 10) : 6);
+
+    if (pieClassFilter !== "all") {
+      const classLevel = Number(pieClassFilter);
+      const fromSubmissions = rawSubmissions
+        .filter((s) => Number(extractClass(s)) === classLevel)
+        .map((s) => extractSub(s))
+        .filter(Boolean);
+      const curriculum = getCurriculumSubjectsForClass(classLevel);
+      const set = new Set([...fromSubmissions, ...curriculum]);
+      return Array.from(set).sort();
+    }
+
+    const set = new Set<string>();
+    rawSubmissions.forEach((s) => {
+      const sub = extractSub(s);
+      if (sub) set.add(sub);
+    });
+    return Array.from(set).sort();
+  }, [pieClassFilter, rawSubmissions]);
+
+  // Dynamic monthly assignments data for Bar Chart
+  const filteredMonthlyAssignments = useMemo(() => {
+    if (barClassFilter === "all" && barSubjectFilter === "all") {
+      return data?.statistics?.assignmentsCreatedPerMonth || {
+        "Jan 2026": 4, "Feb 2026": 8, "Mar 2026": 28,
+        "Apr 2026": 32, "May 2026": 18, "Jun 2026": 20,
+      };
+    }
+
+    const monthlyCounts: Record<string, number> = {};
+
+    rawAssignments.forEach((a) => {
+      const cLevel = a.classLevel || 6;
+      const subName = a.subjectName || "";
+
+      const matchClass = barClassFilter === "all" || Number(cLevel) === Number(barClassFilter);
+      const matchSubject = isSameSubject(subName, barSubjectFilter);
+
+      if (matchClass && matchSubject) {
+        const date = new Date(a.createdAtUtc || a.deadlineUtc);
+        const monthKey = date.toLocaleString("en-US", { month: "short" }) + " " + date.getFullYear();
+        monthlyCounts[monthKey] = (monthlyCounts[monthKey] || 0) + 1;
+      }
+    });
+
+    return monthlyCounts;
+  }, [barClassFilter, barSubjectFilter, rawAssignments, data?.statistics?.assignmentsCreatedPerMonth]);
+
+  // Dynamic submission status distribution for Pie Chart
+  const filteredSubmissionsByStatus = useMemo(() => {
+    if (pieClassFilter === "all" && pieSubjectFilter === "all") {
+      return data?.statistics?.submissionsByStatus || {};
+    }
+
+    const statusCounts: Record<string, number> = {
+      Submitted: 0,
+      Late: 0,
+      NotSubmitted: 0,
+      Graded: 0,
+    };
+
+    rawSubmissions.forEach((s) => {
+      const cLevel =
+        (s as any).classLevel || ((s as any).classSubject ? parseInt((s as any).classSubject.match(/\d+/)?.[0] || "6", 10) : 6);
+      const subName =
+        (s as any).subjectName ||
+        ((s as any).classSubject?.includes(" - ") ? (s as any).classSubject.split(" - ")[1]?.trim() : "") ||
+        ((s as any).assignmentTitle?.includes(":") ? (s as any).assignmentTitle.split(":")[0]?.trim() : "");
+
+      const matchClass = pieClassFilter === "all" || Number(cLevel) === Number(pieClassFilter);
+      const matchSubject = isSameSubject(subName, pieSubjectFilter);
+
+      if (matchClass && matchSubject) {
+        const statusStr = String(s.status || "Submitted");
+        if (statusStr === "Graded") statusCounts["Graded"] += 1;
+        else if (statusStr === "Late") statusCounts["Late"] += 1;
+        else if (statusStr === "Missing" || statusStr === "NotSubmitted") statusCounts["NotSubmitted"] += 1;
+        else statusCounts["Submitted"] += 1;
+      }
+    });
+
+    return statusCounts;
+  }, [pieClassFilter, pieSubjectFilter, rawSubmissions, data?.statistics?.submissionsByStatus]);
+
+  const PAGE_SIZE = 10;
+
+  const fetchModalData = (type: ActiveModalType) => {
+    if (!type) return;
+    setModalLoading(true);
+
+    const done = () => setModalLoading(false);
+    const fail = () => {};
+
+    if (type === "users") {
+      userService.getAllUsers().then((items) => {
+        setUsersData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
+      }).catch(fail).finally(done);
+    } else if (type === "teachers") {
+      userService.getAllTeachers().then((items) => {
+        setTeachersData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
+      }).catch(fail).finally(done);
+    } else if (type === "students") {
+      userService.getAllStudents().then((items) => {
+        setStudentsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
+      }).catch(fail).finally(done);
+    } else if (type === "assignments") {
+      assignmentService.getAllAssignments().then((items) => {
+        setAssignmentsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
+      }).catch(fail).finally(done);
+    } else if (type === "submissions") {
+      submissionService.getAllSubmissionsFull().then((items) => {
+        setSubmissionsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
+      }).catch(fail).finally(done);
+    }
+  };
+
+  const openModal = (type: ActiveModalType) => {
+    setActiveModal(type);
+    setModalPage(1);
+    setModalSearch("");
+    setModalFilter("all");
+    setModalSortBy("default");
+    setModalSortOrder("asc");
+    fetchModalData(type);
+  };
+
+  // Reset to page 1 whenever search, filter, or sorting changes
+  useEffect(() => {
+    setModalPage(1);
+  }, [modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  const handlePageChange = (p: number) => {
+    setModalPage(p);
+  };
+
+  // Filtered & Sorted Users
+  const filteredUsers = useMemo(() => {
+    if (!usersData?.items) return [];
+    let items = [...usersData.items].filter((u) => {
+      const q = modalSearch.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        (u.firstName && u.firstName.toLowerCase().includes(q)) ||
+        (u.lastName && u.lastName.toLowerCase().includes(q)) ||
+        (u.email && u.email.toLowerCase().includes(q));
+
+      const roleLower = (u.role || "").toLowerCase();
+      const matchesFilter =
+        modalFilter === "all" ||
+        (modalFilter === "admin" && roleLower === "admin") ||
+        (modalFilter === "teacher" && roleLower === "teacher") ||
+        (modalFilter === "student" && roleLower === "student") ||
+        (modalFilter === "active" && u.isActive) ||
+        (modalFilter === "inactive" && !u.isActive);
+
+      return matchesSearch && matchesFilter;
+    });
+
+    if (modalSortBy === "name") {
+      items.sort((a, b) => `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`));
+    } else if (modalSortBy === "email") {
+      items.sort((a, b) => a.email.localeCompare(b.email));
+    } else if (modalSortBy === "role") {
+      items.sort((a, b) => a.role.localeCompare(b.role));
+    }
+
+    if (modalSortOrder === "desc") items.reverse();
+    return items;
+  }, [usersData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  // Filtered & Sorted Teachers
+  const filteredTeachers = useMemo(() => {
+    if (!teachersData?.items) return [];
+    let items = [...teachersData.items].filter((t) => {
+      const q = modalSearch.toLowerCase().trim();
+      const name = t.fullName || `${t.firstName || ""} ${t.lastName || ""}`.trim();
+      const matchesSearch =
+        !q ||
+        name.toLowerCase().includes(q) ||
+        (t.email && t.email.toLowerCase().includes(q)) ||
+        (t.designation && t.designation.toLowerCase().includes(q));
+
+      const matchesFilter =
+        modalFilter === "all" ||
+        (modalFilter === "male" && (t.gender || "Male").toLowerCase() === "male") ||
+        (modalFilter === "female" && (t.gender || "").toLowerCase() === "female") ||
+        (t.taughtSubjects && t.taughtSubjects.some((sub) => sub.toLowerCase().includes(modalFilter.toLowerCase()))) ||
+        (t.designation && t.designation.toLowerCase().includes(modalFilter.toLowerCase()));
+
+      return matchesSearch && matchesFilter;
+    });
+
+    if (modalSortBy === "name") {
+      items.sort((a, b) => (a.fullName || `${a.firstName} ${a.lastName}`).localeCompare(b.fullName || `${b.firstName} ${b.lastName}`));
+    } else if (modalSortBy === "email") {
+      items.sort((a, b) => a.email.localeCompare(b.email));
+    } else if (modalSortBy === "designation") {
+      items.sort((a, b) => (a.designation || "").localeCompare(b.designation || ""));
+    }
+
+    if (modalSortOrder === "desc") items.reverse();
+    return items;
+  }, [teachersData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  // Filtered & Sorted Students
+  const filteredStudents = useMemo(() => {
+    if (!studentsData?.items) return [];
+    let items = [...studentsData.items].filter((s) => {
+      const q = modalSearch.toLowerCase().trim();
+      const name = s.fullName || `${s.firstName || ""} ${s.lastName || ""}`.trim();
+      const matchesSearch =
+        !q ||
+        name.toLowerCase().includes(q) ||
+        (s.email && s.email.toLowerCase().includes(q)) ||
+        (s.studentNumber && s.studentNumber.toLowerCase().includes(q));
+
+      const matchesFilter =
+        modalFilter === "all" ||
+        (modalFilter === "male" && (s.gender || "Male").toLowerCase() === "male") ||
+        (modalFilter === "female" && (s.gender || "").toLowerCase() === "female") ||
+        (modalFilter.startsWith("class_") && s.classLevel === parseInt(modalFilter.replace("class_", "")));
+
+      return matchesSearch && matchesFilter;
+    });
+
+    if (modalSortBy === "name") {
+      items.sort((a, b) => (a.fullName || `${a.firstName} ${a.lastName}`).localeCompare(b.fullName || `${b.firstName} ${b.lastName}`));
+    } else if (modalSortBy === "email") {
+      items.sort((a, b) => a.email.localeCompare(b.email));
+    } else if (modalSortBy === "class") {
+      items.sort((a, b) => (a.classLevel || 0) - (b.classLevel || 0));
+    } else if (modalSortBy === "studentNumber") {
+      items.sort((a, b) => (a.studentNumber || "").localeCompare(b.studentNumber || ""));
+    }
+
+    if (modalSortOrder === "desc") items.reverse();
+    return items;
+  }, [studentsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  // Filtered & Sorted Assignments
+  const filteredAssignments = useMemo(() => {
+    if (!assignmentsData?.items) return [];
+    let items = [...assignmentsData.items].filter((a) => {
+      const q = modalSearch.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        a.title.toLowerCase().includes(q) ||
+        (a.subjectName && a.subjectName.toLowerCase().includes(q)) ||
+        (a.teacherName && a.teacherName.toLowerCase().includes(q));
+
+      const statusLower = (a.status || "").toLowerCase();
+      const matchesFilter =
+        modalFilter === "all" ||
+        (modalFilter === "published" && statusLower === "published") ||
+        (modalFilter === "draft" && statusLower === "draft") ||
+        (modalFilter.startsWith("class_") && a.classLevel === parseInt(modalFilter.replace("class_", "")));
+
+      return matchesSearch && matchesFilter;
+    });
+
+    if (modalSortBy === "title") {
+      items.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (modalSortBy === "date") {
+      items.sort((a, b) => new Date(b.createdAtUtc || 0).getTime() - new Date(a.createdAtUtc || 0).getTime());
+    } else if (modalSortBy === "class") {
+      items.sort((a, b) => a.classLevel - b.classLevel);
+    } else if (modalSortBy === "marks") {
+      items.sort((a, b) => b.maxMarks - a.maxMarks);
+    }
+
+    if (modalSortOrder === "desc") items.reverse();
+    return items;
+  }, [assignmentsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  // Filtered & Sorted Submissions
+  const filteredSubmissions = useMemo(() => {
+    if (!submissionsData?.items) return [];
+    let items = [...submissionsData.items].filter((sub) => {
+      const q = modalSearch.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        (sub.assignmentTitle && sub.assignmentTitle.toLowerCase().includes(q)) ||
+        (sub.studentName && sub.studentName.toLowerCase().includes(q)) ||
+        (sub.studentNumber && sub.studentNumber.toLowerCase().includes(q)) ||
+        (sub.classSubject && sub.classSubject.toLowerCase().includes(q));
+
+      const statusLower = (sub.status || "").toLowerCase();
+      const matchesFilter =
+        modalFilter === "all" ||
+        (modalFilter === "graded" && statusLower === "graded") ||
+        (modalFilter === "submitted" && (statusLower === "submitted" || statusLower === "underreview")) ||
+        (modalFilter === "late" && statusLower === "late") ||
+        ((modalFilter === "missing" || modalFilter === "notsubmitted") && (statusLower === "missing" || statusLower === "notsubmitted"));
+
+      return matchesSearch && matchesFilter;
+    });
+
+    if (modalSortBy === "title") {
+      items.sort((a, b) => a.assignmentTitle.localeCompare(b.assignmentTitle));
+    } else if (modalSortBy === "date") {
+      items.sort((a, b) => new Date(b.submittedAtUtc || 0).getTime() - new Date(a.submittedAtUtc || 0).getTime());
+    } else if (modalSortBy === "student") {
+      items.sort((a, b) => (a.studentName || "").localeCompare(b.studentName || ""));
+    } else if (modalSortBy === "grade") {
+      items.sort((a, b) => (b.marks || 0) - (a.marks || 0));
+    }
+
+    if (modalSortOrder === "desc") items.reverse();
+    return items;
+  }, [submissionsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+
+  // Get active filtered list
+  const activeFilteredList = useMemo(() => {
+    if (activeModal === "users") return filteredUsers;
+    if (activeModal === "teachers") return filteredTeachers;
+    if (activeModal === "students") return filteredStudents;
+    if (activeModal === "assignments") return filteredAssignments;
+    if (activeModal === "submissions") return filteredSubmissions;
+    return [];
+  }, [activeModal, filteredUsers, filteredTeachers, filteredStudents, filteredAssignments, filteredSubmissions]);
+
+  // Calculate dynamic pagination based strictly on filtered items
+  const totalPages = Math.max(1, Math.ceil(activeFilteredList.length / PAGE_SIZE));
+  const currentPage = Math.min(modalPage, totalPages);
+
+  // Slice paginated items for current page (exactly 10 records per page)
+  const paginatedUsers = useMemo(() => filteredUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredUsers, currentPage]);
+  const paginatedTeachers = useMemo(() => filteredTeachers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredTeachers, currentPage]);
+  const paginatedStudents = useMemo(() => filteredStudents.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredStudents, currentPage]);
+  const paginatedAssignments = useMemo(() => filteredAssignments.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredAssignments, currentPage]);
+  const paginatedSubmissions = useMemo(() => filteredSubmissions.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredSubmissions, currentPage]);
+
+  const modalTitle: Record<string, string> = {
+    users: "Total Registered Users",
+    teachers: "Assigned Teachers Directory",
+    students: "Enrolled Students Directory",
+    assignments: "All Assignments Repository",
+    submissions: "System-Wide Submissions Overview",
+  };
+
+  if (isLoading) return <LoadingSpinner fullScreen label="Loading admin analytics..." />;
+  if (!data) return <p className="text-sm text-slate-500">Failed to load admin dashboard.</p>;
+
+
+  const monthlyAssignments = data.statistics.assignmentsCreatedPerMonth || {
+    "Jan 2026": 4, "Feb 2026": 8, "Mar 2026": 28,
+    "Apr 2026": 32, "May 2026": 18, "Jun 2026": 20,
+    "Jul 2026": 25, "Aug 2026": 30,
+  };
+
+  const stats = [
+    { label: t("lblTotalUsers"), value: data.totalUsers, key: "users" as const, icon: Users, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", textColor: "text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300", actionMsg: "View Users" },
+    { label: t("navTeachers"), value: data.totalTeachers, key: "teachers" as const, icon: GraduationCap, color: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300", textColor: "text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300", actionMsg: "View Teachers" },
+    { label: t("navStudents"), value: data.totalStudents, key: "students" as const, icon: BookOpen, color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50 dark:text-cyan-300", textColor: "text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-300", actionMsg: "View Students" },
+    { label: t("lblTotalAssignments"), value: data.totalAssignments, key: "assignments" as const, icon: ClipboardList, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", textColor: "text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300", actionMsg: "View Assignments" },
+    { label: t("lblTotalSubmissions"), value: data.totalSubmissions, key: "submissions" as const, icon: Inbox, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", textColor: "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300", actionMsg: "View Submissions" },
+  ];
+
+  const firstName = user?.fullName?.split(" ")[0] || "Admin";
+
+  const greeting = (() => {
+    const hour = new Date().getHours();
+    if (hour >= 4 && hour < 12) return "Good Morning";
+    if (hour >= 12 && hour < 17) return "Good Afternoon";
+    return "Good Evening";
+  })();
+
+  const formattedDateTime = (() => {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    const timeStr = now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return `${dateStr} • ${timeStr}`;
+  })();
+
+  return (
+    <div className="pt-3 sm:pt-4 space-y-4">
+      {/* ─── HEADER ─── */}
+      <section className="relative overflow-hidden rounded-2xl bg-blue-600 px-6 py-5 text-white shadow-lg shadow-blue-600/10 sm:px-7 sm:py-6">
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+              {greeting}, {firstName}
+            </h1>
+            <div className="mt-1.5 flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-100">
+              <Calendar className="h-4 w-4 text-blue-200 shrink-0" />
+              <span>{formattedDateTime}</span>
+            </div>
+            <p className="mt-2 text-xs sm:text-sm font-medium text-blue-100/90 max-w-xl">
+              A real-time overview of academic performance, system activity, and user analytics.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3.5 rounded-2xl bg-white/10 dark:bg-slate-900/60 border border-white/25 dark:border-slate-800 px-4.5 py-2.5 backdrop-blur-xl self-center shadow-lg shadow-black/5 shrink-0 transition-all hover:bg-white/15">
+            <div className="flex items-center justify-center ring-2 ring-white/50 dark:ring-blue-400/50 rounded-full shadow-sm">
+              <Avatar name={user?.fullName || "Admin"} size="sm" />
+            </div>
+            <div className="flex flex-col justify-center text-left">
+              <span className="text-sm font-extrabold text-white tracking-tight leading-none">
+                {user?.fullName || "Admin"}
+              </span>
+              <span className="text-[11px] font-semibold text-blue-100 dark:text-blue-300 capitalize mt-1">
+                {user?.role || "Admin"}
+              </span>
+            </div>
+            <div className="h-7 w-px bg-white/20 dark:bg-slate-700/80 mx-0.5 self-center" />
+            <div className="flex items-center justify-center p-1.5 rounded-xl bg-white/15 dark:bg-slate-800/80 border border-white/20 dark:border-slate-700 hover:bg-white/25 transition-all">
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── STATS ─── */}
+      <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-5">
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <button
+              key={stat.key}
+              onClick={() => openModal(stat.key)}
+              className="group rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-4.5 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus:outline-none dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className={`flex h-9.5 w-9.5 items-center justify-center rounded-xl ${stat.color}`}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className={`inline-flex items-center gap-1 text-[11px] font-extrabold ${stat.textColor} bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 px-2 py-1 rounded-lg transition-all shadow-2xs group-hover:border-current`}>
+                  <span>{stat.actionMsg}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                </div>
+              </div>
+              <p className="mt-3 text-2xl font-extrabold tracking-tight text-slate-950 tabular-nums dark:text-white sm:text-3xl">{stat.value}</p>
+              <p className="mt-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400">{stat.label}</p>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ─── DASHBOARD GRID ─── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div className="lg:col-span-7">
+          <AssignmentsBarChart
+            data={filteredMonthlyAssignments}
+            classFilter={barClassFilter}
+            onClassChange={(cls) => {
+              setBarClassFilter(cls);
+              setBarSubjectFilter("all");
+            }}
+            subjectFilter={barSubjectFilter}
+            onSubjectChange={(subj) => setBarSubjectFilter(subj)}
+            availableSubjects={barAvailableSubjects}
+          />
+        </div>
+        <div className="lg:col-span-5">
+          <SubmissionPieChart
+            data={filteredSubmissionsByStatus}
+            classFilter={pieClassFilter}
+            onClassChange={(cls) => {
+              setPieClassFilter(cls);
+              setPieSubjectFilter("all");
+            }}
+            subjectFilter={pieSubjectFilter}
+            onSubjectChange={(subj) => setPieSubjectFilter(subj)}
+            availableSubjects={pieAvailableSubjects}
+          />
+        </div>
+        <div className="lg:col-span-12">
+          <RecentActivityCard activities={data.latestActivities} />
+        </div>
+      </div>
+
+      {/* ─── DETAIL MODAL ─── */}
+      <Modal
+        isOpen={activeModal !== null}
+        onClose={() => setActiveModal(null)}
+        title={activeModal ? modalTitle[activeModal] : ""}
+        maxWidth="7xl"
+        headerControls={
+          <div className="flex items-center gap-2.5 w-full">
+            {/* Search Input */}
+            <div className="relative flex-1">
+              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+              <input
+                type="text"
+                value={modalSearch}
+                onChange={(e) => setModalSearch(e.target.value)}
+                placeholder={`Search ${activeModal || "items"} by name, title, email...`}
+                className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-blue-500/30 focus:bg-white dark:focus:bg-slate-900 transition-all font-medium"
+              />
+            </div>
+
+            {/* Filter Dropdown */}
+            <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
+              <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+              <select
+                value={modalFilter}
+                onChange={(e) => setModalFilter(e.target.value)}
+                className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+              >
+                <option value="all">Filter: All</option>
+
+                {/* USERS FILTERS */}
+                {activeModal === "users" && (
+                  <optgroup label="User Roles & Status">
+                    <option value="admin">Admin Role</option>
+                    <option value="teacher">Teacher Role</option>
+                    <option value="student">Student Role</option>
+                    <option value="active">Active Only</option>
+                    <option value="inactive">Inactive Only</option>
+                  </optgroup>
+                )}
+
+                {/* TEACHERS FILTERS */}
+                {activeModal === "teachers" && (
+                  <>
+                    <optgroup label="Gender">
+                      <option value="male">Male (♂)</option>
+                      <option value="female">Female (♀)</option>
+                    </optgroup>
+                    <optgroup label="Taught Subjects">
+                      <option value="Physics">Physics Teachers</option>
+                      <option value="Chemistry">Chemistry Teachers</option>
+                      <option value="Higher Mathematics">Higher Math Teachers</option>
+                      <option value="Biology">Biology Teachers</option>
+                      <option value="English">English Teachers</option>
+                      <option value="General Studies">General Studies</option>
+                    </optgroup>
+                  </>
+                )}
+
+                {/* STUDENTS FILTERS */}
+                {activeModal === "students" && (
+                  <>
+                    <optgroup label="Gender">
+                      <option value="male">Male (♂)</option>
+                      <option value="female">Female (♀)</option>
+                    </optgroup>
+                    <optgroup label="Class Level">
+                      <option value="class_6">Class 6</option>
+                      <option value="class_7">Class 7</option>
+                      <option value="class_8">Class 8</option>
+                      <option value="class_9">Class 9</option>
+                      <option value="class_10">Class 10</option>
+                      <option value="class_11">Class 11</option>
+                      <option value="class_12">Class 12</option>
+                    </optgroup>
+                  </>
+                )}
+
+                {/* ASSIGNMENTS FILTERS */}
+                {activeModal === "assignments" && (
+                  <>
+                    <optgroup label="Publishing Status">
+                      <option value="published">Published Only</option>
+                      <option value="draft">Draft Only</option>
+                    </optgroup>
+                    <optgroup label="Class Level">
+                      <option value="class_6">Class 6</option>
+                      <option value="class_7">Class 7</option>
+                      <option value="class_8">Class 8</option>
+                      <option value="class_9">Class 9</option>
+                      <option value="class_10">Class 10</option>
+                      <option value="class_11">Class 11</option>
+                      <option value="class_12">Class 12</option>
+                    </optgroup>
+                  </>
+                )}
+
+                {/* SUBMISSIONS FILTERS */}
+                {activeModal === "submissions" && (
+                  <optgroup label="Submission Status">
+                    <option value="graded">Graded</option>
+                    <option value="submitted">Pending Review</option>
+                    <option value="late">Late Submissions</option>
+                    <option value="missing">Missing / Overdue</option>
+                  </optgroup>
+                )}
+              </select>
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-1.5 shrink-0 bg-violet-50/60 dark:bg-violet-950/30 border border-violet-300 dark:border-violet-700 rounded-xl px-2.5 py-1">
+              <ArrowUpDown className="w-3.5 h-3.5 text-violet-500 shrink-0" />
+              <select
+                value={modalSortBy}
+                onChange={(e) => setModalSortBy(e.target.value)}
+                className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+              >
+                <option value="default">Sort: Default</option>
+                {activeModal === "users" && (
+                  <>
+                    <option value="name">Name (A-Z)</option>
+                    <option value="email">Email</option>
+                    <option value="role">Role</option>
+                  </>
+                )}
+                {activeModal === "teachers" && (
+                  <>
+                    <option value="name">Name (A-Z)</option>
+                    <option value="email">Email</option>
+                    <option value="designation">Designation</option>
+                  </>
+                )}
+                {activeModal === "students" && (
+                  <>
+                    <option value="name">Name (A-Z)</option>
+                    <option value="email">Email</option>
+                    <option value="class">Class Level</option>
+                    <option value="studentNumber">Student Number</option>
+                  </>
+                )}
+                {activeModal === "assignments" && (
+                  <>
+                    <option value="title">Title (A-Z)</option>
+                    <option value="date">Date Created</option>
+                    <option value="class">Class Level</option>
+                    <option value="marks">Max Marks</option>
+                  </>
+                )}
+                {activeModal === "submissions" && (
+                  <>
+                    <option value="title">Assignment Title</option>
+                    <option value="date">Submission Date</option>
+                    <option value="student">Student Name</option>
+                    <option value="grade">Grade / Score</option>
+                  </>
+                )}
+              </select>
+
+              <button
+                onClick={() => setModalSortOrder(modalSortOrder === "asc" ? "desc" : "asc")}
+                title={`Sort ${modalSortOrder === "asc" ? "Descending" : "Ascending"}`}
+                className="ml-1 p-0.5 rounded text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white"
+              >
+                {modalSortOrder === "asc" ? "↑" : "↓"}
+              </button>
+            </div>
+          </div>
+        }
+      >
+        {modalLoading ? (
+          <LoadingSpinner label="Loading…" />
+        ) : (
+          <div className="space-y-4">
+
+            {activeModal === "users" && usersData && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredUsers.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="text-center text-xs text-slate-400 py-6">
+                        No users match your search and filter criteria.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedUsers.map((u) => (
+                      <TableRow key={u.id}>
+                        <TableCell className="font-medium">{u.firstName} {u.lastName}</TableCell>
+                        <TableCell className="text-slate-500 dark:text-slate-400">{u.email}</TableCell>
+                        <TableCell>
+                          <Badge variant={u.role === "Admin" ? "primary" : u.role === "Teacher" ? "info" : "default"} size="sm">{u.role}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={u.isActive ? "success" : "default"} size="sm">
+                            {u.isActive ? "Active" : "Inactive"}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            )}
+
+            {activeModal === "teachers" && teachersData && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Gender</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Designation</TableHead>
+                    <TableHead>Subjects</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredTeachers.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center text-xs text-slate-400 py-6">
+                        No teachers match your search and filter criteria.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedTeachers.map((t) => {
+                      const name = t.fullName || `${t.firstName || ""} ${t.lastName || ""}`.trim() || "Teacher";
+                      const isFemale = (t.gender || "").toLowerCase() === "female";
+                      return (
+                        <TableRow key={t.id}>
+                          <TableCell className="font-medium">{name}</TableCell>
+                          <TableCell>
+                            <span
+                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold ${
+                                isFemale
+                                  ? "bg-pink-50 text-pink-700 dark:bg-pink-950/60 dark:text-pink-300 border border-pink-200 dark:border-pink-800"
+                                  : "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                              }`}
+                            >
+                              <span>{isFemale ? "♀" : "♂"}</span>
+                              <span>{isFemale ? "Female" : "Male"}</span>
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{t.email}</TableCell>
+                          <TableCell>{t.designation || "Teacher"}</TableCell>
+                          <TableCell>
+                            <div className="flex flex-wrap gap-1">
+                              {(t.taughtSubjects && t.taughtSubjects.length > 0 ? t.taughtSubjects : ["General Studies"]).map((sub, i) => (
+                                <Badge key={i} variant="default" size="sm">{sub}</Badge>
+                              ))}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  )}
+                </TableBody>
+              </Table>
+            )}
+
+            {activeModal === "students" && studentsData && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Student #</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Gender</TableHead>
+                    <TableHead>Class</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Phone Number</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredStudents.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-xs text-slate-400 py-6">
+                        No students match your search and filter criteria.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedStudents.map((s) => {
+                      const name = s.fullName || `${s.firstName || ""} ${s.lastName || ""}`.trim() || "Student";
+                      const isFemale = (s.gender || "").toLowerCase() === "female";
+                      return (
+                        <TableRow key={s.id}>
+                          <TableCell className="font-mono text-xs text-slate-500">{s.studentNumber}</TableCell>
+                          <TableCell className="font-medium">{name}</TableCell>
+                          <TableCell>
+                            <span
+                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold ${
+                                isFemale
+                                  ? "bg-pink-50 text-pink-700 dark:bg-pink-950/60 dark:text-pink-300 border border-pink-200 dark:border-pink-800"
+                                  : "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                              }`}
+                            >
+                              <span>{isFemale ? "♀" : "♂"}</span>
+                              <span>{isFemale ? "Female" : "Male"}</span>
+                            </span>
+                          </TableCell>
+                          <TableCell>Class {s.classLevel || 9}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{s.email}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs">{s.phone || "—"}</TableCell>
+                        </TableRow>
+                      );
+                    })
+                  )}
+                </TableBody>
+              </Table>
+            )}
+
+            {activeModal === "assignments" && assignmentsData && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Class · Subject</TableHead>
+                    <TableHead>Created By</TableHead>
+                    <TableHead>Created</TableHead>
+                    <TableHead>Deadline</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Marks</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredAssignments.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center text-xs text-slate-400 py-6">
+                        No assignments match your search and filter criteria.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedAssignments.map((a) => (
+                      <TableRow key={a.id}>
+                        <TableCell className="font-medium">{a.title}</TableCell>
+                        <TableCell>Class {a.classLevel} · {a.subjectName}</TableCell>
+                        <TableCell className="text-slate-500 dark:text-slate-400">{a.teacherName || "Teacher"}</TableCell>
+                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.createdAtUtc)}</TableCell>
+                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.deadlineUtc)}</TableCell>
+                        <TableCell>
+                          <Badge
+                            size="sm"
+                            variant={a.status === "Published" ? "success" : a.status === "Draft" ? "warning" : "default"}
+                          >
+                            {a.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="tabular-nums font-medium">{a.maxMarks}</TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            )}
+
+            {activeModal === "submissions" && submissionsData && (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Class · Subject</TableHead>
+                    <TableHead>Assignment</TableHead>
+                    <TableHead>Student</TableHead>
+                    <TableHead>Submitted</TableHead>
+                    <TableHead>Grade</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredSubmissions.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={6} className="text-center text-xs text-slate-400 py-6">
+                        No submissions match your search and filter criteria.
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    paginatedSubmissions.map((sub) => (
+                      <TableRow key={sub.id}>
+                        <TableCell className="text-slate-500 dark:text-slate-400">{sub.classSubject || "Class 9 · Physics"}</TableCell>
+                        <TableCell className="font-medium">{sub.assignmentTitle}</TableCell>
+                        <TableCell>{sub.studentName} <span className="text-xs text-slate-400">({sub.studentNumber})</span></TableCell>
+                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(sub.submittedAtUtc)}</TableCell>
+                        <TableCell className="tabular-nums font-medium">
+                          {sub.status === "Graded" && sub.marks !== undefined ? `${sub.marks}/${sub.maxMarks}` : `—/${sub.maxMarks}`}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            size="sm"
+                            variant={
+                              sub.status === "Graded" ? "success" :
+                              sub.status === "Late" ? "warning" : "info"
+                            }
+                          >
+                            {sub.status}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            )}
+
+            <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                {activeFilteredList.length} total items
+              </span>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                pageSize={PAGE_SIZE}
+                totalItems={activeFilteredList.length}
+              />
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
+}
+
+

@@ -1,0 +1,1236 @@
+2026-08-06 10:38:02.390 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 10:38:02.413 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 10:38:02.413 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 10:38:02.413 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 10:38:24.916 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 10:38:35.649 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 10:40:27.934 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 10:40:27.955 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 10:40:27.955 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 10:40:27.955 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 10:41:13.123 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 10:41:45.320 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 10:41:45.342 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 10:41:45.342 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 10:41:45.342 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 10:41:45.552 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 10:42:11.470 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 10:42:15.651 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 10:56:55.696 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 10:56:55.716 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 10:56:55.716 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 10:56:55.716 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 10:59:14.601 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 11:04:00.293 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/dashboard/admin
+System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at AssignmentManagement.Infrastructure.Repositories.DashboardRepository.GetAdminDashboardMetricsAsync(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Repositories\DashboardRepository.cs:line 134
+   at AssignmentManagement.Application.Services.DashboardService.GetAdminDashboardAsync(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\DashboardService.cs:line 23
+   at AssignmentManagement.Api.Controllers.DashboardsController.GetAdminDashboard(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\DashboardsController.cs:line 23
+   at lambda_method818(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 11:04:18.575 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 11:04:18.598 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 11:04:18.599 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 11:04:18.599 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 11:05:14.931 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 11:12:20.300 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/dashboard/admin
+System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at Npgsql.Internal.NpgsqlConnector.ConnectAsync(NpgsqlTimeout timeout, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|209_0(NpgsqlConnector conn, String username, SslMode sslMode, GssEncryptionMode gssEncMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|209_0(NpgsqlConnector conn, String username, SslMode sslMode, GssEncryptionMode gssEncMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at AssignmentManagement.Infrastructure.Repositories.DashboardRepository.GetAdminDashboardMetricsAsync(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Repositories\DashboardRepository.cs:line 20
+   at AssignmentManagement.Application.Services.DashboardService.GetAdminDashboardAsync(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\DashboardService.cs:line 23
+   at AssignmentManagement.Api.Controllers.DashboardsController.GetAdminDashboard(CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\DashboardsController.cs:line 23
+   at lambda_method818(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 11:18:27.816 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:18:29.409 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:19:42.525 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:19:44.671 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 11:20:00.793 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 11:20:06.258 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 11:20:48.850 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 11:20:51.241 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:27:40.330 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:27:44.521 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 11:27:49.705 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 11:27:52.008 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:42:25.874 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:42:31.674 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 11:43:46.753 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged out
+2026-08-06 11:43:49.920 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:47:01.657 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:48:20.002 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:49:24.242 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 11:49:24.267 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 11:49:24.267 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 11:49:24.268 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 11:49:46.667 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 11:50:00.104 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:50:05.225 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 11:56:33.949 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 11:56:35.654 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:01:55.257 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:01:58.660 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:02:09.152 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:02:15.457 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:06:23.874 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 12:06:23.909 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 12:06:23.909 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 12:06:23.909 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 12:07:47.139 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 12:20:08.088 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:20:09.509 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:21:04.739 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:21:10.518 +06:00 [WRN] [AssignmentManagement.Application.Services.AuthService] Failed login attempt for email teacher4@example.com
+2026-08-06 12:21:10.519 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/auth/login
+System.UnauthorizedAccessException: Invalid email or password.
+   at AssignmentManagement.Application.Services.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AuthService.cs:line 37
+   at AssignmentManagement.Api.Controllers.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AuthController.cs:line 21
+   at lambda_method1264(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 12:21:15.622 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 2 (teacher@example.com) logged in successfully with role "Teacher"
+2026-08-06 12:22:24.372 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/11
+AssignmentManagement.Application.Common.ForbiddenException: You do not have permission to view or access this submission.
+   at AssignmentManagement.Application.Services.SubmissionService.EnsureAccessPermission(Submission submission) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 269
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionByIdAsync(Int32 submissionId, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 162
+   at AssignmentManagement.Api.Controllers.SubmissionsController.GetById(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 64
+   at lambda_method1108(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 12:22:24.380 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/11
+AssignmentManagement.Application.Common.ForbiddenException: You do not have permission to view or access this submission.
+   at AssignmentManagement.Application.Services.SubmissionService.EnsureAccessPermission(Submission submission) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 269
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionByIdAsync(Int32 submissionId, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 162
+   at AssignmentManagement.Api.Controllers.SubmissionsController.GetById(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 64
+   at lambda_method1108(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 12:28:18.189 +06:00 [INF] [AssignmentManagement.Application.Services.AssignmentService] Assignment 11 'Physics Lab: Ohm's Law & Circuit Resistance Report (Class 6)' updated by Teacher User 2
+2026-08-06 12:31:25.088 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 2 (teacher@example.com) logged out
+2026-08-06 12:31:58.424 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:37:50.667 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 12:37:56.128 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 12:38:00.019 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:42:18.048 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:42:28.855 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 12:44:27.784 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 12:44:31.457 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 12:46:31.374 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 12:46:33.982 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 12:55:40.371 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 12:55:40.397 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 12:55:40.398 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 12:55:40.398 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 12:55:42.609 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 13:41:00.608 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 13:41:05.234 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 28 (student12@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:41:54.970 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 28 (student12@school.edu.bd) logged out
+2026-08-06 13:42:04.524 +06:00 [WRN] [AssignmentManagement.Application.Services.AuthService] Failed login attempt for email teacher1@school.edu.bd
+2026-08-06 13:42:04.526 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/auth/login
+System.UnauthorizedAccessException: Invalid email or password.
+   at AssignmentManagement.Application.Services.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AuthService.cs:line 37
+   at AssignmentManagement.Api.Controllers.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AuthController.cs:line 21
+   at lambda_method1001(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 13:42:09.523 +06:00 [WRN] [AssignmentManagement.Application.Services.AuthService] Failed login attempt for email teacher1@edu.bd
+2026-08-06 13:42:09.523 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/auth/login
+System.UnauthorizedAccessException: Invalid email or password.
+   at AssignmentManagement.Application.Services.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AuthService.cs:line 37
+   at AssignmentManagement.Api.Controllers.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AuthController.cs:line 21
+   at lambda_method1001(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 13:42:15.375 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:43:54.262 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 13:43:56.789 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 13:47:18.374 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 13:47:19.349 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 13:51:23.558 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 13:51:26.621 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:51:29.702 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged out
+2026-08-06 13:51:37.268 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 91 (student75@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:52:17.046 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 91 (student75@school.edu.bd) logged out
+2026-08-06 13:52:21.959 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:54:27.934 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 13:54:30.199 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 13:54:35.838 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 13:54:42.203 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 13:58:00.933 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 13:58:07.131 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 115 (student99@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:00:32.582 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 115 (student99@school.edu.bd) logged out
+2026-08-06 14:00:35.550 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:01:12.309 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:01:15.174 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:01:59.757 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 14:02:01.138 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:02:19.197 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 14:02:21.528 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:02:35.101 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:02:36.509 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:02:46.869 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:02:50.228 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:03:36.247 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 14:03:37.301 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:03:52.997 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 14:03:54.413 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:04:53.390 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 14:04:54.700 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:17:04.589 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 27 (student11@school.edu.bd) logged out
+2026-08-06 14:17:08.535 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 104 (student88@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:21:14.126 +06:00 [INF] [AssignmentManagement.Application.Services.SubmissionService] Submission 2561 uploaded for Assignment 147 by Student 88 (User 104)
+2026-08-06 14:21:39.365 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 104 (student88@school.edu.bd) logged out
+2026-08-06 14:21:42.265 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:22:05.268 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:22:07.391 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 14 (teacher13@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:22:40.100 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 14 (teacher13@school.edu.bd) logged out
+2026-08-06 14:24:27.609 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:24:40.853 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:24:43.506 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:27:14.500 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 14:27:15.662 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:27:29.162 +06:00 [INF] [AssignmentManagement.Application.Services.SubmissionService] Submission 2562 uploaded for Assignment 178 by Student 100 (User 116)
+2026-08-06 14:28:03.253 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 116 (student100@school.edu.bd) logged out
+2026-08-06 14:28:06.447 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:28:34.782 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:28:36.877 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:30:09.852 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:30:11.524 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:30:39.053 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:30:40.348 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:36:08.373 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/13
+AssignmentManagement.Application.Common.ForbiddenException: You do not have permission to view or access this submission.
+   at AssignmentManagement.Application.Services.SubmissionService.EnsureAccessPermission(Submission submission) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 269
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionByIdAsync(Int32 submissionId, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 162
+   at AssignmentManagement.Api.Controllers.SubmissionsController.GetById(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 64
+   at lambda_method1492(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:36:08.382 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/13
+AssignmentManagement.Application.Common.ForbiddenException: You do not have permission to view or access this submission.
+   at AssignmentManagement.Application.Services.SubmissionService.EnsureAccessPermission(Submission submission) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 269
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionByIdAsync(Int32 submissionId, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 162
+   at AssignmentManagement.Api.Controllers.SubmissionsController.GetById(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 64
+   at lambda_method1492(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:36:19.769 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 113
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:36:19.785 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 113
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:36:21.759 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/download
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 113
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Download(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 101
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:36:22.085 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/download
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 113
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Download(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 101
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:37:12.656 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 14:37:12.677 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 14:37:12.677 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 14:37:12.677 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 14:37:25.116 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 14:37:25.517 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:37:47.714 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:37:47.745 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:38:11.333 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:38:11.340 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:38:13.496 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:38:13.502 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:40:34.755 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (6ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?', @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime), @p19='?', @p20='?' (DbType = Int32), @p21='?' (DbType = Int32), @p22='?' (DbType = DateTime), @p23='?' (DbType = Int32), @p24='?' (DbType = DateTime), @p25='?' (DbType = DateTime), @p26='?', @p27='?', @p28='?' (DbType = Int32), @p29='?', @p30='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO subjects (subject_id, description, subject_code, subject_name)
+VALUES (@p0, @p1, @p2, @p3);
+INSERT INTO users (user_id, created_at, email, first_name, last_name, password_hash, phone, role, updated_at)
+VALUES (@p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)
+RETURNING is_active;
+INSERT INTO teachers (teacher_id, designation, user_id)
+VALUES (@p13, @p14, @p15);
+INSERT INTO classes (class_id, class_level, created_at, description, subject_id, teacher_id, updated_at)
+VALUES (@p16, @p17, @p18, @p19, @p20, @p21, @p22)
+RETURNING is_active;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, title, updated_at)
+VALUES (@p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30)
+RETURNING assignment_id, allow_resubmission, status;
+2026-08-06 14:40:34.767 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'AssignmentManagement.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-08-06 14:40:34.769 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/assignments
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at AssignmentManagement.Application.Services.AssignmentService.CreateAssignmentAsync(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AssignmentService.cs:line 74
+   at AssignmentManagement.Api.Controllers.AssignmentsController.Create(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AssignmentsController.cs:line 40
+   at lambda_method1322(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:40:40.476 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?', @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime), @p19='?', @p20='?' (DbType = Int32), @p21='?' (DbType = Int32), @p22='?' (DbType = DateTime), @p23='?' (DbType = Int32), @p24='?' (DbType = DateTime), @p25='?' (DbType = DateTime), @p26='?', @p27='?', @p28='?' (DbType = Int32), @p29='?', @p30='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO subjects (subject_id, description, subject_code, subject_name)
+VALUES (@p0, @p1, @p2, @p3);
+INSERT INTO users (user_id, created_at, email, first_name, last_name, password_hash, phone, role, updated_at)
+VALUES (@p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)
+RETURNING is_active;
+INSERT INTO teachers (teacher_id, designation, user_id)
+VALUES (@p13, @p14, @p15);
+INSERT INTO classes (class_id, class_level, created_at, description, subject_id, teacher_id, updated_at)
+VALUES (@p16, @p17, @p18, @p19, @p20, @p21, @p22)
+RETURNING is_active;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, title, updated_at)
+VALUES (@p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30)
+RETURNING assignment_id, allow_resubmission, status;
+2026-08-06 14:40:40.479 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'AssignmentManagement.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-08-06 14:40:40.481 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/assignments
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at AssignmentManagement.Application.Services.AssignmentService.CreateAssignmentAsync(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AssignmentService.cs:line 74
+   at AssignmentManagement.Api.Controllers.AssignmentsController.Create(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AssignmentsController.cs:line 40
+   at lambda_method1322(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:40:47.442 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?', @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime), @p19='?', @p20='?' (DbType = Int32), @p21='?' (DbType = Int32), @p22='?' (DbType = DateTime), @p23='?' (DbType = Int32), @p24='?' (DbType = DateTime), @p25='?' (DbType = DateTime), @p26='?', @p27='?', @p28='?' (DbType = Int32), @p29='?', @p30='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO subjects (subject_id, description, subject_code, subject_name)
+VALUES (@p0, @p1, @p2, @p3);
+INSERT INTO users (user_id, created_at, email, first_name, last_name, password_hash, phone, role, updated_at)
+VALUES (@p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)
+RETURNING is_active;
+INSERT INTO teachers (teacher_id, designation, user_id)
+VALUES (@p13, @p14, @p15);
+INSERT INTO classes (class_id, class_level, created_at, description, subject_id, teacher_id, updated_at)
+VALUES (@p16, @p17, @p18, @p19, @p20, @p21, @p22)
+RETURNING is_active;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, title, updated_at)
+VALUES (@p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30)
+RETURNING assignment_id, allow_resubmission, status;
+2026-08-06 14:40:47.444 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'AssignmentManagement.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-08-06 14:40:47.446 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/assignments
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at AssignmentManagement.Application.Services.AssignmentService.CreateAssignmentAsync(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AssignmentService.cs:line 74
+   at AssignmentManagement.Api.Controllers.AssignmentsController.Create(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AssignmentsController.cs:line 40
+   at lambda_method1322(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:41:15.835 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Database.Command] Failed executing DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?', @p4='?' (DbType = Int32), @p5='?' (DbType = DateTime), @p6='?', @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = DateTime), @p13='?' (DbType = Int32), @p14='?', @p15='?' (DbType = Int32), @p16='?' (DbType = Int32), @p17='?' (DbType = Int32), @p18='?' (DbType = DateTime), @p19='?', @p20='?' (DbType = Int32), @p21='?' (DbType = Int32), @p22='?' (DbType = DateTime), @p23='?' (DbType = Int32), @p24='?' (DbType = DateTime), @p25='?' (DbType = DateTime), @p26='?', @p27='?', @p28='?' (DbType = Int32), @p29='?', @p30='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO subjects (subject_id, description, subject_code, subject_name)
+VALUES (@p0, @p1, @p2, @p3);
+INSERT INTO users (user_id, created_at, email, first_name, last_name, password_hash, phone, role, updated_at)
+VALUES (@p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12)
+RETURNING is_active;
+INSERT INTO teachers (teacher_id, designation, user_id)
+VALUES (@p13, @p14, @p15);
+INSERT INTO classes (class_id, class_level, created_at, description, subject_id, teacher_id, updated_at)
+VALUES (@p16, @p17, @p18, @p19, @p20, @p21, @p22)
+RETURNING is_active;
+INSERT INTO assignments (class_id, created_at, deadline, description, instructions, max_marks, title, updated_at)
+VALUES (@p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30)
+RETURNING assignment_id, allow_resubmission, status;
+2026-08-06 14:41:15.836 +06:00 [ERR] [Microsoft.EntityFrameworkCore.Update] An exception occurred in the database while saving changes for context type 'AssignmentManagement.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-08-06 14:41:15.838 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request POST /api/assignments
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "pk_subjects"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "pk_subjects"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: subjects
+    ConstraintName: pk_subjects
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at AssignmentManagement.Application.Services.AssignmentService.CreateAssignmentAsync(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\AssignmentService.cs:line 74
+   at AssignmentManagement.Api.Controllers.AssignmentsController.Create(CreateAssignmentRequestDto request, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\AssignmentsController.cs:line 40
+   at lambda_method1322(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:42:04.164 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:42:19.806 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-06 14:42:19.827 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-06 14:42:19.828 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-06 14:42:19.828 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-06 14:43:42.310 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-06 14:43:42.691 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:44:37.055 +06:00 [INF] [AssignmentManagement.Application.Services.AssignmentService] Assignment 197 'New Assignment ' created for Class 4 by Teacher User 4
+2026-08-06 14:45:14.364 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:45:16.871 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:45:23.749 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:45:25.950 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:45:49.491 +06:00 [INF] [AssignmentManagement.Application.Services.SubmissionService] Submission 2561 uploaded for Assignment 197 by Student 3 (User 19)
+2026-08-06 14:46:17.390 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged out
+2026-08-06 14:46:20.637 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:46:34.229 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:46:38.066 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:47:10.572 +06:00 [INF] [AssignmentManagement.Application.Services.SubmissionService] Submission 2561 graded with 50/100 marks by User 4
+2026-08-06 14:47:22.187 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:47:25.906 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:47:46.877 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged out
+2026-08-06 14:47:48.249 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged in successfully with role "Student"
+2026-08-06 14:51:14.165 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged out
+2026-08-06 14:51:19.031 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:52:44.804 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:52:45.845 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:54:12.151 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:54:12.173 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:54:58.324 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:54:59.851 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:57:07.450 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:57:07.457 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/preview
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Preview(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 88
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:57:13.132 +06:00 [ERR] [AssignmentManagement.Api.Middleware.ExceptionMiddleware] Unhandled exception occurred while processing request GET /api/submissions/2391/download
+AssignmentManagement.Application.Common.ForbiddenException: Invalid file path specified.
+   at AssignmentManagement.Infrastructure.Services.StorageService.GetFileAsync(String relativePath, Boolean isDownload, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Infrastructure\Services\StorageService.cs:line 117
+   at AssignmentManagement.Application.Services.SubmissionService.GetSubmissionFileStreamAsync(Int32 submissionId, Boolean isPreview, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Application\Services\SubmissionService.cs:line 228
+   at AssignmentManagement.Api.Controllers.SubmissionsController.Download(Int32 id, CancellationToken cancellationToken) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Controllers\SubmissionsController.cs:line 101
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at AssignmentManagement.Api.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api\Middleware\ExceptionMiddleware.cs:line 23
+2026-08-06 14:57:15.852 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:57:17.147 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:57:53.419 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:57:54.782 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-06 14:57:55.811 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4 (teacher3@school.edu.bd) logged out
+2026-08-06 14:57:58.537 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged in successfully with role "Admin"
+2026-08-06 14:58:06.813 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 1 (admin@example.com) logged out
+2026-08-06 14:58:09.012 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 19 (student3@school.edu.bd) logged in successfully with role "Student"

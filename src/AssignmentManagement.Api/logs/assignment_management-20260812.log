@@ -1,0 +1,41 @@
+2026-08-12 09:28:01.725 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-12 09:28:01.751 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-12 09:28:01.752 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-12 09:28:01.753 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-12 09:28:07.831 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-12 09:28:08.016 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Tokens refreshed successfully for user 31 (student15@school.edu.bd)
+2026-08-12 09:28:15.537 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged out
+2026-08-12 09:28:21.939 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher4@school.edu.bd' (length 12)
+2026-08-12 09:28:22.139 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 5 (teacher4@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 09:31:01.579 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 5 (teacher4@school.edu.bd) logged out
+2026-08-12 09:31:04.007 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@school.edu.bd' (length 12)
+2026-08-12 09:31:04.131 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged in successfully with role "Admin"
+2026-08-12 09:43:58.921 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged out
+2026-08-12 09:44:01.304 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student15@school.edu.bd' (length 12)
+2026-08-12 09:44:01.431 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 09:44:47.066 +06:00 [INF] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5000
+2026-08-12 09:44:47.091 +06:00 [INF] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+2026-08-12 09:44:47.092 +06:00 [INF] [Microsoft.Hosting.Lifetime] Hosting environment: Production
+2026-08-12 09:44:47.092 +06:00 [INF] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\Tarek\Desktop\assignment\src\AssignmentManagement.Api
+2026-08-12 09:45:02.441 +06:00 [WRN] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+2026-08-12 09:47:13.227 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged out
+2026-08-12 09:47:15.433 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@school.edu.bd' (length 12)
+2026-08-12 09:47:15.632 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged in successfully with role "Admin"
+2026-08-12 09:49:14.599 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged out
+2026-08-12 09:49:31.531 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@school.edu.bd' (length 12)
+2026-08-12 09:49:31.653 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged in successfully with role "Admin"
+2026-08-12 09:52:48.306 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 117 (admin@school.edu.bd) logged out
+2026-08-12 09:52:50.767 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher5@school.edu.bd' (length 12)
+2026-08-12 09:52:50.887 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 6 (teacher5@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 09:53:07.074 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 6 (teacher5@school.edu.bd) logged out
+2026-08-12 09:53:10.177 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher4@school.edu.bd' (length 12)
+2026-08-12 09:53:10.297 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 5 (teacher4@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 09:53:12.385 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 5 (teacher4@school.edu.bd) logged out
+2026-08-12 09:53:15.787 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student15@school.edu.bd' (length 12)
+2026-08-12 09:53:15.907 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 09:53:32.659 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged out
+2026-08-12 09:53:34.965 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student95@school.edu.bd' (length 12)
+2026-08-12 09:53:35.085 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 111 (student95@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 09:54:37.682 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 111 (student95@school.edu.bd) logged out
+2026-08-12 09:55:14.370 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student15@school.edu.bd' (length 12)
+2026-08-12 09:55:14.534 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 31 (student15@school.edu.bd) logged in successfully with role "Student"
