@@ -72,22 +72,16 @@ export function AdminResultsView() {
     { enabled: true }
   );
   const { data: submissions = [], isLoading: submissionsPending } = useCachedData(
-    "submissions:results",
-    async () => {
-      const res = await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
-      return res.items;
-    }
+    "submissions:results:full",
+    () => submissionService.getAllSubmissionsFull()
   );
   const { data: classes = [], isLoading: classesPending } = useCachedData(
     "classes:all",
     () => classService.getAllClasses()
   );
   const { data: assignments = [], isLoading: assignmentsPending } = useCachedData(
-    "assignments:results",
-    async () => {
-      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
-      return res.items;
-    }
+    "assignments:results:full",
+    () => assignmentService.getAllAssignments()
   );
   const isLoading =
     (studentsPending && students.length === 0) ||
@@ -313,7 +307,11 @@ export function AdminResultsView() {
     const subAggMap: Record<string, { totalMarks: number; totalMaxMarks: number; totalGraded: number }> = {};
 
     submissions.forEach((s) => {
-      if (s.marks === undefined || s.marks === null) return;
+      const isScored =
+        s.status === "Graded" ||
+        s.status === "Missing" ||
+        (s.marks !== undefined && s.marks !== null);
+      if (!isScored) return;
 
       const targetAssignment = assignmentMap[s.assignmentId];
       const subClassLvl = targetAssignment?.classLevel || resolveClassLevel(s);
