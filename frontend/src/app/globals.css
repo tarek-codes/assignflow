@@ -27,17 +27,11 @@
 }
 
 /* Fullscreen F11 Top Spacing Offsets */
-:fullscreen main,
-:-webkit-full-screen main,
-:-moz-full-screen main,
-:ms-fullscreen main {
+:fullscreen main {
   padding-top: 2.25rem !important;
 }
 
-:fullscreen .sidebar-header,
-:-webkit-full-screen .sidebar-header,
-:-moz-full-screen .sidebar-header,
-:ms-fullscreen .sidebar-header {
+:fullscreen .sidebar-header {
   padding-top: 3.25rem !important;
 }
 
