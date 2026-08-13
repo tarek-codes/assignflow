@@ -308,7 +308,7 @@ export function AssignmentList() {
             onPageChange={setPage}
             showRange
             pageSize={pageSize}
-            totalItems={filteredAssignments.length}
+            totalItems={totalCount}
           />
         </div>
       )}

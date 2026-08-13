@@ -430,7 +430,7 @@ export function SubmissionList() {
             onPageChange={setPage}
             showRange
             pageSize={pageSize}
-            totalItems={filteredItems.length}
+            totalItems={totalCount}
           />
         </div>
       )}
