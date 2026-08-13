@@ -2,8 +2,9 @@
 
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
+import { assignmentService } from "@/services/assignmentService";
 import { AssignmentListItem } from "@/types/assignment";
-import { useAllAssignments } from "@/hooks/queries/useDataQueries";
+import { useCachedData } from "@/hooks/useCachedData";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -26,7 +27,13 @@ export function AssignmentList() {
     ? "Manage, view, and organize all your created class assignments"
     : "Browse, search, and manage course assignments";
 
-  const { data: allAssignments = [], isPending: isLoading } = useAllAssignments();
+  const { data: allAssignments = [], isLoading } = useCachedData<AssignmentListItem[]>(
+    "assignments:list",
+    async () => {
+      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    }
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedClass, setSelectedClass] = useState<string>("all");

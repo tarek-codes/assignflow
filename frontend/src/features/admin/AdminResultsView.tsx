@@ -2,13 +2,11 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Award, BookOpen, Crown, Filter, Medal, Search, UserCheck, TrendingUp, CheckCircle2, AlertTriangle, Star } from "lucide-react";
-import {
-  useAllAssignments,
-  useAllClasses,
-  useAllStudents,
-  useAllSubmissions,
-} from "@/hooks/queries/useDataQueries";
-import { StudentListItem } from "@/services/userService";
+import { userService, StudentListItem } from "@/services/userService";
+import { submissionService } from "@/services/submissionService";
+import { classService } from "@/services/classService";
+import { assignmentService } from "@/services/assignmentService";
+import { useCachedData } from "@/hooks/useCachedData";
 import { ClassListItem } from "@/types/class";
 import { SubmissionListItem } from "@/types/submission";
 import { AssignmentListItem } from "@/types/assignment";
@@ -68,10 +66,29 @@ function parseSubClassAndSubject(sub: SubmissionListItem) {
 }
 
 export function AdminResultsView() {
-  const { data: students = [], isPending: studentsPending } = useAllStudents();
-  const { data: submissions = [], isPending: submissionsPending } = useAllSubmissions();
-  const { data: classes = [], isPending: classesPending } = useAllClasses();
-  const { data: assignments = [], isPending: assignmentsPending } = useAllAssignments();
+  const { data: students = [], isLoading: studentsPending } = useCachedData(
+    "students:all",
+    () => userService.getAllStudents(),
+    { enabled: true }
+  );
+  const { data: submissions = [], isLoading: submissionsPending } = useCachedData(
+    "submissions:results",
+    async () => {
+      const res = await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    }
+  );
+  const { data: classes = [], isLoading: classesPending } = useCachedData(
+    "classes:all",
+    () => classService.getAllClasses()
+  );
+  const { data: assignments = [], isLoading: assignmentsPending } = useCachedData(
+    "assignments:results",
+    async () => {
+      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    }
+  );
   const isLoading =
     (studentsPending && students.length === 0) ||
     (submissionsPending && submissions.length === 0) ||

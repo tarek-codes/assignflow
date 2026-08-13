@@ -3,7 +3,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { submissionService } from "@/services/submissionService";
-import { useStudentDashboard, useInvalidateDataCache } from "@/hooks/queries/useDataQueries";
+import { dashboardService } from "@/services/dashboardService";
+import { useCachedData, invalidateCachedPrefix } from "@/hooks/useCachedData";
 import { cn } from "@/utils/cn";
 
 import { useAuth } from "@/context/AuthContext";
@@ -198,8 +199,10 @@ export function StudentDashboardView() {
   const { user } = useAuth();
   const { t, language, translateSubject, translateClass, translateUserName } = useLanguage();
   const { showToast } = useToast();
-  const { invalidateDashboards, invalidateSubmissions } = useInvalidateDataCache();
-  const { data, isPending: isLoading, refetch: refetchDashboard } = useStudentDashboard();
+  const { data, isLoading, refetch: refetchDashboard } = useCachedData(
+    "dashboard:student",
+    () => dashboardService.getStudentDashboard()
+  );
   const [selectedAssignment, setSelectedAssignment] = useState<StudentUpcomingAssignment | null>(null);
   const [showPendingModal, setShowPendingModal] = useState(false);
   const [pendingPage, setPendingPage] = useState(1);
@@ -285,9 +288,9 @@ export function StudentDashboardView() {
       showToast("Assignment submitted successfully!", "success");
       handleCloseModal();
 
-      await invalidateDashboards();
-      await invalidateSubmissions();
-      const { data: res } = await refetchDashboard();
+      await invalidateCachedPrefix("dashboard:");
+      await invalidateCachedPrefix("submissions:");
+      const res = await refetchDashboard();
 
       // If user is currently in a subject drill-in view, sync selectedSubject with fresh data
       if (selectedSubject && res) {

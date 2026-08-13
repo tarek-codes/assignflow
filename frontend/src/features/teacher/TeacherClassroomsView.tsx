@@ -3,12 +3,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { assignmentService } from "@/services/assignmentService";
-import {
-  useAllAssignments,
-  useAllStudents,
-  useClassesPage,
-  useInvalidateDataCache,
-} from "@/hooks/queries/useDataQueries";
+import { classService } from "@/services/classService";
+import { userService } from "@/services/userService";
+import { useCachedData, invalidateCachedPrefix } from "@/hooks/useCachedData";
 import { ClassListItem } from "@/types/class";
 import { AssignmentListItem, AssignmentDetail } from "@/types/assignment";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -77,15 +74,27 @@ function getSubjectIcon(name: string) {
 export function TeacherClassroomsView() {
   const { showToast } = useToast();
   const { t, translateSubject, translateClass } = useLanguage();
-  const { invalidateAssignments, invalidateDashboards } = useInvalidateDataCache();
-  const { data: classes = [], isPending: isLoadingClasses } = useClassesPage(1, 100);
   const [selectedClassroom, setSelectedClassroom] = useState<ClassListItem | null>(null);
-  const { data: allStudents = [], isPending: studentsPending } = useAllStudents({
-    enabled: Boolean(selectedClassroom),
-  });
-  const { data: allAssignments = [], isPending: assignmentsPending } = useAllAssignments({
-    enabled: Boolean(selectedClassroom),
-  });
+  const { data: classes = [], isLoading: isLoadingClasses } = useCachedData(
+    "classes:teacher",
+    async () => {
+      const res = await classService.getClasses({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    }
+  );
+  const { data: allStudents = [], isLoading: studentsPending } = useCachedData(
+    "students:all",
+    () => userService.getAllStudents(),
+    { enabled: Boolean(selectedClassroom) }
+  );
+  const { data: allAssignments = [], isLoading: assignmentsPending, refetch: refetchAssignments } = useCachedData(
+    "assignments:list",
+    async () => {
+      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    },
+    { enabled: Boolean(selectedClassroom) }
+  );
   const [activeSegment, setActiveSegment] = useState<"all" | "primary" | "secondary" | "higher_secondary">("all");
 
   // Classroom Detail State
@@ -225,8 +234,9 @@ export function TeacherClassroomsView() {
           allowResubmission: true,
         });
         showToast(`Assignment "${updated.title}" updated successfully.`, "success");
-        await invalidateAssignments();
-        await invalidateDashboards();
+        await invalidateCachedPrefix("assignments:");
+        await invalidateCachedPrefix("dashboard:");
+        await refetchAssignments();
       } else {
         // Create
         const created = await assignmentService.createAssignment({
@@ -239,8 +249,9 @@ export function TeacherClassroomsView() {
           allowResubmission: true,
         });
         showToast(`Assignment "${created.title}" created successfully!`, "success");
-        await invalidateAssignments();
-        await invalidateDashboards();
+        await invalidateCachedPrefix("assignments:");
+        await invalidateCachedPrefix("dashboard:");
+        await refetchAssignments();
       }
       setIsAssignmentModalOpen(false);
     } catch (err: any) {
@@ -269,8 +280,9 @@ export function TeacherClassroomsView() {
     try {
       await assignmentService.deleteAssignment(id);
       showToast(`Assignment "${title}" deleted successfully.`, "success");
-      await invalidateAssignments();
-      await invalidateDashboards();
+      await invalidateCachedPrefix("assignments:");
+      await invalidateCachedPrefix("dashboard:");
+      await refetchAssignments();
     } catch (err: any) {
       showToast(err?.response?.data?.message || "Failed to delete assignment.", "error");
     }
@@ -282,11 +294,13 @@ export function TeacherClassroomsView() {
       if (assignment.status === "Draft") {
         await assignmentService.publishAssignment(assignment.id);
         showToast(`"${assignment.title}" published!`, "success");
-        await invalidateAssignments();
+        await invalidateCachedPrefix("assignments:");
+        await refetchAssignments();
       } else {
         await assignmentService.saveDraft(assignment.id);
         showToast(`"${assignment.title}" saved as draft.`, "success");
-        await invalidateAssignments();
+        await invalidateCachedPrefix("assignments:");
+        await refetchAssignments();
       }
     } catch (err: any) {
       showToast(err?.response?.data?.message || "Failed to update status.", "error");

@@ -15,7 +15,8 @@ import {
   GraduationCap,
   User as UserIcon,
 } from "lucide-react";
-import { useTeacherDashboard } from "@/hooks/queries/useDataQueries";
+import { dashboardService } from "@/services/dashboardService";
+import { useCachedData } from "@/hooks/useCachedData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -29,7 +30,7 @@ import { ROUTES } from "@/constants/routes";
 export function TeacherDashboardView() {
   const { user } = useAuth();
   const { t } = useLanguage();
-  const { data, isPending: isLoading } = useTeacherDashboard();
+  const { data, isLoading } = useCachedData("dashboard:teacher", () => dashboardService.getTeacherDashboard());
 
   if (isLoading) return <LoadingSpinner label="Loading dashboard…" />;
   if (!data) return <p className="text-sm text-slate-500">Failed to load dashboard.</p>;

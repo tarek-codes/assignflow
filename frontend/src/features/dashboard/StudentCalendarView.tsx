@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useStudentDashboard, useInvalidateDataCache } from "@/hooks/queries/useDataQueries";
+import { useCachedData, invalidateCachedPrefix } from "@/hooks/useCachedData";
+import { dashboardService } from "@/services/dashboardService";
 import { useAuth } from "@/context/AuthContext";
 import { StudentDashboardData, StudentUpcomingAssignment } from "@/types/dashboard";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -45,8 +46,10 @@ export function StudentCalendarView() {
   const { user } = useAuth();
   const { showToast } = useToast();
   const { language, translateSubject } = useLanguage();
-  const { invalidateDashboards, invalidateSubmissions } = useInvalidateDataCache();
-  const { data, isPending: isLoading, refetch } = useStudentDashboard();
+  const { data, isLoading, refetch } = useCachedData(
+    "dashboard:student",
+    () => dashboardService.getStudentDashboard()
+  );
 
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
@@ -127,8 +130,8 @@ export function StudentCalendarView() {
       await submissionService.submitOrReplace(selectedAssignment.assignmentId, { file, submissionText: notes });
       showToast("Submitted successfully!", "success");
       closeModal();
-      await invalidateDashboards();
-      await invalidateSubmissions();
+      await invalidateCachedPrefix("dashboard:");
+      await invalidateCachedPrefix("submissions:");
       await refetch();
     } catch (err: any) {
       showToast(err.response?.data?.message || "Submission failed.", "error");

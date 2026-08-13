@@ -15,12 +15,8 @@ import {
   X,
 } from "lucide-react";
 import { classService } from "@/services/classService";
-import {
-  useAllClasses,
-  useAllStudents,
-  useAllTeachers,
-  useInvalidateDataCache,
-} from "@/hooks/queries/useDataQueries";
+import { userService } from "@/services/userService";
+import { useCachedData, invalidateCachedPrefix } from "@/hooks/useCachedData";
 import { TeacherListItem, StudentListItem } from "@/services/userService";
 import { ClassListItem } from "@/types/class";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -42,17 +38,17 @@ interface ClassLevelGroup {
 
 export function ManageClassesView() {
   const { showToast } = useToast();
-  const { invalidateClasses, invalidateTeachers } = useInvalidateDataCache();
-  const { data: classes = [], isPending: isLoading } = useAllClasses();
-  const { data: students = [] } = useAllStudents();
-
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [subjectPage, setSubjectPage] = useState(1);
   const [activeSegment, setActiveSegment] = useState<"all" | "primary" | "secondary" | "higher_secondary">("all");
   const [assignTarget, setAssignTarget] = useState<ClassListItem | null>(null);
-  const { data: teachers = [], isFetching: teachersLoading, refetch: refetchTeachers } = useAllTeachers({
-    enabled: Boolean(assignTarget),
-  });
+
+  const { data: classes = [], isLoading, refetch: refetchClasses } = useCachedData("classes:all", () => classService.getAllClasses());
+  const { data: teachers = [], isLoading: teachersLoading, refetch: refetchTeachers } = useCachedData(
+    "teachers:all",
+    () => userService.getAllTeachers(),
+    { enabled: Boolean(assignTarget) }
+  );
   const [classSubjectSearch, setClassSubjectSearch] = useState("");
   const [classSubjectFilter, setClassSubjectFilter] = useState<"all" | "assigned" | "unassigned">("all");
 
@@ -60,12 +56,11 @@ export function ManageClassesView() {
   const [assigningTeacherId, setAssigningTeacherId] = useState<number | null>(null);
 
   const loadTeachers = () => {
-    void invalidateTeachers();
+    invalidateCachedPrefix("teachers:");
+    void refetchTeachers();
   };
 
   useEffect(() => {
-    // Reload the teacher roster whenever a new teacher is approved elsewhere
-    // (e.g. Account Approvals page) so this picker always shows fresh data.
     const handleRosterChange = () => loadTeachers();
     if (typeof window !== "undefined") {
       window.addEventListener("teacher-roster-changed", handleRosterChange);
@@ -75,19 +70,7 @@ export function ManageClassesView() {
         window.removeEventListener("teacher-roster-changed", handleRosterChange);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Compute exact count of enrolled students per class level
-  const studentsCountByClass = useMemo(() => {
-    const map = new Map<number, number>();
-    students.forEach((s) => {
-      if (s.classLevel) {
-        map.set(s.classLevel, (map.get(s.classLevel) || 0) + 1);
-      }
-    });
-    return map;
-  }, [students]);
+  }, [refetchTeachers]);
 
   const levelGroups = useMemo<ClassLevelGroup[]>(() => {
     const map = new Map<number, ClassListItem[]>();
@@ -211,7 +194,8 @@ export function ManageClassesView() {
     setAssigningTeacherId(teacher.id);
     try {
       await classService.assignTeacher(assignTarget.id, { teacherId: teacher.id });
-      await invalidateClasses();
+      await invalidateCachedPrefix("classes:");
+      await refetchClasses();
       showToast(`${teacher.fullName || teacher.firstName} assigned to ${assignTarget.subjectName}.`, "success");
       closeAssignModal();
     } catch (err: any) {
@@ -291,7 +275,7 @@ export function ManageClassesView() {
                 .map((group) => {
                   const unassignedCount = group.subjects.filter((s) => !s.teacherId).length;
                   const config = getClassLevelConfig(group.classLevel);
-                  const enrolledCount = studentsCountByClass.get(group.classLevel) || 0;
+                  const subjectCount = group.subjects.length;
 
                   return (
                     <button
@@ -318,9 +302,9 @@ export function ManageClassesView() {
                           Class {group.classLevel}
                         </h3>
                         <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-semibold">
-                          <Users className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                          <BookOpen className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                           <span>
-                            {enrolledCount} Enrolled Student{enrolledCount === 1 ? "" : "s"}
+                            {subjectCount} Subject{subjectCount === 1 ? "" : "s"}
                           </span>
                         </div>
                       </div>

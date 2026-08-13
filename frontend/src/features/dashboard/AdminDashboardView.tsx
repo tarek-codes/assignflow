@@ -16,15 +16,11 @@ import {
   Calendar,
   ArrowUpDown,
 } from "lucide-react";
-import {
-  useAdminDashboard,
-  useAllAssignments,
-  useAllSubmissions,
-  useAllStudents,
-  useAllTeachers,
-  useAllUsers,
-} from "@/hooks/queries/useDataQueries";
-import { UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
+import { dashboardService } from "@/services/dashboardService";
+import { assignmentService } from "@/services/assignmentService";
+import { submissionService } from "@/services/submissionService";
+import { userService, UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
+import { useCachedData } from "@/hooks/useCachedData";
 import { AssignmentListItem } from "@/types/assignment";
 import { SubmissionListItem } from "@/types/submission";
 import { PagedResult } from "@/types/api";
@@ -52,27 +48,48 @@ export function AdminDashboardView() {
   const { user } = useAuth();
   const { t } = useLanguage();
   const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
-
-  const { data, isPending: isLoading } = useAdminDashboard();
-  const { data: rawAssignments = [], isPending: assignmentsPending, isFetching: assignmentsFetching } = useAllAssignments();
-  const { data: rawSubmissions = [], isPending: submissionsPending, isFetching: submissionsFetching } = useAllSubmissions();
-  const { data: allUsers = [], isPending: usersPending, isFetching: usersFetching } = useAllUsers({
-    enabled: activeModal === "users",
-  });
-  const { data: allTeachers = [], isPending: teachersPending, isFetching: teachersFetching } = useAllTeachers({
-    enabled: activeModal === "teachers",
-  });
-  const { data: allStudents = [], isPending: studentsPending, isFetching: studentsFetching } = useAllStudents({
-    enabled: activeModal === "students",
-  });
-
-  // Filter state for Assignments Created (Bar Chart) card
   const [barClassFilter, setBarClassFilter] = useState("all");
   const [barSubjectFilter, setBarSubjectFilter] = useState("all");
-
-  // Filter state for Submission Status (Pie Chart) card
   const [pieClassFilter, setPieClassFilter] = useState("all");
   const [pieSubjectFilter, setPieSubjectFilter] = useState("all");
+
+  const needsAssignmentDetails =
+    barClassFilter !== "all" || barSubjectFilter !== "all" || activeModal === "assignments";
+  const needsSubmissionDetails =
+    pieClassFilter !== "all" || pieSubjectFilter !== "all" || activeModal === "submissions";
+
+  const { data, isLoading } = useCachedData("dashboard:admin", () => dashboardService.getAdminDashboard());
+  const { data: rawAssignments = [] } = useCachedData<AssignmentListItem[]>(
+    "assignments:summary",
+    async () => {
+      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    },
+    { enabled: needsAssignmentDetails }
+  );
+  const { data: rawSubmissions = [] } = useCachedData<SubmissionListItem[]>(
+    "submissions:summary",
+    async () => {
+      const res = await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    },
+    { enabled: needsSubmissionDetails }
+  );
+  const { data: allUsers = [], isLoading: usersPending } = useCachedData<UserListItem[]>(
+    "users:all",
+    () => userService.getAllUsers(),
+    { enabled: activeModal === "users" }
+  );
+  const { data: allTeachers = [], isLoading: teachersPending } = useCachedData<TeacherListItem[]>(
+    "teachers:all",
+    () => userService.getAllTeachers(),
+    { enabled: activeModal === "teachers" }
+  );
+  const { data: allStudents = [], isLoading: studentsPending } = useCachedData<StudentListItem[]>(
+    "students:all",
+    () => userService.getAllStudents(),
+    { enabled: activeModal === "students" }
+  );
 
   const [modalPage, setModalPage] = useState(1);
 

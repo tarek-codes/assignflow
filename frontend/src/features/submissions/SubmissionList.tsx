@@ -2,8 +2,9 @@
 
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
+import { submissionService } from "@/services/submissionService";
 import { SubmissionListItem } from "@/types/submission";
-import { useAllSubmissions } from "@/hooks/queries/useDataQueries";
+import { useCachedData } from "@/hooks/useCachedData";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -74,7 +75,17 @@ export function SubmissionList() {
     ? "Review and grade student submissions for your classrooms"
     : "Audit student submissions across classrooms";
 
-  const { data: allSubmissions = [], isPending: isLoading } = useAllSubmissions(isStudent ? "mine" : "all");
+  const submissionCacheKey = isStudent ? "submissions:mine:list" : "submissions:all:list";
+  const { data: allSubmissions = [], isLoading } = useCachedData<SubmissionListItem[]>(
+    submissionCacheKey,
+    async () => {
+      const res = isStudent
+        ? await submissionService.getMySubmissions({ pageNumber: 1, pageSize: 100 })
+        : await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
+      return res.items;
+    },
+    { deps: [isStudent] }
+  );
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
