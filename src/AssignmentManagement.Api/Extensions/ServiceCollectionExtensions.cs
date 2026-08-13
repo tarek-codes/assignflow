@@ -26,6 +26,11 @@ public static class ServiceCollectionExtensions
         services.AddEndpointsApiExplorer();
         services.AddSwaggerDocumentation(configuration);
 
+        services.AddResponseCompression(options =>
+        {
+            options.EnableForHttps = true;
+        });
+
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
