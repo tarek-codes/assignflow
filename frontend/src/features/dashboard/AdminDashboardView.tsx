@@ -62,16 +62,14 @@ export function AdminDashboardView() {
   const { data: rawAssignments = [] } = useCachedData<AssignmentListItem[]>(
     "assignments:summary",
     async () => {
-      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
-      return res.items;
+      return await assignmentService.getAllAssignments();
     },
     { enabled: needsAssignmentDetails }
   );
   const { data: rawSubmissions = [] } = useCachedData<SubmissionListItem[]>(
     "submissions:summary",
     async () => {
-      const res = await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
-      return res.items;
+      return await submissionService.getAllSubmissionsFull();
     },
     { enabled: needsSubmissionDetails }
   );

@@ -79,10 +79,9 @@ export function SubmissionList() {
   const { data: allSubmissions = [], isLoading } = useCachedData<SubmissionListItem[]>(
     submissionCacheKey,
     async () => {
-      const res = isStudent
-        ? await submissionService.getMySubmissions({ pageNumber: 1, pageSize: 100 })
-        : await submissionService.getAllSubmissions({ pageNumber: 1, pageSize: 100 });
-      return res.items;
+      return isStudent
+        ? await submissionService.getMySubmissionsFull()
+        : await submissionService.getAllSubmissionsFull();
     },
     { deps: [isStudent] }
   );

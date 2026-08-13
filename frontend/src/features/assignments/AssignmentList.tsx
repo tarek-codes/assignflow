@@ -30,8 +30,7 @@ export function AssignmentList() {
   const { data: allAssignments = [], isLoading } = useCachedData<AssignmentListItem[]>(
     "assignments:list",
     async () => {
-      const res = await assignmentService.getAssignments({ pageNumber: 1, pageSize: 100 });
-      return res.items;
+      return await assignmentService.getAllAssignments();
     }
   );
 
