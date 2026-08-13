@@ -34,15 +34,12 @@ export function AssignmentList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const { data: assignmentsData, isLoading } = useCachedData(
-    `assignments:list:${page}`,
+  const { data: allAssignments = [], isLoading } = useCachedData<AssignmentListItem[]>(
+    "assignments:full:list",
     async () => {
-      return await assignmentService.getAssignments({ pageNumber: page, pageSize });
-    },
-    { deps: [page] }
+      return await assignmentService.getAllAssignments();
+    }
   );
-
-  const allAssignments = assignmentsData?.items || [];
   const totalCount = assignmentsData?.totalCount || 0;
 
   // Unique lists from data (always guarantees full standard class levels 6 to 12)
@@ -136,8 +133,11 @@ export function AssignmentList() {
     });
   }, [allAssignments, searchTerm, selectedClass, selectedSubject, selectedStatus]);
 
-  const totalPages = assignmentsData?.totalPages || Math.max(1, Math.ceil(totalCount / pageSize));
-  const paginatedAssignments = filteredAssignments;
+  const totalPages = Math.max(1, Math.ceil(filteredAssignments.length / pageSize));
+  const paginatedAssignments = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredAssignments.slice(start, start + pageSize);
+  }, [filteredAssignments, page, pageSize]);
 
   const isFiltered =
     searchTerm !== "" || selectedClass !== "all" || selectedSubject !== "all" || selectedStatus !== "all";
@@ -160,14 +160,16 @@ export function AssignmentList() {
       {/* SEARCH AND CORRELATED FILTERS BAR */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
         <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input
-            placeholder="Search assignments by title..."
+            type="text"
+            placeholder="Search assignments by title or subject..."
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setPage(1);
             }}
-            leftIcon={<Search className="w-4 h-4" />}
+            className="pl-10 text-xs font-medium"
           />
         </div>
 
@@ -221,14 +223,20 @@ export function AssignmentList() {
             className="text-xs font-semibold rounded-lg border border-blue-300 dark:border-blue-700 bg-blue-50/60 dark:bg-blue-950/30 px-3 py-2 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-blue-500/30 transition-all cursor-pointer"
           >
             <option value="all">All Statuses</option>
-            <option value="Published">Published</option>
-            <option value="Draft">Draft</option>
-            <option value="Closed">Closed</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+            <option value="closed">Closed</option>
           </select>
 
           {/* RESET BUTTON */}
           {isFiltered && (
-            <Button size="sm" variant="ghost" onClick={resetFilters} leftIcon={<RotateCcw className="w-3.5 h-3.5" />}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={resetFilters}
+              leftIcon={<RotateCcw className="w-3.5 h-3.5" />}
+              className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400"
+            >
               Reset
             </Button>
           )}
@@ -237,21 +245,35 @@ export function AssignmentList() {
 
       {/* ASSIGNMENTS TABLE */}
       {isLoading ? (
-        <LoadingSpinner label="Loading assignments list..." />
+        <LoadingSpinner label="Loading assignments..." />
       ) : filteredAssignments.length === 0 ? (
         <EmptyState
-          title="No assignments found"
-          description="Try adjusting your class, subject, or search filters."
           icon={<FileText className="w-10 h-10 text-slate-400" />}
+          title="No assignments found"
+          description={
+            isFiltered
+              ? "No assignments match your current filters. Try resetting your search or filter settings."
+              : isTeacher
+              ? "You haven't created any assignments yet."
+              : "No course assignments have been published yet."
+          }
+          action={
+            isTeacher && !isFiltered ? (
+              <Link href={ROUTES.CREATE_ASSIGNMENT}>
+                <Button leftIcon={<Plus className="w-4 h-4" />}>Create First Assignment</Button>
+              </Link>
+            ) : undefined
+          }
         />
       ) : (
         <div className="space-y-4">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Class · Subject</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Posted At</TableHead>
+                <TableHead>Assignment Title</TableHead>
+                <TableHead>Class</TableHead>
+                <TableHead>Subject</TableHead>
+                <TableHead>Max Marks</TableHead>
                 <TableHead>Deadline</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
@@ -259,26 +281,26 @@ export function AssignmentList() {
             <TableBody>
               {paginatedAssignments.map((ass) => (
                 <TableRow key={ass.id}>
-                  <TableCell className="font-semibold text-slate-700 dark:text-slate-300 text-xs">
-                    <div className="flex items-center gap-2">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold shadow-xs ${getClassSolidBadge(ass.classLevel)}`}>
-                        Class {ass.classLevel}
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {ass.subjectName}
-                      </span>
-                    </div>
-                  </TableCell>
                   <TableCell>
                     <Link
                       href={ROUTES.ASSIGNMENT_DETAILS(ass.id)}
-                      className="inline-flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline transition-colors group"
+                      className="group/title flex items-center gap-1.5 text-xs font-semibold text-slate-900 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
-                      {ass.title}
-                      <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                      <span className="truncate max-w-xs">{ass.title}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 opacity-0 group-hover/title:opacity-100 transition-opacity shrink-0" />
                     </Link>
                   </TableCell>
-                  <TableCell className="text-xs text-slate-500">{formatDate(ass.createdAtUtc || ass.deadlineUtc)}</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary" className={getClassSolidBadge(ass.classLevel)}>
+                      Class {ass.classLevel}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                    {ass.subjectName || "General"}
+                  </TableCell>
+                  <TableCell className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+                    {ass.maxMarks}
+                  </TableCell>
                   <TableCell className="text-xs font-medium">{formatDate(ass.deadlineUtc)}</TableCell>
                   <TableCell>
                     {(() => {
@@ -310,7 +332,7 @@ export function AssignmentList() {
             onPageChange={setPage}
             showRange
             pageSize={pageSize}
-            totalItems={totalCount}
+            totalItems={filteredAssignments.length}
           />
         </div>
       )}

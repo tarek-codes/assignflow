@@ -78,20 +78,16 @@ export function SubmissionList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const submissionCacheKey = isStudent ? `submissions:mine:list:${page}` : `submissions:all:list:${page}`;
-  const { data: submissionsData, isLoading } = useCachedData(
+  const submissionCacheKey = isStudent ? "submissions:mine:full:list" : "submissions:all:full:list";
+  const { data: allSubmissions = [], isLoading } = useCachedData<SubmissionListItem[]>(
     submissionCacheKey,
     async () => {
       return isStudent
-        ? await submissionService.getMySubmissions({ pageNumber: page, pageSize })
-        : await submissionService.getAllSubmissions({ pageNumber: page, pageSize });
+        ? await submissionService.getMySubmissionsFull()
+        : await submissionService.getAllSubmissionsFull();
     },
-    { deps: [isStudent, page] }
+    { deps: [isStudent] }
   );
-
-  const allSubmissions = submissionsData?.items || [];
-  const totalCount = submissionsData?.totalCount || 0;
-  const totalPages = submissionsData?.totalPages || Math.max(1, Math.ceil(totalCount / pageSize));
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
@@ -212,7 +208,11 @@ export function SubmissionList() {
       });
   }, [parsedItemsMap, searchQuery, statusFilter, selectedClass, selectedSubject]);
 
-  const paginatedItems = filteredItems;
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
+  const paginatedItems = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredItems.slice(start, start + pageSize);
+  }, [filteredItems, page, pageSize]);
 
   const isFiltered =
     searchQuery !== "" || statusFilter !== "all" || selectedClass !== "all" || selectedSubject !== "all";
@@ -432,7 +432,7 @@ export function SubmissionList() {
             onPageChange={setPage}
             showRange
             pageSize={pageSize}
-            totalItems={totalCount}
+            totalItems={filteredItems.length}
           />
         </div>
       )}
