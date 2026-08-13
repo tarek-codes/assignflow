@@ -17,36 +17,36 @@ public sealed class DashboardRepository : IDashboardRepository
 
     public async Task<AdminDashboardDto> GetAdminDashboardMetricsAsync(CancellationToken cancellationToken = default)
     {
-        var totalUsersTask = _context.Users.AsNoTracking().CountAsync(cancellationToken);
-        var totalTeachersTask = _context.Teachers.AsNoTracking().CountAsync(cancellationToken);
-        var totalStudentsTask = _context.Students.AsNoTracking().CountAsync(cancellationToken);
-        var totalAssignmentsTask = _context.Assignments.AsNoTracking().CountAsync(cancellationToken);
-        var totalSubmissionsTask = _context.Submissions.AsNoTracking().CountAsync(cancellationToken);
+        var totalUsers = await _context.Users.AsNoTracking().CountAsync(cancellationToken);
+        var totalTeachers = await _context.Teachers.AsNoTracking().CountAsync(cancellationToken);
+        var totalStudents = await _context.Students.AsNoTracking().CountAsync(cancellationToken);
+        var totalAssignments = await _context.Assignments.AsNoTracking().CountAsync(cancellationToken);
+        var totalSubmissions = await _context.Submissions.AsNoTracking().CountAsync(cancellationToken);
 
-        var usersByRoleGroupTask = _context.Users
+        var usersByRoleGroup = await _context.Users
             .AsNoTracking()
             .GroupBy(u => u.Role)
             .Select(g => new { Role = g.Key.ToString(), Count = g.Count() })
             .ToListAsync(cancellationToken);
 
-        var assignmentsByStatusGroupTask = _context.Assignments
+        var assignmentsByStatusGroup = await _context.Assignments
             .AsNoTracking()
             .GroupBy(a => a.Status)
             .Select(g => new { Status = g.Key.ToString(), Count = g.Count() })
             .ToListAsync(cancellationToken);
 
-        var submissionsByStatusGroupTask = _context.Submissions
+        var submissionsByStatusGroup = await _context.Submissions
             .AsNoTracking()
             .GroupBy(s => s.Status)
             .Select(g => new { Status = g.Key.ToString(), Count = g.Count() })
             .ToListAsync(cancellationToken);
 
-        var assignmentsRawDatesTask = _context.Assignments
+        var assignmentsRawDates = await _context.Assignments
             .AsNoTracking()
             .Select(a => a.CreatedAtUtc)
             .ToListAsync(cancellationToken);
 
-        var topSubjectsGroupTask = _context.Assignments
+        var topSubjectsGroup = await _context.Assignments
             .AsNoTracking()
             .Where(a => a.Class != null && a.Class.Subject != null)
             .GroupBy(a => a.Class!.Subject!.SubjectName)
@@ -55,29 +55,6 @@ public sealed class DashboardRepository : IDashboardRepository
             .Take(6)
             .ToListAsync(cancellationToken);
 
-        await Task.WhenAll(
-            totalUsersTask,
-            totalTeachersTask,
-            totalStudentsTask,
-            totalAssignmentsTask,
-            totalSubmissionsTask,
-            usersByRoleGroupTask,
-            assignmentsByStatusGroupTask,
-            submissionsByStatusGroupTask,
-            assignmentsRawDatesTask,
-            topSubjectsGroupTask
-        );
-
-        var totalUsers = await totalUsersTask;
-        var totalTeachers = await totalTeachersTask;
-        var totalStudents = await totalStudentsTask;
-        var totalAssignments = await totalAssignmentsTask;
-        var totalSubmissions = await totalSubmissionsTask;
-        var usersByRoleGroup = await usersByRoleGroupTask;
-        var assignmentsByStatusGroup = await assignmentsByStatusGroupTask;
-        var submissionsByStatusGroup = await submissionsByStatusGroupTask;
-        var assignmentsRawDates = await assignmentsRawDatesTask;
-        var topSubjectsGroup = await topSubjectsGroupTask;
 
         var assignmentsCreatedPerMonth = assignmentsRawDates
             .GroupBy(dt => new DateTime(dt.Year, dt.Month, 1))
