@@ -18,11 +18,18 @@ import {
 } from "lucide-react";
 import { formatDate } from "@/utils/formatters";
 
+import { useLanguage } from "@/context/LanguageContext";
+
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
 ];
+const BANGLA_MONTHS = [
+  "জানুয়ারী", "ফেব্রুয়ারী", "মার্চ", "এপ্রিল", "মে", "জুন",
+  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর",
+];
 const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const BANGLA_DAYS_SHORT = ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি"];
 
 function getDaysInMonth(y: number, m: number) {
   return new Date(y, m + 1, 0).getDate();
@@ -37,6 +44,7 @@ interface CalendarCell {
 export function StudentCalendarView() {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { language, translateSubject } = useLanguage();
 
   const [data, setData] = useState<StudentDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -144,10 +152,10 @@ export function StudentCalendarView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-            Calendar
+            {language === "bn" ? "ক্যালেন্ডার" : "Calendar"}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Assignment deadlines at a glance.
+            {language === "bn" ? "অ্যাসাইনমেন্টের ডেডলাইন এক নজরে" : "Assignment deadlines at a glance."}
           </p>
         </div>
       </div>
@@ -163,7 +171,7 @@ export function StudentCalendarView() {
             <ChevronLeft className="w-4 h-4" />
           </button>
           <h2 className="text-sm font-bold tracking-wide">
-            {MONTHS[month]} {year}
+            {language === "bn" ? BANGLA_MONTHS[month] : MONTHS[month]} {year}
           </h2>
           <button
             onClick={nextMonth}
@@ -175,7 +183,7 @@ export function StudentCalendarView() {
 
         {/* Day headers */}
         <div className="grid grid-cols-7 border-b border-slate-100 dark:border-slate-800 bg-blue-50/60 dark:bg-slate-800/60">
-          {DAYS_SHORT.map((d) => (
+          {(language === "bn" ? BANGLA_DAYS_SHORT : DAYS_SHORT).map((d) => (
             <div key={d} className="py-2 text-center text-xs font-bold text-blue-700 dark:text-blue-300">
               {d}
             </div>
@@ -214,7 +222,7 @@ export function StudentCalendarView() {
 
                   {isToday && (
                     <span className="text-[9px] font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-100/80 dark:bg-blue-900/50 px-1.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
-                      Today
+                      {language === "bn" ? "আজ" : "Today"}
                     </span>
                   )}
                 </div>

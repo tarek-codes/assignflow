@@ -17,9 +17,15 @@ export const englishTranslations = {
   navRoleStudent: "Student",
   navRoleTeacher: "Teacher",
   navRoleAdmin: "Admin",
+  brandPortal: "AssignFlow Portal",
+  authRoleAdminTitle: "Admin",
   navApprovals: "Approvals",
   navCalendar: "Calendar",
   navMyGrades: "My Grades",
+  navMySubmissions: "My Submissions",
+  navCreatedAssignments: "Created Assignments",
+  navReceivedSubmissions: "Received Submissions",
+  navResults: "Results",
 
   // Authentication
   authSignIn: "Sign In",
@@ -203,10 +209,16 @@ export const banglaTranslations: Record<TranslationKey, string> = {
   navSignOut: "সাইন আউট",
   navRoleStudent: "শিক্ষার্থী",
   navRoleTeacher: "শিক্ষক",
-  navRoleAdmin: "অ্যাডমিন",
+  navRoleAdmin: "এডমিন",
+  brandPortal: "এসাইনফ্লো পোর্টাল",
+  authRoleAdminTitle: "এডমিন",
   navApprovals: "অনুমোদন তালিকা",
   navCalendar: "ক্যালেন্ডার",
   navMyGrades: "আমার গ্রেডসমূহ",
+  navMySubmissions: "আমার সাবমিশনসমূহ",
+  navCreatedAssignments: "তৈরিকৃত অ্যাসাইনমেন্ট",
+  navReceivedSubmissions: "প্রাপ্ত সাবমিশনসমূহ",
+  navResults: "ফলাফল",
 
   // Authentication
   authSignIn: "সাইন ইন করুন",
@@ -448,6 +460,45 @@ export const SUBJECT_TRANSLATIONS: Record<string, { en: string; bn: string }> = 
   "statistics": { en: "Statistics", bn: "পরিসংখ্যান" },
   "agriculture studies": { en: "Agriculture Studies", bn: "কৃষি শিক্ষা" },
   "home science": { en: "Home Science", bn: "গার্হস্থ্য বিজ্ঞান" },
+
+  // Marketing & Production Management
+  "marketing": { en: "Marketing", bn: "বিপণন (মার্কেটিং)" },
+  "marketing 1st paper": { en: "Marketing 1st Paper", bn: "মার্কেটিং ১ম পত্র" },
+  "marketing 2nd paper": { en: "Marketing 2nd Paper", bn: "মার্কেটিং ২য় পত্র" },
+  "production management & marketing 1st paper": { en: "Production Management & Marketing 1st Paper", bn: "উৎপাদন ব্যবস্থাপনা ও বিপণন ১ম পত্র" },
+  "production management and marketing 1st paper": { en: "Production Management & Marketing 1st Paper", bn: "উৎপাদন ব্যবস্থাপনা ও বিপণন ১ম পত্র" },
+  "production management & marketing 2nd paper": { en: "Production Management & Marketing 2nd Paper", bn: "উৎপাদন ব্যবস্থাপনা ও বিপণন ২য় পত্র" },
+  "production management and marketing 2nd paper": { en: "Production Management & Marketing 2nd Paper", bn: "উৎপাদন ব্যবস্থাপনা ও বিপণন ২য় পত্র" },
+
+  // Economics, Civics & History
+  "economics 1st paper": { en: "Economics 1st Paper", bn: "অর্থনীতি ১ম পত্র" },
+  "economics 2nd paper": { en: "Economics 2nd Paper", bn: "অর্থনীতি ২য় পত্র" },
+  "civics & good governance 1st paper": { en: "Civics & Good Governance 1st Paper", bn: "পৌরনীতি ও সুশাসন ১ম পত্র" },
+  "civics and good governance 1st paper": { en: "Civics & Good Governance 1st Paper", bn: "পৌরনীতি ও সুশাসন ১ম পত্র" },
+  "civics & good governance 2nd paper": { en: "Civics & Good Governance 2nd Paper", bn: "পৌরনীতি ও সুশাসন ২য় পত্র" },
+  "civics and good governance 2nd paper": { en: "Civics & Good Governance 2nd Paper", bn: "পৌরনীতি ও সুশাসন ২য় পত্র" },
+  "history 1st paper": { en: "History 1st Paper", bn: "ইতিহাস ১ম পত্র" },
+  "history 2nd paper": { en: "History 2nd Paper", bn: "ইতিহাস ২য় পত্র" },
+  "islamic history & culture 1st paper": { en: "Islamic History & Culture 1st Paper", bn: "ইসলামের ইতিহাস ও সংস্কৃতি ১ম পত্র" },
+  "islamic history and culture 1st paper": { en: "Islamic History & Culture 1st Paper", bn: "ইসলামের ইতিহাস ও সংস্কৃতি ১ম পত্র" },
+  "islamic history & culture 2nd paper": { en: "Islamic History & Culture 2nd Paper", bn: "ইসলামের ইতিহাস ও সংস্কৃতি ২য় পত্র" },
+  "islamic history and culture 2nd paper": { en: "Islamic History & Culture 2nd Paper", bn: "ইসলামের ইতিহাস ও সংস্কৃতি ২য় পত্র" },
+
+  // Logic, Sociology, Social Work, Geography & Psychology
+  "logic 1st paper": { en: "Logic 1st Paper", bn: "যুক্তিবিদ্যা ১ম পত্র" },
+  "logic 2nd paper": { en: "Logic 2nd Paper", bn: "যুক্তিবিদ্যা ২য় পত্র" },
+  "sociology 1st paper": { en: "Sociology 1st Paper", bn: "সমাজবিজ্ঞান ১ম পত্র" },
+  "sociology 2nd paper": { en: "Sociology 2nd Paper", bn: "সমাজবিজ্ঞান ২য় পত্র" },
+  "social work 1st paper": { en: "Social Work 1st Paper", bn: "সমাজকর্ম ১ম পত্র" },
+  "social work 2nd paper": { en: "Social Work 2nd Paper", bn: "সমাজকর্ম ২য় পত্র" },
+  "geography 1st paper": { en: "Geography 1st Paper", bn: "ভূগোল ১ম পত্র" },
+  "geography 2nd paper": { en: "Geography 2nd Paper", bn: "ভূগোল ২য় পত্র" },
+  "psychology 1st paper": { en: "Psychology 1st Paper", bn: "মনোবিজ্ঞান ১ম পত্র" },
+  "psychology 2nd paper": { en: "Psychology 2nd Paper", bn: "মনোবিজ্ঞান ২য় পত্র" },
+  "statistics 1st paper": { en: "Statistics 1st Paper", bn: "পরিসংখ্যান ১ম পত্র" },
+  "statistics 2nd paper": { en: "Statistics 2nd Paper", bn: "পরিসংখ্যান ২য় পত্র" },
+  "agriculture studies 1st paper": { en: "Agriculture Studies 1st Paper", bn: "কৃষি শিক্ষা ১ম পত্র" },
+  "agriculture studies 2nd paper": { en: "Agriculture Studies 2nd Paper", bn: "কৃষি শিক্ষা ২য় পত্র" },
 };
 
 export const CLASS_LEVEL_TRANSLATIONS: Record<number, { en: string; bn: string }> = {

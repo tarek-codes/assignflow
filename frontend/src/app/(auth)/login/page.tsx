@@ -10,7 +10,7 @@ export default function LoginPage() {
   const { t } = useLanguage();
 
   const roleFeatures = [
-    { icon: ShieldCheck, title: "Administrators", description: t("authSidebarAdminDesc") },
+    { icon: ShieldCheck, title: t("authRoleAdminTitle") || "Admin", description: t("authSidebarAdminDesc") },
     { icon: GraduationCap, title: t("navTeachers") || "Teachers", description: t("authSidebarTeacherDesc") },
     { icon: Users, title: t("navStudents") || "Students", description: t("authSidebarStudentDesc") },
   ];

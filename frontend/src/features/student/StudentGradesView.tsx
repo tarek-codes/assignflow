@@ -19,6 +19,7 @@ import { formatDate } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
 import { getCurriculumSubjectsForClass, canonicalizeSubjectName } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
+import { useLanguage } from "@/context/LanguageContext";
 
 const isSameSubject = (subA: string, subB: string): boolean => {
   if (!subA || !subB) return false;
@@ -35,6 +36,7 @@ const isSameSubject = (subA: string, subB: string): boolean => {
 
 export function StudentGradesView() {
   const router = useRouter();
+  const { t, language, translateSubject } = useLanguage();
   const [data, setData] = useState<StudentDashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -142,22 +144,24 @@ export function StudentGradesView() {
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-blue-100 backdrop-blur-sm">
-              <Award className="h-3.5 w-3.5" /> Academic performance
+              <Award className="h-3.5 w-3.5" /> {language === "bn" ? "অ্যাকাডেমিক পারফরম্যান্স" : "Academic performance"}
             </div>
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">My Grades</h1>
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("navMyGrades")}</h1>
             <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
-              Review your graded work, total marks, percentage results, and teacher feedback.
+              {language === "bn"
+                ? "আপনার মূল্যায়িত কাজ, নম্বর, শতকরা ফলাফল এবং শিক্ষকের মন্তব্য দেখুন।"
+                : "Review your graded work, total marks, percentage results, and teacher feedback."}
             </p>
           </div>
           {grades.length > 0 && (
             <div className="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 backdrop-blur-sm">
               <div>
-                <p className="text-[11px] font-medium text-blue-100 uppercase tracking-wider">Average Score</p>
+                <p className="text-[11px] font-medium text-blue-100 uppercase tracking-wider">{language === "bn" ? "গড় স্কোর" : "Average Score"}</p>
                 <p className="text-2xl font-bold text-white tabular-nums">{stats.avgPercentage}%</p>
               </div>
               <div className="h-8 w-px bg-white/20" />
               <div>
-                <p className="text-[11px] font-medium text-blue-100 uppercase tracking-wider">Position in Class</p>
+                <p className="text-[11px] font-medium text-blue-100 uppercase tracking-wider">{language === "bn" ? "শ্রেণীতে অবস্থান" : "Position in Class"}</p>
                 <p className="text-2xl font-bold text-white tabular-nums">{classRank}</p>
               </div>
             </div>

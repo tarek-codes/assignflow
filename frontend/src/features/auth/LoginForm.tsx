@@ -79,7 +79,7 @@ export function LoginForm() {
       <div className="mb-7">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 dark:border-blue-900/60 dark:bg-blue-950/50 dark:text-blue-300">
           <ShieldCheck className="h-3.5 w-3.5" />
-          {t("brandName")} Portal
+          {t("brandPortal")}
         </div>
         <h1 className="text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
           {t("authSignIn")}

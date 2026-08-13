@@ -30,20 +30,20 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
 
   const navLinks = isStudent
     ? [
-      { label: t("navDashboard"), href: ROUTES.STUDENT_DASHBOARD, icon: LayoutDashboard },
-      { label: t("navCalendar"), href: ROUTES.STUDENT_CALENDAR, icon: CalendarDays },
-      { label: isStudent ? "My Submissions" : t("navSubmissions"), href: ROUTES.SUBMISSIONS, icon: Upload },
-      { label: t("navMyGrades"), href: ROUTES.STUDENT_GRADES, icon: Award },
-    ]
+        { label: t("navDashboard"), href: ROUTES.STUDENT_DASHBOARD, icon: LayoutDashboard },
+        { label: t("navCalendar"), href: ROUTES.STUDENT_CALENDAR, icon: CalendarDays },
+        { label: t("navMySubmissions"), href: ROUTES.SUBMISSIONS, icon: Upload },
+        { label: t("navMyGrades"), href: ROUTES.STUDENT_GRADES, icon: Award },
+      ]
     : [
-      { label: t("navDashboard"), href: ROUTES.DASHBOARD, icon: LayoutDashboard },
-      ...(isAdmin ? [{ label: t("navClasses"), href: ROUTES.MANAGE, icon: Layers }] : []),
-      ...(isTeacher ? [{ label: t("navMyClassrooms"), href: ROUTES.TEACHER_CLASSROOMS, icon: School }] : []),
-      { label: isTeacher ? "Created Assignments" : t("navAssignments"), href: ROUTES.ASSIGNMENTS, icon: FileText },
-      { label: isTeacher ? "Received Submissions" : t("navSubmissions"), href: ROUTES.SUBMISSIONS, icon: Upload },
-      ...(isAdmin ? [{ label: "Results", href: ROUTES.ADMIN_RESULTS, icon: Award }] : []),
-      ...(isAdmin ? [{ label: t("navApprovals"), href: ROUTES.APPROVALS, icon: UserCheck }] : []),
-    ];
+        { label: t("navDashboard"), href: ROUTES.DASHBOARD, icon: LayoutDashboard },
+        ...(isAdmin ? [{ label: t("navClasses"), href: ROUTES.MANAGE, icon: Layers }] : []),
+        ...(isTeacher ? [{ label: t("navMyClassrooms"), href: ROUTES.TEACHER_CLASSROOMS, icon: School }] : []),
+        { label: isTeacher ? t("navCreatedAssignments") : t("navAssignments"), href: ROUTES.ASSIGNMENTS, icon: FileText },
+        { label: isTeacher ? t("navReceivedSubmissions") : t("navSubmissions"), href: ROUTES.SUBMISSIONS, icon: Upload },
+        ...(isAdmin ? [{ label: t("navResults"), href: ROUTES.ADMIN_RESULTS, icon: Award }] : []),
+        ...(isAdmin ? [{ label: t("navApprovals"), href: ROUTES.APPROVALS, icon: UserCheck }] : []),
+      ];
 
   const accountLinks = [
     { label: t("navProfile"), href: ROUTES.PROFILE, icon: User },

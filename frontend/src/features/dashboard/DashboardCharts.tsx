@@ -18,6 +18,8 @@ import {
 import { cn } from "@/utils/cn";
 import { TrendingUp, BarChart3, PieChart as PieChartIcon } from "lucide-react";
 
+import { useLanguage } from "@/context/LanguageContext";
+
 const cardBase =
   "bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md";
 
@@ -42,6 +44,8 @@ function CardHeader({
   onSubjectChange?: (subj: string) => void;
   availableSubjects?: string[];
 }) {
+  const { language, translateSubject, translateClass } = useLanguage();
+
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
       <div className="flex items-center gap-3">
@@ -69,14 +73,12 @@ function CardHeader({
             onChange={(e) => onClassChange(e.target.value)}
             className="text-xs font-semibold bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-700 text-slate-800 dark:text-slate-200 rounded-xl px-2.5 py-1 outline-none cursor-pointer hover:border-emerald-500 focus:ring-2 focus:ring-emerald-500/30 transition-all"
           >
-            <option value="all">All Classes</option>
-            <option value="6">Class 6</option>
-            <option value="7">Class 7</option>
-            <option value="8">Class 8</option>
-            <option value="9">Class 9</option>
-            <option value="10">Class 10</option>
-            <option value="11">Class 11</option>
-            <option value="12">Class 12</option>
+            <option value="all">{language === "bn" ? "সকল ক্লাস" : "All Classes"}</option>
+            {[6, 7, 8, 9, 10, 11, 12].map((lvl) => (
+              <option key={lvl} value={lvl}>
+                {translateClass(lvl)}
+              </option>
+            ))}
           </select>
         )}
 
@@ -86,10 +88,10 @@ function CardHeader({
             onChange={(e) => onSubjectChange(e.target.value)}
             className="text-xs font-semibold bg-violet-50/60 dark:bg-violet-950/30 border border-violet-300 dark:border-violet-700 text-slate-800 dark:text-slate-200 rounded-xl px-2.5 py-1 outline-none cursor-pointer hover:border-violet-500 focus:ring-2 focus:ring-violet-500/30 transition-all max-w-[140px] truncate"
           >
-            <option value="all">All Subjects</option>
+            <option value="all">{language === "bn" ? "সকল বিষয়" : "All Subjects"}</option>
             {availableSubjects.map((sub) => (
               <option key={sub} value={sub}>
-                {sub}
+                {translateSubject(sub)}
               </option>
             ))}
           </select>
@@ -178,13 +180,15 @@ export function AssignmentsBarChart({
     ? entries.reduce((acc, [_, count]) => acc + count, 0)
     : chartData.reduce((acc, curr) => acc + curr.count, 0);
 
+  const { language } = useLanguage();
+
   return (
     <div className={cardBase}>
       <CardHeader
-        title="Assignments Created"
-        subtitle="No. of Assignments Created Per Month"
+        title={language === "bn" ? "অ্যাসাইনমেন্ট তৈরি" : "Assignments Created"}
+        subtitle={language === "bn" ? "প্রতি মাসে তৈরিকৃত অ্যাসাইনমেন্টের সংখ্যা" : "No. of Assignments Created Per Month"}
         icon={TrendingUp}
-        badgeText={`${totalCreated} total`}
+        badgeText={language === "bn" ? `মোট ${totalCreated} টি` : `${totalCreated} total`}
         classFilter={classFilter}
         onClassChange={onClassChange}
         subjectFilter={subjectFilter}
@@ -275,6 +279,7 @@ export function SubmissionPieChart({
   availableSubjects?: string[];
 }) {
   const mounted = useHasMounted();
+  const { language } = useLanguage();
 
   // Normalize incoming backend keys to the required 4 categories:
   // On-Time Submission, Late Submission, Missing, Graded
@@ -286,10 +291,10 @@ export function SubmissionPieChart({
   const rawSum = onTimeCount + lateCount + missingCount + gradedCount;
 
   const chartData = [
-    { name: "On-Time Submission", value: onTimeCount, color: "#2563eb" },
-    { name: "Late Submission", value: lateCount, color: "#f59e0b" },
-    { name: "Missing", value: missingCount, color: "#ef4444" },
-    { name: "Graded", value: gradedCount, color: "#10b981" },
+    { name: language === "bn" ? "সময়মতো জমা" : "On-Time Submission", value: onTimeCount, color: "#2563eb" },
+    { name: language === "bn" ? "বিলম্বিত জমা" : "Late Submission", value: lateCount, color: "#f59e0b" },
+    { name: language === "bn" ? "অনুপস্থিত/বাকি" : "Missing", value: missingCount, color: "#ef4444" },
+    { name: language === "bn" ? "মূল্যায়িত" : "Graded", value: gradedCount, color: "#10b981" },
   ];
 
   const total = chartData.reduce((sum, item) => sum + item.value, 0);
@@ -297,10 +302,10 @@ export function SubmissionPieChart({
   return (
     <div className={cardBase}>
       <CardHeader
-        title="Submission Status"
-        subtitle="Overall distribution"
+        title={language === "bn" ? "সাবমিশনের অবস্থা" : "Submission Status"}
+        subtitle={language === "bn" ? "সামগ্রিক বণ্টন" : "Overall distribution"}
         icon={PieChartIcon}
-        badgeText={`${total} total`}
+        badgeText={language === "bn" ? `মোট ${total} টি` : `${total} total`}
         classFilter={classFilter}
         onClassChange={onClassChange}
         subjectFilter={subjectFilter}
