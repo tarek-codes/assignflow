@@ -3,6 +3,8 @@ using AssignmentManagement.Application.Common;
 using AssignmentManagement.Application.DTOs.Subjects;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Entities;
+using AssignmentManagement.Application.Abstractions.Services;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Moq;
 using Xunit;
 
@@ -16,7 +18,7 @@ public class SubjectServiceTests
     public SubjectServiceTests()
     {
         _repositoryMock = new Mock<ISubjectRepository>();
-        _subjectService = new SubjectService(_repositoryMock.Object);
+        _subjectService = new SubjectService(_repositoryMock.Object, new PassThroughCacheService());
     }
 
     // Test Name: SubjectService - GetSubjectsAsync Returns Mapped Paged Result

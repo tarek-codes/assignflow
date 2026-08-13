@@ -5,6 +5,7 @@ using AssignmentManagement.Application.DTOs.Classes;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Entities;
 using AssignmentManagement.Domain.Enums;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Moq;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class ClassServiceTests
     {
         _repositoryMock = new Mock<IClassRepository>();
         _currentUserServiceMock = new Mock<ICurrentUserService>();
-        _classService = new ClassService(_repositoryMock.Object, _currentUserServiceMock.Object);
+        _classService = new ClassService(_repositoryMock.Object, _currentUserServiceMock.Object, new PassThroughCacheService());
     }
 
     // Test Name: ClassService - GetClassesAsync Returns Paged List For Admin User

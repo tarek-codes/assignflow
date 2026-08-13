@@ -4,6 +4,7 @@ using AssignmentManagement.Application.Common;
 using AssignmentManagement.Application.DTOs.Dashboard;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Enums;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Moq;
 using Xunit;
 
@@ -19,7 +20,7 @@ public class DashboardServiceTests
     {
         _repoMock = new Mock<IDashboardRepository>();
         _currentUserServiceMock = new Mock<ICurrentUserService>();
-        _dashboardService = new DashboardService(_repoMock.Object, _currentUserServiceMock.Object);
+        _dashboardService = new DashboardService(_repoMock.Object, _currentUserServiceMock.Object, new PassThroughCacheService());
     }
 
     [Fact]

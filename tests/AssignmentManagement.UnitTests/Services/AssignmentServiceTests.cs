@@ -5,6 +5,7 @@ using AssignmentManagement.Application.DTOs.Assignments;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Entities;
 using AssignmentManagement.Domain.Enums;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -27,6 +28,7 @@ public class AssignmentServiceTests
         _assignmentService = new AssignmentService(
             _repositoryMock.Object,
             _currentUserServiceMock.Object,
+            new PassThroughCacheService(),
             _loggerMock.Object);
     }
 

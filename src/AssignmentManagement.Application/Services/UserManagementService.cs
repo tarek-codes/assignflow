@@ -15,17 +15,33 @@ public sealed class UserManagementService : IUserManagementService
 {
     private readonly IUserManagementRepository _repository;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly ICacheService _cache;
 
-    public UserManagementService(IUserManagementRepository repository, IPasswordHasher passwordHasher)
+    public UserManagementService(
+        IUserManagementRepository repository,
+        IPasswordHasher passwordHasher,
+        ICacheService cache)
     {
         _repository = repository;
         _passwordHasher = passwordHasher;
+        _cache = cache;
     }
 
-    public async Task<PagedResult<UserListItemDto>> GetUsersAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<UserListItemDto>> GetUsersAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
-        var result = await _repository.GetUsersAsync(query, cancellationToken);
-        return new PagedResult<UserListItemDto>(result.Items.Select(MapUserListItem).ToList(), result.PageNumber, result.PageSize, result.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Users(query),
+            async () =>
+            {
+                var result = await _repository.GetUsersAsync(query, cancellationToken);
+                return new PagedResult<UserListItemDto>(
+                    result.Items.Select(MapUserListItem).ToList(),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<UserDetailDto?> GetUserAsync(int id, CancellationToken cancellationToken = default)
@@ -53,6 +69,7 @@ public sealed class UserManagementService : IUserManagementService
 
         await _repository.AddAsync(user, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapUserDetail(user);
     }
@@ -74,6 +91,7 @@ public sealed class UserManagementService : IUserManagementService
         user.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapUserDetail(user);
     }
@@ -90,13 +108,25 @@ public sealed class UserManagementService : IUserManagementService
         user.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
         return true;
     }
 
-    public async Task<PagedResult<TeacherListItemDto>> GetTeachersAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<TeacherListItemDto>> GetTeachersAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
-        var result = await _repository.GetTeachersAsync(query, cancellationToken);
-        return new PagedResult<TeacherListItemDto>(result.Items.Select(MapTeacherListItem).ToList(), result.PageNumber, result.PageSize, result.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Teachers(query),
+            async () =>
+            {
+                var result = await _repository.GetTeachersAsync(query, cancellationToken);
+                return new PagedResult<TeacherListItemDto>(
+                    result.Items.Select(MapTeacherListItem).ToList(),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<TeacherDetailDto?> GetTeacherAsync(int id, CancellationToken cancellationToken = default)
@@ -180,6 +210,7 @@ public sealed class UserManagementService : IUserManagementService
         }
 
         teacher.User = user;
+        await InvalidateCacheAsync(cancellationToken);
         return MapTeacherDetail(teacher);
     }
 
@@ -201,6 +232,7 @@ public sealed class UserManagementService : IUserManagementService
         teacher.Designation = request.Designation;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapTeacherDetail(teacher);
     }
@@ -217,13 +249,25 @@ public sealed class UserManagementService : IUserManagementService
         teacher.User.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
         return true;
     }
 
-    public async Task<PagedResult<StudentListItemDto>> GetStudentsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<StudentListItemDto>> GetStudentsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
-        var result = await _repository.GetStudentsAsync(query, cancellationToken);
-        return new PagedResult<StudentListItemDto>(result.Items.Select(MapStudentListItem).ToList(), result.PageNumber, result.PageSize, result.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Students(query),
+            async () =>
+            {
+                var result = await _repository.GetStudentsAsync(query, cancellationToken);
+                return new PagedResult<StudentListItemDto>(
+                    result.Items.Select(MapStudentListItem).ToList(),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<StudentDetailDto?> GetStudentAsync(int id, CancellationToken cancellationToken = default)
@@ -264,6 +308,7 @@ public sealed class UserManagementService : IUserManagementService
         await _repository.SaveChangesAsync(cancellationToken);
 
         student.User = user;
+        await InvalidateCacheAsync(cancellationToken);
         return MapStudentDetail(student);
     }
 
@@ -286,6 +331,7 @@ public sealed class UserManagementService : IUserManagementService
         student.ClassLevel = request.ClassLevel;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapStudentDetail(student);
     }
@@ -302,6 +348,7 @@ public sealed class UserManagementService : IUserManagementService
         student.User.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
         return true;
     }
 
@@ -346,6 +393,7 @@ public sealed class UserManagementService : IUserManagementService
         await _repository.SaveChangesAsync(cancellationToken);
 
         admin.User = user;
+        await InvalidateCacheAsync(cancellationToken);
         return MapAdminDetail(admin);
     }
 
@@ -366,6 +414,7 @@ public sealed class UserManagementService : IUserManagementService
         admin.User.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
 
         return MapAdminDetail(admin);
     }
@@ -382,8 +431,12 @@ public sealed class UserManagementService : IUserManagementService
         admin.User.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await InvalidateCacheAsync(cancellationToken);
         return true;
     }
+
+    private Task InvalidateCacheAsync(CancellationToken cancellationToken) =>
+        CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
     private async Task EnsureEmailAvailableAsync(string email, int? excludeUserId, CancellationToken cancellationToken)
     {

@@ -10,10 +10,12 @@ namespace AssignmentManagement.Application.Services;
 public sealed class SubjectService : ISubjectService
 {
     private readonly ISubjectRepository _repository;
+    private readonly ICacheService _cache;
 
-    public SubjectService(ISubjectRepository repository)
+    public SubjectService(ISubjectRepository repository, ICacheService cache)
     {
         _repository = repository;
+        _cache = cache;
     }
 
     public async Task<PagedResult<SubjectListItemDto>> GetSubjectsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
@@ -41,6 +43,7 @@ public sealed class SubjectService : ISubjectService
 
         await _repository.AddAsync(subject, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return SubjectMapping.ToDetailDto(subject);
     }
@@ -60,6 +63,7 @@ public sealed class SubjectService : ISubjectService
         subject.Description = request.Description;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return SubjectMapping.ToDetailDto(subject);
     }
@@ -79,6 +83,7 @@ public sealed class SubjectService : ISubjectService
 
         _repository.Remove(subject);
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return true;
     }

@@ -6,6 +6,7 @@ using AssignmentManagement.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace AssignmentManagement.Infrastructure;
 
@@ -20,6 +21,8 @@ public static class DependencyInjection
         {
             options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
         });
+
+        AddCaching(services, configuration);
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -36,5 +39,27 @@ public static class DependencyInjection
         services.AddScoped<IStorageService, StorageService>();
 
         return services;
+    }
+
+    private static void AddCaching(IServiceCollection services, IConfiguration configuration)
+    {
+        var redisConnection = configuration.GetConnectionString("Redis")
+            ?? configuration["Redis:ConnectionString"];
+
+        if (!string.IsNullOrWhiteSpace(redisConnection))
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redisConnection;
+                options.InstanceName = configuration["Redis:InstanceName"] ?? "assignflow:";
+            });
+            services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnection));
+        }
+        else
+        {
+            services.AddDistributedMemoryCache();
+        }
+
+        services.AddSingleton<ICacheService, DistributedCacheService>();
     }
 }

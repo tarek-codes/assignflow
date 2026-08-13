@@ -5,6 +5,7 @@ using AssignmentManagement.Application.DTOs.Submissions;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Entities;
 using AssignmentManagement.Domain.Enums;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -34,6 +35,7 @@ public class SubmissionServiceTests
             _assignmentRepoMock.Object,
             _storageServiceMock.Object,
             _currentUserServiceMock.Object,
+            new PassThroughCacheService(),
             _loggerMock.Object);
     }
 

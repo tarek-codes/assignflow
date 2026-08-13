@@ -13,18 +13,31 @@ public sealed class ClassService : IClassService
 {
     private readonly IClassRepository _repository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly ICacheService _cache;
 
-    public ClassService(IClassRepository repository, ICurrentUserService currentUserService)
+    public ClassService(IClassRepository repository, ICurrentUserService currentUserService, ICacheService cache)
     {
         _repository = repository;
         _currentUserService = currentUserService;
+        _cache = cache;
     }
 
-    public async Task<PagedResult<ClassListItemDto>> GetClassesAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<ClassListItemDto>> GetClassesAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
         int? teacherUserId = _currentUserService.Role == UserRole.Teacher ? _currentUserService.UserId : null;
-        var result = await _repository.GetClassesAsync(query, teacherUserId, cancellationToken);
-        return new PagedResult<ClassListItemDto>(result.Items.Select(ClassMapping.ToListItemDto).ToList(), result.PageNumber, result.PageSize, result.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Classes(query, teacherUserId),
+            async () =>
+            {
+                var result = await _repository.GetClassesAsync(query, teacherUserId, cancellationToken);
+                return new PagedResult<ClassListItemDto>(
+                    result.Items.Select(ClassMapping.ToListItemDto).ToList(),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<ClassDetailDto?> GetClassAsync(int id, CancellationToken cancellationToken = default)
@@ -52,6 +65,7 @@ public sealed class ClassService : IClassService
 
         await _repository.AddAsync(@class, cancellationToken);
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return await ReloadAndMapAsync(@class.Id, cancellationToken);
     }
@@ -75,6 +89,7 @@ public sealed class ClassService : IClassService
         @class.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return await ReloadAndMapAsync(@class.Id, cancellationToken);
     }
@@ -94,6 +109,7 @@ public sealed class ClassService : IClassService
         @class.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return await ReloadAndMapAsync(@class.Id, cancellationToken);
     }
@@ -112,6 +128,7 @@ public sealed class ClassService : IClassService
         @class.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         return await ReloadAndMapAsync(@class.Id, cancellationToken);
     }
@@ -126,6 +143,7 @@ public sealed class ClassService : IClassService
 
         _repository.Remove(@class);
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
         return true;
     }
 

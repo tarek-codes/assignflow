@@ -13,23 +13,37 @@ public sealed class AssignmentService : IAssignmentService
 {
     private readonly IAssignmentRepository _repository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly ICacheService _cache;
     private readonly ILogger<AssignmentService> _logger;
 
     public AssignmentService(
         IAssignmentRepository repository,
         ICurrentUserService currentUserService,
+        ICacheService cache,
         ILogger<AssignmentService> logger)
     {
         _repository = repository;
         _currentUserService = currentUserService;
+        _cache = cache;
         _logger = logger;
     }
 
-    public async Task<PagedResult<AssignmentListItemDto>> GetAssignmentsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<AssignmentListItemDto>> GetAssignmentsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
         int? teacherUserId = _currentUserService.Role == UserRole.Teacher ? _currentUserService.UserId : null;
-        var result = await _repository.GetAssignmentsAsync(teacherUserId, query, cancellationToken);
-        return new PagedResult<AssignmentListItemDto>(result.Items.Select(AssignmentMapping.ToListItemDto).ToList(), result.PageNumber, result.PageSize, result.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Assignments(query, teacherUserId),
+            async () =>
+            {
+                var result = await _repository.GetAssignmentsAsync(teacherUserId, query, cancellationToken);
+                return new PagedResult<AssignmentListItemDto>(
+                    result.Items.Select(AssignmentMapping.ToListItemDto).ToList(),
+                    result.PageNumber,
+                    result.PageSize,
+                    result.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<AssignmentDetailDto?> GetAssignmentAsync(int id, CancellationToken cancellationToken = default)
@@ -74,6 +88,8 @@ public sealed class AssignmentService : IAssignmentService
 
         _logger.LogInformation("Assignment {AssignmentId} '{Title}' created for Class {ClassId} by Teacher User {TeacherUserId}", assignment.Id, assignment.Title, assignment.ClassId, teacherUserId);
 
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
+
         // Re-fetch with navigation properties for proper DTO mapping
         var created = await _repository.GetAssignmentAsync(assignment.Id, cancellationToken: cancellationToken) ?? assignment;
         return AssignmentMapping.ToDetailDto(created);
@@ -105,6 +121,8 @@ public sealed class AssignmentService : IAssignmentService
 
         _logger.LogInformation("Assignment {AssignmentId} '{Title}' updated by Teacher User {TeacherUserId}", assignment.Id, assignment.Title, teacherUserId);
 
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
+
         assignment.Class = classEntity;
         return AssignmentMapping.ToDetailDto(assignment);
     }
@@ -122,6 +140,7 @@ public sealed class AssignmentService : IAssignmentService
         assignment.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
         return AssignmentMapping.ToDetailDto(assignment);
     }
 
@@ -137,6 +156,7 @@ public sealed class AssignmentService : IAssignmentService
         assignment.UpdatedAtUtc = DateTime.UtcNow;
 
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
         return AssignmentMapping.ToDetailDto(assignment);
     }
 
@@ -150,6 +170,7 @@ public sealed class AssignmentService : IAssignmentService
 
         _repository.Remove(assignment);
         await _repository.SaveChangesAsync(cancellationToken);
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
         return true;
     }
 

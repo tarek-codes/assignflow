@@ -15,6 +15,7 @@ public sealed class SubmissionService : ISubmissionService
     private readonly IAssignmentRepository _assignmentRepository;
     private readonly IStorageService _storageService;
     private readonly ICurrentUserService _currentUserService;
+    private readonly ICacheService _cache;
     private readonly ILogger<SubmissionService> _logger;
 
     public SubmissionService(
@@ -22,12 +23,14 @@ public sealed class SubmissionService : ISubmissionService
         IAssignmentRepository assignmentRepository,
         IStorageService storageService,
         ICurrentUserService currentUserService,
+        ICacheService cache,
         ILogger<SubmissionService> logger)
     {
         _submissionRepository = submissionRepository;
         _assignmentRepository = assignmentRepository;
         _storageService = storageService;
         _currentUserService = currentUserService;
+        _cache = cache;
         _logger = logger;
     }
 
@@ -100,6 +103,8 @@ public sealed class SubmissionService : ISubmissionService
 
         _logger.LogInformation("Submission {SubmissionId} uploaded for Assignment {AssignmentId} by Student {StudentId} (User {UserId})", existingSubmission.Id, assignmentId, student.Id, currentUserId);
 
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
+
         var reloaded = await _submissionRepository.GetByIdAsync(existingSubmission.Id, cancellationToken: cancellationToken);
         return SubmissionMapping.ToDetailDto(reloaded ?? existingSubmission);
     }
@@ -114,15 +119,22 @@ public sealed class SubmissionService : ISubmissionService
         return submission == null ? null : SubmissionMapping.ToDetailDto(submission);
     }
 
-    public async Task<PagedResult<SubmissionListItemDto>> GetMySubmissionsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<SubmissionListItemDto>> GetMySubmissionsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
         var currentUserId = GetCurrentUserId();
-        var pagedResult = await _submissionRepository.GetSubmissionsByStudentUserAsync(currentUserId, query, cancellationToken);
-        return new PagedResult<SubmissionListItemDto>(
-            pagedResult.Items.Select(SubmissionMapping.ToListItemDto).ToList(),
-            pagedResult.PageNumber,
-            pagedResult.PageSize,
-            pagedResult.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.MySubmissions(currentUserId, query),
+            async () =>
+            {
+                var pagedResult = await _submissionRepository.GetSubmissionsByStudentUserAsync(currentUserId, query, cancellationToken);
+                return new PagedResult<SubmissionListItemDto>(
+                    pagedResult.Items.Select(SubmissionMapping.ToListItemDto).ToList(),
+                    pagedResult.PageNumber,
+                    pagedResult.PageSize,
+                    pagedResult.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<PagedResult<SubmissionListItemDto>> GetSubmissionsForAssignmentAsync(int assignmentId, PaginationQueryDto query, CancellationToken cancellationToken = default)
@@ -144,15 +156,22 @@ public sealed class SubmissionService : ISubmissionService
             pagedResult.TotalCount);
     }
 
-    public async Task<PagedResult<SubmissionListItemDto>> GetAllSubmissionsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
+    public Task<PagedResult<SubmissionListItemDto>> GetAllSubmissionsAsync(PaginationQueryDto query, CancellationToken cancellationToken = default)
     {
         int? teacherUserId = _currentUserService.Role == UserRole.Teacher ? _currentUserService.UserId : null;
-        var pagedResult = await _submissionRepository.GetAllSubmissionsAsync(query, teacherUserId, cancellationToken);
-        return new PagedResult<SubmissionListItemDto>(
-            pagedResult.Items.Select(SubmissionMapping.ToListItemDto).ToList(),
-            pagedResult.PageNumber,
-            pagedResult.PageSize,
-            pagedResult.TotalCount);
+        return _cache.GetOrSetAsync(
+            CacheKeys.Submissions(query, teacherUserId),
+            async () =>
+            {
+                var pagedResult = await _submissionRepository.GetAllSubmissionsAsync(query, teacherUserId, cancellationToken);
+                return new PagedResult<SubmissionListItemDto>(
+                    pagedResult.Items.Select(SubmissionMapping.ToListItemDto).ToList(),
+                    pagedResult.PageNumber,
+                    pagedResult.PageSize,
+                    pagedResult.TotalCount);
+            },
+            CacheTtl.List,
+            cancellationToken);
     }
 
     public async Task<SubmissionDetailDto?> GetSubmissionByIdAsync(int submissionId, CancellationToken cancellationToken = default)
@@ -195,6 +214,8 @@ public sealed class SubmissionService : ISubmissionService
 
         _logger.LogInformation("Submission {SubmissionId} graded with {Marks}/{MaxMarks} marks by User {TeacherUserId}", submissionId, request.Marks, maxMarks, currentUserId);
 
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
+
         var reloaded = await _submissionRepository.GetByIdAsync(submissionId, cancellationToken: cancellationToken);
         return SubmissionMapping.ToDetailDto(reloaded ?? submission);
     }
@@ -214,6 +235,8 @@ public sealed class SubmissionService : ISubmissionService
         submission.UpdatedAtUtc = DateTime.UtcNow;
 
         await _submissionRepository.SaveChangesAsync(cancellationToken);
+
+        await CacheInvalidation.OnDashboardDataChangedAsync(_cache, cancellationToken);
 
         var reloaded = await _submissionRepository.GetByIdAsync(submissionId, cancellationToken: cancellationToken);
         return SubmissionMapping.ToDetailDto(reloaded ?? submission);

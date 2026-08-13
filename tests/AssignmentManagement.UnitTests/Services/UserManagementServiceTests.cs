@@ -5,6 +5,7 @@ using AssignmentManagement.Application.DTOs.Users;
 using AssignmentManagement.Application.Services;
 using AssignmentManagement.Domain.Entities;
 using AssignmentManagement.Domain.Enums;
+using AssignmentManagement.UnitTests.TestHelpers;
 using Moq;
 using Xunit;
 
@@ -20,7 +21,7 @@ public class UserManagementServiceTests
     {
         _repositoryMock = new Mock<IUserManagementRepository>();
         _passwordHasherMock = new Mock<IPasswordHasher>();
-        _userService = new UserManagementService(_repositoryMock.Object, _passwordHasherMock.Object);
+        _userService = new UserManagementService(_repositoryMock.Object, _passwordHasherMock.Object, new PassThroughCacheService());
     }
 
     // Test Name: UserManagementService - GetUsersAsync Returns Paged Users List

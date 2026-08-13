@@ -1,5 +1,12 @@
 # Render Blueprint configuration for AssignFlow Backend API
 services:
+  - type: keyvalue
+    name: assignflow-redis
+    plan: free
+    region: singapore
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
   - type: web
     name: assignflow-api
     runtime: docker
@@ -13,6 +20,13 @@ services:
         value: Production
       - key: ConnectionStrings__DefaultConnection
         value: Host=ep-rapid-voice-azepmkjl.c-3.ap-southeast-1.aws.neon.tech;Port=5432;Database=neondb;Username=neondb_owner;Password=npg_ZQS3lkUAgiE0;SSL Mode=Require;Trust Server Certificate=true
+      - key: ConnectionStrings__Redis
+        fromService:
+          type: keyvalue
+          name: assignflow-redis
+          property: connectionString
+      - key: Redis__InstanceName
+        value: assignflow:
       - key: Jwt__Secret
         value: AssignmentManagement_SuperStrongSecretKey_2026_With_More_Than_256_Bits!
       - key: Jwt__Issuer
