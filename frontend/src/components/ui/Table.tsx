@@ -13,7 +13,7 @@ export function Table({ className, children, ...props }: React.TableHTMLAttribut
 
 export function TableHeader({ className, children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
-    <thead className={cn("bg-slate-950 dark:bg-slate-900 text-white text-xs font-bold uppercase tracking-wider sticky top-0 z-10 divide-x divide-slate-700/60", className)} {...props}>
+    <thead className={cn("bg-slate-950 dark:bg-slate-900 text-white text-xs font-bold uppercase tracking-wider sticky top-0 z-10 divide-x divide-black dark:divide-slate-700/60", className)} {...props}>
       {children}
     </thead>
   );
@@ -25,7 +25,7 @@ export function TableBody({ className, children, ...props }: React.HTMLAttribute
 
 export function TableRow({ className, children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {
   return (
-    <tr className={cn("hover:bg-slate-50/80 dark:hover:bg-slate-700/40 transition-colors duration-150 divide-x divide-slate-100 dark:divide-slate-700/50", className)} {...props}>
+    <tr className={cn("hover:bg-slate-50/80 dark:hover:bg-slate-700/40 transition-colors duration-150 divide-x divide-black dark:divide-slate-700/50", className)} {...props}>
       {children}
     </tr>
   );

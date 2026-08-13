@@ -1014,7 +1014,15 @@ export function AdminDashboardView() {
                   ) : (
                     paginatedAssignments.map((a) => (
                       <TableRow key={a.id}>
-                        <TableCell className="font-medium">{a.title}</TableCell>
+                        <TableCell>
+                          <Link
+                            href={ROUTES.ASSIGNMENT_DETAILS(a.id)}
+                            className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
+                          >
+                            <span>{a.title}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                          </Link>
+                        </TableCell>
                         <TableCell>Class {a.classLevel} · {a.subjectName}</TableCell>
                         <TableCell className="text-slate-500 dark:text-slate-400">{a.teacherName || "Teacher"}</TableCell>
                         <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.createdAtUtc)}</TableCell>
@@ -1058,7 +1066,15 @@ export function AdminDashboardView() {
                     paginatedSubmissions.map((sub) => (
                       <TableRow key={sub.id}>
                         <TableCell className="text-slate-500 dark:text-slate-400">{sub.classSubject || "Class 9 · Physics"}</TableCell>
-                        <TableCell className="font-medium">{sub.assignmentTitle}</TableCell>
+                        <TableCell>
+                          <Link
+                            href={sub.assignmentId ? ROUTES.ASSIGNMENT_DETAILS(sub.assignmentId) : ROUTES.SUBMISSION_DETAILS(sub.id)}
+                            className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
+                          >
+                            <span>{sub.assignmentTitle}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                          </Link>
+                        </TableCell>
                         <TableCell>{sub.studentName} <span className="text-xs text-slate-400">({sub.studentNumber})</span></TableCell>
                         <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(sub.submittedAtUtc)}</TableCell>
                         <TableCell className="tabular-nums font-medium">

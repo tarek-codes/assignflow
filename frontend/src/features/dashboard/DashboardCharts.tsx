@@ -224,9 +224,7 @@ export function AssignmentsBarChart({
                   barSize={36}
                   label={{
                     position: "top",
-                    fill: "#1e293b",
-                    fontSize: 11,
-                    fontWeight: 700,
+                    className: "fill-slate-800 dark:fill-white text-[11px] font-bold",
                     formatter: (val: any) => (val && Number(val) > 0 ? String(val) : ""),
                   }}
                 />
