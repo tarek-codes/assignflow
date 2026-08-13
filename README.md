@@ -125,7 +125,7 @@ cd assignflow
 }
 ```
 
-2. Run the ASP.NET Core Web API:
+2. Run the ASP.NET Core Web API (see [Database Setup](#3-database-setup) first if PostgreSQL is not installed yet):
 
 ```bash
 dotnet run --project src/AssignmentManagement.Api/AssignmentManagement.Api.csproj
@@ -134,11 +134,81 @@ dotnet run --project src/AssignmentManagement.Api/AssignmentManagement.Api.cspro
 The API will listen on: `http://localhost:5196`  
 Swagger Documentation: `http://localhost:5196/swagger`
 
-> **Note:** Database tables and initial seed data are populated automatically on application startup.
+> **Note:** Database tables and initial seed data are populated automatically on application startup via `DbInitializer`.
 
 ---
 
-### 3. Frontend Setup
+### 3. Database Setup
+
+AssignFlow uses **PostgreSQL 15+** with **Entity Framework Core** (code-first). There are no manual SQL scripts — the API creates the schema and seeds demo data when it starts.
+
+#### Option A: Local PostgreSQL (recommended for development)
+
+1. **Install PostgreSQL**  
+   Download from [postgresql.org](https://www.postgresql.org/download/) (Windows/macOS/Linux) or use Docker:
+
+   ```bash
+   docker run --name assignflow-postgres -e POSTGRES_PASSWORD=your_password -e POSTGRES_DB=assignflow -p 5432:5432 -d postgres:15
+   ```
+
+2. **Create a database** (skip if using the Docker command above — it already creates `assignflow`):
+
+   ```sql
+   CREATE DATABASE assignflow;
+   ```
+
+3. **Set the connection string** in `src/AssignmentManagement.Api/appsettings.json`:
+
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Host=localhost;Port=5432;Database=assignflow;Username=postgres;Password=your_password"
+   }
+   ```
+
+4. **Start the API** — on first run, EF Core creates all tables and seeds the demo dataset:
+
+   ```bash
+   dotnet run --project src/AssignmentManagement.Api/AssignmentManagement.Api.csproj
+   ```
+
+#### Option B: Cloud PostgreSQL (Neon — used in production)
+
+1. Create a free project at [Neon.tech](https://neon.tech).
+2. Create a PostgreSQL database and copy the **connection string**.
+3. Paste it into `appsettings.json` (or set `ConnectionStrings__DefaultConnection` as an environment variable on Render/Railway):
+
+   ```text
+   Host=ep-xxxx.region.aws.neon.tech;Port=5432;Database=neondb;Username=your_user;Password=your_password;SSL Mode=Require;Trust Server Certificate=true
+   ```
+
+#### What gets created automatically
+
+| Item | Details |
+|------|---------|
+| **Schema** | All tables (`users`, `teachers`, `students`, `classes`, `assignments`, `submissions`, etc.) via `EnsureCreatedAsync` |
+| **Seed data** | 1 Admin, 20 Teachers, 100 Students (Class 6–12), 36 Subjects, class assignments, graded & pending submissions |
+| **Demo logins** | See [Demo Credentials](#-demo-credentials) — all use password `Password123!` |
+
+> **Important:** On each API startup, `DbInitializer` **resets and re-seeds** the database to guarantee a consistent demo environment. Do not use this behavior for production data you need to keep — configure a separate initializer strategy before go-live.
+
+#### Optional: Redis (API response caching)
+
+For faster dashboards and list endpoints in production, connect a Redis instance and add to `appsettings.json` or environment variables:
+
+```json
+"ConnectionStrings": {
+  "Redis": "redis://your-redis-host:6379"
+},
+"Redis": {
+  "InstanceName": "assignflow:"
+}
+```
+
+If Redis is not configured, the API falls back to in-memory caching locally.
+
+---
+
+### 4. Frontend Setup
 
 1. Navigate to the `frontend` folder and install dependencies:
 
