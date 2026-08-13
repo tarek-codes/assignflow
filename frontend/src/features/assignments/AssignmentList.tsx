@@ -44,7 +44,6 @@ export function AssignmentList() {
 
   const allAssignments = assignmentsData?.items || [];
   const totalCount = assignmentsData?.totalCount || 0;
-  const totalPages = assignmentsData?.totalPages || Math.ceil(totalCount / pageSize) || 1;
 
   // Unique lists from data
   const allClassLevels = useMemo(() => {
