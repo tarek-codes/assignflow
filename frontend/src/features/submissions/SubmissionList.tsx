@@ -109,7 +109,9 @@ export function SubmissionList() {
   }, [allSubmissions]);
 
   const allClassLevels = useMemo(() => {
-    const levels = Array.from(new Set(parsedItemsMap.map((p) => p.parsed.classLevel).filter(Boolean)));
+    const levels = Array.from(
+      new Set([6, 7, 8, 9, 10, 11, 12, ...parsedItemsMap.map((p) => p.parsed.classLevel).filter(Boolean)])
+    );
     return levels.sort((a, b) => a - b);
   }, [parsedItemsMap]);
 

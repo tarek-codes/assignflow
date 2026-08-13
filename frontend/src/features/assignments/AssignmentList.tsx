@@ -45,9 +45,11 @@ export function AssignmentList() {
   const allAssignments = assignmentsData?.items || [];
   const totalCount = assignmentsData?.totalCount || 0;
 
-  // Unique lists from data
+  // Unique lists from data (always guarantees full standard class levels 6 to 12)
   const allClassLevels = useMemo(() => {
-    const levels = Array.from(new Set(allAssignments.map((a) => a.classLevel).filter(Boolean)));
+    const levels = Array.from(
+      new Set([6, 7, 8, 9, 10, 11, 12, ...allAssignments.map((a) => a.classLevel).filter(Boolean)])
+    );
     return levels.sort((a, b) => a - b);
   }, [allAssignments]);
 
