@@ -40,7 +40,6 @@ export function AssignmentList() {
       return await assignmentService.getAllAssignments();
     }
   );
-  const totalCount = assignmentsData?.totalCount || 0;
 
   // Unique lists from data (always guarantees full standard class levels 6 to 12)
   const allClassLevels = useMemo(() => {
@@ -228,7 +227,6 @@ export function AssignmentList() {
             <option value="closed">Closed</option>
           </select>
 
-          {/* RESET BUTTON */}
           {isFiltered && (
             <Button
               variant="ghost"
