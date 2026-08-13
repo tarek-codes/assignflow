@@ -289,7 +289,7 @@ export function AssignmentList() {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <Badge variant="secondary" className={getClassSolidBadge(ass.classLevel)}>
+                    <Badge variant="default" className={getClassSolidBadge(ass.classLevel)}>
                       Class {ass.classLevel}
                     </Badge>
                   </TableCell>
