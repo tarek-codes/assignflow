@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getCached, invalidateCached, setCached } from "@/lib/dataCache";
 
 type UseCachedDataOptions = {
   enabled?: boolean;
@@ -9,7 +8,7 @@ type UseCachedDataOptions = {
 };
 
 export function useCachedData<T>(
-  key: string,
+  _key: string,
   fetcher: () => Promise<T>,
   options?: UseCachedDataOptions
 ) {
@@ -18,31 +17,22 @@ export function useCachedData<T>(
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
 
-  const [data, setData] = useState<T | undefined>(() => (enabled ? getCached<T>(key) : undefined));
-  const [isLoading, setIsLoading] = useState(enabled && getCached<T>(key) === undefined);
+  const [data, setData] = useState<T | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(enabled);
 
   const refetch = useCallback(async () => {
-    invalidateCached(key);
     setIsLoading(true);
     try {
       const result = await fetcherRef.current();
-      setCached(key, result);
       setData(result);
       return result;
     } finally {
       setIsLoading(false);
     }
-  }, [key]);
+  }, []);
 
   useEffect(() => {
     if (!enabled) {
-      setIsLoading(false);
-      return;
-    }
-
-    const cached = getCached<T>(key);
-    if (cached !== undefined) {
-      setData(cached);
       setIsLoading(false);
       return;
     }
@@ -54,7 +44,6 @@ export function useCachedData<T>(
       .current()
       .then((result) => {
         if (cancelled) return;
-        setCached(key, result);
         setData(result);
       })
       .catch(() => {})
@@ -65,9 +54,10 @@ export function useCachedData<T>(
     return () => {
       cancelled = true;
     };
-  }, [enabled, key, ...deps]);
+  }, [enabled, ...deps]);
 
   return { data, isLoading, refetch };
 }
 
-export { invalidateCached, invalidateCachedPrefix } from "@/lib/dataCache";
+export function invalidateCached(_key: string) {}
+export function invalidateCachedPrefix(_prefix: string) {}

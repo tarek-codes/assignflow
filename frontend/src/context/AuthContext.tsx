@@ -2,19 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authService } from "@/services/authService";
-import { dashboardService } from "@/services/dashboardService";
-import { setCached } from "@/lib/dataCache";
 import { AuthResponse, LoginRequest, User } from "@/types/auth";
-
-function prefetchDashboardData(role: string) {
-  if (role === "Admin") {
-    dashboardService.getAdminDashboard().then((res) => setCached("dashboard:admin", res)).catch(() => {});
-  } else if (role === "Teacher") {
-    dashboardService.getTeacherDashboard().then((res) => setCached("dashboard:teacher", res)).catch(() => {});
-  } else if (role === "Student") {
-    dashboardService.getStudentDashboard().then((res) => setCached("dashboard:student", res)).catch(() => {});
-  }
-}
 
 interface AuthContextType {
   user: User | null;
@@ -76,9 +64,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setAccessToken(response.accessToken);
     setUser(userData);
-
-    // Warm up background memory cache for dashboards & common lists
-    prefetchDashboardData(response.role);
 
     return response;
   };
