@@ -20,7 +20,7 @@ export function TableHeader({ className, children, ...props }: React.HTMLAttribu
 }
 
 export function TableBody({ className, children, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  return <tbody className={cn("divide-y divide-slate-100 dark:divide-slate-700/50 text-slate-800 dark:text-slate-200", className)} {...props}>{children}</tbody>;
+  return <tbody className={cn("divide-y divide-black dark:divide-slate-700/50 text-slate-800 dark:text-slate-200", className)} {...props}>{children}</tbody>;
 }
 
 export function TableRow({ className, children, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {
