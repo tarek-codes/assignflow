@@ -73,16 +73,20 @@ export function useCachedData<T>(
       return;
     }
 
-    // If cache is valid, skip fetching completely on tab switch!
+    // Stale-While-Revalidate (SWR): if cache is valid or present, serve it immediately
     const currentCached = memoryCache.get(key);
-    if (currentCached && Date.now() - currentCached.timestamp < ttlMs) {
+    const isFresh = currentCached && Date.now() - currentCached.timestamp < ttlMs;
+
+    if (currentCached) {
       setData(currentCached.data as T);
       setIsLoading(false);
-      return;
+      // If data is still fresh within TTL, don't trigger background revalidation
+      if (isFresh) return;
+    } else {
+      setIsLoading(true);
     }
 
     let cancelled = false;
-    setIsLoading(true);
     setError(null);
 
     fetchWithRetry(maxRetries)
@@ -92,7 +96,10 @@ export function useCachedData<T>(
       })
       .catch((err) => {
         if (cancelled) return;
-        setError(err instanceof Error ? err : new Error("Failed to fetch data"));
+        // Only surface error if there was no stale cached data to show
+        if (!currentCached) {
+          setError(err instanceof Error ? err : new Error("Failed to fetch data"));
+        }
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);

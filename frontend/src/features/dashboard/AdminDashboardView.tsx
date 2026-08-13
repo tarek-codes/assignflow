@@ -59,20 +59,20 @@ export function AdminDashboardView() {
     pieClassFilter !== "all" || pieSubjectFilter !== "all" || activeModal === "submissions";
 
   const { data, isLoading, error, refetch: refetchDashboard } = useCachedData("dashboard:admin", () => dashboardService.getAdminDashboard());
-  const { data: rawAssignments = [] } = useCachedData<AssignmentListItem[]>(
-    "assignments:summary",
+  const { data: summaryData } = useCachedData(
+    "admin:summary_details",
     async () => {
-      return await assignmentService.getAllAssignments();
+      const [assignments, submissions] = await Promise.all([
+        assignmentService.getAllAssignments(),
+        submissionService.getAllSubmissionsFull(),
+      ]);
+      return { assignments, submissions };
     },
-    { enabled: needsAssignmentDetails }
+    { enabled: needsAssignmentDetails || needsSubmissionDetails }
   );
-  const { data: rawSubmissions = [] } = useCachedData<SubmissionListItem[]>(
-    "submissions:summary",
-    async () => {
-      return await submissionService.getAllSubmissionsFull();
-    },
-    { enabled: needsSubmissionDetails }
-  );
+
+  const rawAssignments = summaryData?.assignments || [];
+  const rawSubmissions = summaryData?.submissions || [];
   const { data: allUsers = [], isLoading: usersPending } = useCachedData<UserListItem[]>(
     "users:all",
     () => userService.getAllUsers(),
