@@ -75,18 +75,23 @@ export function SubmissionList() {
     ? "Review and grade student submissions for your classrooms"
     : "Audit student submissions across classrooms";
 
-  const submissionCacheKey = isStudent ? "submissions:mine:list" : "submissions:all:list";
-  const { data: allSubmissions = [], isLoading } = useCachedData<SubmissionListItem[]>(
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
+  const submissionCacheKey = isStudent ? `submissions:mine:list:${page}` : `submissions:all:list:${page}`;
+  const { data: submissionsData, isLoading } = useCachedData(
     submissionCacheKey,
     async () => {
       return isStudent
-        ? await submissionService.getMySubmissionsFull()
-        : await submissionService.getAllSubmissionsFull();
+        ? await submissionService.getMySubmissions({ pageNumber: page, pageSize })
+        : await submissionService.getAllSubmissions({ pageNumber: page, pageSize });
     },
-    { deps: [isStudent] }
+    { deps: [isStudent, page] }
   );
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
+
+  const allSubmissions = submissionsData?.items || [];
+  const totalCount = submissionsData?.totalCount || 0;
+  const totalPages = submissionsData?.totalPages || Math.max(1, Math.ceil(totalCount / pageSize));
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
@@ -205,11 +210,7 @@ export function SubmissionList() {
       });
   }, [parsedItemsMap, searchQuery, statusFilter, selectedClass, selectedSubject]);
 
-  const totalPages = Math.ceil(filteredItems.length / pageSize);
-  const paginatedItems = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return filteredItems.slice(start, start + pageSize);
-  }, [filteredItems, page, pageSize]);
+  const paginatedItems = filteredItems;
 
   const isFiltered =
     searchQuery !== "" || statusFilter !== "all" || selectedClass !== "all" || selectedSubject !== "all";

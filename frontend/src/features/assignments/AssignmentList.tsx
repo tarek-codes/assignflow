@@ -27,19 +27,24 @@ export function AssignmentList() {
     ? "Manage, view, and organize all your created class assignments"
     : "Browse, search, and manage course assignments";
 
-  const { data: allAssignments = [], isLoading } = useCachedData<AssignmentListItem[]>(
-    "assignments:list",
-    async () => {
-      return await assignmentService.getAllAssignments();
-    }
-  );
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [page, setPage] = useState(1);
   const pageSize = 10;
+
+  const { data: assignmentsData, isLoading } = useCachedData(
+    `assignments:list:${page}`,
+    async () => {
+      return await assignmentService.getAssignments({ pageNumber: page, pageSize });
+    },
+    { deps: [page] }
+  );
+
+  const allAssignments = assignmentsData?.items || [];
+  const totalCount = assignmentsData?.totalCount || 0;
+  const totalPages = assignmentsData?.totalPages || Math.ceil(totalCount / pageSize) || 1;
 
   // Unique lists from data
   const allClassLevels = useMemo(() => {
@@ -130,11 +135,8 @@ export function AssignmentList() {
     });
   }, [allAssignments, searchTerm, selectedClass, selectedSubject, selectedStatus]);
 
-  const totalPages = Math.ceil(filteredAssignments.length / pageSize);
-  const paginatedAssignments = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return filteredAssignments.slice(start, start + pageSize);
-  }, [filteredAssignments, page, pageSize]);
+  const totalPages = assignmentsData?.totalPages || Math.max(1, Math.ceil(totalCount / pageSize));
+  const paginatedAssignments = filteredAssignments;
 
   const isFiltered =
     searchTerm !== "" || selectedClass !== "all" || selectedSubject !== "all" || selectedStatus !== "all";
