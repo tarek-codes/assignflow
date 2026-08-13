@@ -1,0 +1,23 @@
+# Render Blueprint configuration for AssignFlow Backend API
+services:
+  - type: web
+    name: assignflow-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    context: .
+    region: singapore
+    plan: free
+    healthCheckPath: /swagger
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__DefaultConnection
+        value: Host=ep-rapid-voice-azepmkjl.c-3.ap-southeast-1.aws.neon.tech;Port=5432;Database=neondb;Username=neondb_owner;Password=npg_ZQS3lkUAgiE0;SSL Mode=Require;Trust Server Certificate=true
+      - key: Jwt__Secret
+        value: AssignmentManagement_SuperStrongSecretKey_2026_With_More_Than_256_Bits!
+      - key: Jwt__Issuer
+        value: AssignmentManagement
+      - key: Jwt__Audience
+        value: AssignmentManagement.Web
+      - key: Cors__AllowedOrigins__0
+        value: http://localhost:3000

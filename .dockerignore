@@ -1,0 +1,17 @@
+# Docker build context exclusions for AssignFlow Backend
+.git
+.github
+.idea
+.vs
+.vscode
+bin/
+obj/
+frontend/
+node_modules/
+.next/
+*.user
+*.lock
+logs/
+storage/
+DEPLOY.md
+README.md

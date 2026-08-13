@@ -57,22 +57,22 @@ Set these build-time environment variables in your frontend platform (e.g., Verc
 
 ### Step 2: Deploy Backend API (Render / Railway)
 
-#### Option A: Render
+#### Option A: Render (using Docker Language Setting)
 1. Sign in to [Render Dashboard](https://dashboard.render.com) and click **New +** → **Web Service**.
 2. Connect your GitHub repository: `https://github.com/tarek-codes/assignflow`.
 3. Configure settings:
    - **Name**: `assignflow-api`
-   - **Environment**: `.NET` (or `Docker`)
-   - **Root Directory**: `src/AssignmentManagement.Api`
-   - **Build Command**: `dotnet publish -c Release -o out`
-   - **Start Command**: `dotnet out/AssignmentManagement.Api.dll`
+   - **Language / Runtime**: **Docker**
+   - **Dockerfile Path**: `./Dockerfile`
+   - **Docker Context**: `.`
+   - **Port**: `8080` (or leave default, bound via `ASPNETCORE_URLS=http://+:8080`)
 4. Under **Environment Variables**, add:
-   - `ConnectionStrings__DefaultConnection`: *<Your PostgreSQL Connection String>*
-   - `Jwt__Secret`: `Your_Super_Secret_Production_JWT_Key_2026_With_256_Bits!`
+   - `ConnectionStrings__DefaultConnection`: `Host=ep-rapid-voice-azepmkjl.c-3.ap-southeast-1.aws.neon.tech;Port=5432;Database=neondb;Username=neondb_owner;Password=npg_ZQS3lkUAgiE0;SSL Mode=Require;Trust Server Certificate=true`
+   - `Jwt__Secret`: `AssignmentManagement_SuperStrongSecretKey_2026_With_More_Than_256_Bits!`
    - `Jwt__Issuer`: `AssignmentManagement`
    - `Jwt__Audience`: `AssignmentManagement.Web`
-   - `Cors__AllowedOrigins__0`: `https://your-frontend.vercel.app`
-5. Click **Create Web Service**. EF Core migrations and initial seed data will run automatically on service startup (`DbInitializer`).
+   - `Cors__AllowedOrigins__0`: `https://your-frontend.vercel.app` (replace with your production frontend URL)
+5. Click **Create Web Service**. Render will automatically pull the multi-stage [`Dockerfile`](file:///c:/Users/Tarek/Desktop/assignment/Dockerfile), build the ASP.NET Core API image, execute EF Core migrations on Neon PostgreSQL, seed default users, and launch the API container.
 
 ---
 
