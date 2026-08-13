@@ -31,25 +31,39 @@ public sealed class DistributedCacheService : ICacheService
 
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
     {
-        var json = await _cache.GetStringAsync(key, cancellationToken);
-        if (string.IsNullOrEmpty(json))
+        try
+        {
+            var json = await _cache.GetStringAsync(key, cancellationToken);
+            if (string.IsNullOrEmpty(json))
+            {
+                return default;
+            }
+
+            return JsonSerializer.Deserialize<T>(json, JsonOptions);
+        }
+        catch
         {
             return default;
         }
-
-        return JsonSerializer.Deserialize<T>(json, JsonOptions);
     }
 
     public async Task SetAsync<T>(string key, T value, TimeSpan? ttl = null, CancellationToken cancellationToken = default)
     {
-        var json = JsonSerializer.Serialize(value, JsonOptions);
-        var options = new DistributedCacheEntryOptions
+        try
         {
-            AbsoluteExpirationRelativeToNow = ttl ?? TimeSpan.FromMinutes(5),
-        };
+            var json = JsonSerializer.Serialize(value, JsonOptions);
+            var options = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = ttl ?? TimeSpan.FromMinutes(5),
+            };
 
-        await _cache.SetStringAsync(key, json, options, cancellationToken);
-        _memoryKeyRegistry.TryAdd(key, 0);
+            await _cache.SetStringAsync(key, json, options, cancellationToken);
+            _memoryKeyRegistry.TryAdd(key, 0);
+        }
+        catch
+        {
+            // Ignore caching failure if Redis/cache is down
+        }
     }
 
     public async Task<T> GetOrSetAsync<T>(
@@ -71,32 +85,46 @@ public sealed class DistributedCacheService : ICacheService
 
     public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
-        await _cache.RemoveAsync(key, cancellationToken);
+        try
+        {
+            await _cache.RemoveAsync(key, cancellationToken);
+        }
+        catch
+        {
+            // Ignore
+        }
         _memoryKeyRegistry.TryRemove(key, out _);
     }
 
     public async Task RemoveByPrefixAsync(string prefix, CancellationToken cancellationToken = default)
     {
-        if (_redis is not null)
+        try
         {
-            var database = _redis.GetDatabase();
-            var pattern = $"{_instancePrefix}{prefix}*";
-
-            foreach (var endpoint in _redis.GetEndPoints())
+            if (_redis is not null && _redis.IsConnected)
             {
-                var server = _redis.GetServer(endpoint);
-                if (!server.IsConnected || server.IsReplica)
+                var database = _redis.GetDatabase();
+                var pattern = $"{_instancePrefix}{prefix}*";
+
+                foreach (var endpoint in _redis.GetEndPoints())
                 {
-                    continue;
+                    var server = _redis.GetServer(endpoint);
+                    if (!server.IsConnected || server.IsReplica)
+                    {
+                        continue;
+                    }
+
+                    foreach (var key in server.Keys(database: database.Database, pattern: pattern))
+                    {
+                        await database.KeyDeleteAsync(key);
+                    }
                 }
 
-                foreach (var key in server.Keys(database: database.Database, pattern: pattern))
-                {
-                    await database.KeyDeleteAsync(key);
-                }
+                return;
             }
-
-            return;
+        }
+        catch
+        {
+            // Fallback to local key registry if Redis pattern deletion fails
         }
 
         var keysToRemove = _memoryKeyRegistry.Keys

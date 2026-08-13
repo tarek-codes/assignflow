@@ -48,12 +48,29 @@ public static class DependencyInjection
 
         if (!string.IsNullOrWhiteSpace(redisConnection))
         {
+            var configOptions = ConfigurationOptions.Parse(redisConnection);
+            configOptions.AbortOnConnectFail = false;
+            configOptions.ConnectTimeout = 1000; // 1 second timeout
+            configOptions.SyncTimeout = 1000;
+            configOptions.AsyncTimeout = 1000;
+
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = redisConnection;
+                options.ConfigurationOptions = configOptions;
                 options.InstanceName = configuration["Redis:InstanceName"] ?? "assignflow:";
             });
-            services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnection));
+
+            services.AddSingleton<IConnectionMultiplexer>(_ =>
+            {
+                try
+                {
+                    return ConnectionMultiplexer.Connect(configOptions);
+                }
+                catch
+                {
+                    return null!;
+                }
+            });
         }
         else
         {
