@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
-import { BookOpenCheck, CheckCircle2, GraduationCap, ShieldCheck, Users } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, BookOpenCheck, CheckCircle2, GraduationCap, ShieldCheck, Users } from "lucide-react";
 import { LoginForm } from "@/features/auth/LoginForm";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function LoginPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const roleFeatures = [
     { icon: ShieldCheck, title: t("authRoleAdminTitle") || "Admin", description: t("authSidebarAdminDesc") },
@@ -17,6 +18,17 @@ export default function LoginPage() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 sm:p-6 lg:p-10 bg-[radial-gradient(#e2e8f0_1.2px,transparent_1.2px)] dark:bg-[radial-gradient(#1e293b_1.2px,transparent_1.2px)] [background-size:24px_24px]">
+      {/* Top left back to landing page button */}
+      <div className="absolute top-6 left-6 sm:top-8 sm:left-8 z-30">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 px-3.5 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-md backdrop-blur-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-all hover:-translate-x-0.5"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          <span>{language === "bn" ? "হোমে ফিরে যান" : "Back to Home"}</span>
+        </Link>
+      </div>
+
       {/* Top right language toggle */}
       <div className="absolute top-6 right-6 sm:top-8 sm:right-8 z-30 flex items-center gap-2">
         <LanguageToggle variant="pill" />
