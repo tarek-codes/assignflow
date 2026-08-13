@@ -21,6 +21,7 @@ import {
 import { dashboardService } from "@/services/dashboardService";
 import { assignmentService } from "@/services/assignmentService";
 import { submissionService } from "@/services/submissionService";
+import { classService } from "@/services/classService";
 import { userService, UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
 import { useCachedData } from "@/hooks/useCachedData";
 import { AssignmentListItem } from "@/types/assignment";
@@ -69,27 +70,40 @@ export function AdminDashboardView() {
         submissionService.getAllSubmissionsFull(),
       ]);
       return { assignments, submissions };
-    },
-    { enabled: needsAssignmentDetails || needsSubmissionDetails }
+    }
   );
 
   const rawAssignments = summaryData?.assignments || [];
   const rawSubmissions = summaryData?.submissions || [];
   const { data: allUsers = [], isLoading: usersPending } = useCachedData<UserListItem[]>(
     "users:all",
-    () => userService.getAllUsers(),
-    { enabled: activeModal === "users" }
+    () => userService.getAllUsers()
   );
   const { data: allTeachers = [], isLoading: teachersPending } = useCachedData<TeacherListItem[]>(
     "teachers:all",
-    () => userService.getAllTeachers(),
-    { enabled: activeModal === "teachers" }
+    () => userService.getAllTeachers()
   );
   const { data: allStudents = [], isLoading: studentsPending } = useCachedData<StudentListItem[]>(
     "students:all",
-    () => userService.getAllStudents(),
-    { enabled: activeModal === "students" }
+    () => userService.getAllStudents()
   );
+
+  // Proactive background prefetching for tabs (Classes, Assignments, Submissions) right after dashboard loads
+  useEffect(() => {
+    if (!isLoading && data && user) {
+      const teacherCacheKey = `assignments:full:list:${user.id}:${user.role}`;
+      const submissionCacheKey = `submissions:full:list:${user.id}:${user.role}`;
+
+      // Prefetch Assignments, Submissions, and Classes in low priority background queue
+      const timer = setTimeout(() => {
+        assignmentService.getAllAssignments().catch(() => {});
+        submissionService.getAllSubmissionsFull().catch(() => {});
+        classService.getAllClasses().catch(() => {});
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, data, user]);
 
   const [modalPage, setModalPage] = useState(1);
 

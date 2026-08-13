@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { submissionService } from "@/services/submissionService";
+import { assignmentService } from "@/services/assignmentService";
 import { dashboardService } from "@/services/dashboardService";
 import { useCachedData, invalidateCachedPrefix } from "@/hooks/useCachedData";
 import { cn } from "@/utils/cn";
@@ -203,6 +204,19 @@ export function StudentDashboardView() {
     "dashboard:student",
     () => dashboardService.getStudentDashboard()
   );
+
+  // Proactive background prefetching immediately after student dashboard loads
+  useEffect(() => {
+    if (!isLoading && data && user) {
+      const timer = setTimeout(() => {
+        assignmentService.getAllAssignments().catch(() => {});
+        submissionService.getMySubmissionsFull().catch(() => {});
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, data, user]);
+
   const [selectedAssignment, setSelectedAssignment] = useState<StudentUpcomingAssignment | null>(null);
   const [showPendingModal, setShowPendingModal] = useState(false);
   const [pendingPage, setPendingPage] = useState(1);

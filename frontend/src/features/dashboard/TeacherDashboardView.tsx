@@ -27,10 +27,28 @@ import { Avatar } from "@/components/ui/Avatar";
 import { formatDate, formatFullDateTime } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
 
+import { useEffect } from "react";
+import { assignmentService } from "@/services/assignmentService";
+import { submissionService } from "@/services/submissionService";
+import { classService } from "@/services/classService";
+
 export function TeacherDashboardView() {
   const { user } = useAuth();
   const { t } = useLanguage();
   const { data, isLoading, error, refetch } = useCachedData("dashboard:teacher", () => dashboardService.getTeacherDashboard());
+
+  // Proactive background prefetching immediately after teacher dashboard loads
+  useEffect(() => {
+    if (!isLoading && data && user) {
+      const timer = setTimeout(() => {
+        assignmentService.getAllAssignments().catch(() => {});
+        submissionService.getAllSubmissionsFull().catch(() => {});
+        classService.getAllClasses().catch(() => {});
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, data, user]);
 
   if (isLoading) return <LoadingSpinner label="Loading dashboard…" />;
   if (!data) return (

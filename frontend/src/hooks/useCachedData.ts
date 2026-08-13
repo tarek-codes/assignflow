@@ -113,6 +113,31 @@ export function useCachedData<T>(
   return { data, isLoading, error, refetch };
 }
 
+export function getCachedData<T>(key: string, ttlMs = 5 * 60 * 1000): T | undefined {
+  const cached = memoryCache.get(key);
+  if (cached && Date.now() - cached.timestamp < ttlMs) {
+    return cached.data as T;
+  }
+  return undefined;
+}
+
+export async function fetchCachedData<T>(
+  key: string,
+  fetcher: () => Promise<T>,
+  ttlMs = 5 * 60 * 1000
+): Promise<T> {
+  const existing = getCachedData<T>(key, ttlMs);
+  if (existing !== undefined) return existing;
+  try {
+    const data = await fetcher();
+    memoryCache.set(key, { data, timestamp: Date.now() });
+    return data;
+  } catch (err) {
+    console.error(`Failed to prefetch ${key}:`, err);
+    throw err;
+  }
+}
+
 export function invalidateCached(key: string) {
   memoryCache.delete(key);
 }
