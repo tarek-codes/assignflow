@@ -20,7 +20,13 @@ public static class DbInitializer
         }
         catch { }
 
-        // 1. Wipe out existing database completely for a clean state
+        // Skip seeding if data already exists — prevents expensive re-seed on every cold start
+        if (await context.Users.AnyAsync())
+        {
+            return;
+        }
+
+        // 1. Wipe out existing database completely for a clean state (only runs on first deploy)
         try
         {
             await context.Submissions.ExecuteDeleteAsync();
