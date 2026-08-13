@@ -72,6 +72,8 @@ Set these build-time environment variables in your frontend platform (e.g., Verc
    - `Jwt__Issuer`: `AssignmentManagement`
    - `Jwt__Audience`: `AssignmentManagement.Web`
    - `Cors__AllowedOrigins__0`: `https://your-frontend.vercel.app` (replace with your production frontend URL)
+   - `DOTNET_USE_POLLING_FILE_WATCHER`: `true`
+   - `DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE`: `false`
 5. Click **Create Web Service**. Render will automatically pull the multi-stage [`Dockerfile`](file:///c:/Users/Tarek/Desktop/assignment/Dockerfile), build the ASP.NET Core API image, execute EF Core migrations on Neon PostgreSQL, seed default users, and launch the API container.
 
 ---

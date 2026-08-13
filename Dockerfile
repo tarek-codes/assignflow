@@ -28,6 +28,10 @@ WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
+# Prevent inotify file watcher limit crashes on Render/Linux container hosts
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+
 # Copy compiled binaries from build stage
 COPY --from=build /app/publish .
 

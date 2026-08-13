@@ -21,3 +21,7 @@ services:
         value: AssignmentManagement.Web
       - key: Cors__AllowedOrigins__0
         value: http://localhost:3000
+      - key: DOTNET_USE_POLLING_FILE_WATCHER
+        value: "true"
+      - key: DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE
+        value: "false"
