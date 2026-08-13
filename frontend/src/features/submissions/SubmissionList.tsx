@@ -78,7 +78,7 @@ export function SubmissionList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
-  const submissionCacheKey = isStudent ? "submissions:mine:full:list" : "submissions:all:full:list";
+  const submissionCacheKey = `submissions:full:list:${user?.id || "guest"}:${user?.role || "all"}`;
   const { data: allSubmissions = [], isLoading } = useCachedData<SubmissionListItem[]>(
     submissionCacheKey,
     async () => {
@@ -86,7 +86,7 @@ export function SubmissionList() {
         ? await submissionService.getMySubmissionsFull()
         : await submissionService.getAllSubmissionsFull();
     },
-    { deps: [isStudent] }
+    { deps: [isStudent, user?.id, user?.role] }
   );
 
   // Search & Filter State
@@ -104,22 +104,16 @@ export function SubmissionList() {
     }));
   }, [allSubmissions]);
 
+  // Unique lists dynamically generated from teacher's received submissions
   const allClassLevels = useMemo(() => {
-    const levels = Array.from(
-      new Set([6, 7, 8, 9, 10, 11, 12, ...parsedItemsMap.map((p) => p.parsed.classLevel).filter(Boolean)])
-    );
+    const levels = Array.from(new Set(parsedItemsMap.map((p) => p.parsed.classLevel).filter(Boolean)));
     return levels.sort((a, b) => a - b);
   }, [parsedItemsMap]);
 
   const allSubjects = useMemo(() => {
-    const subsFromSubmissions = parsedItemsMap.map((p) => p.parsed.subjectName).filter(Boolean);
-    const userClass = user?.classLevel || 6;
-    const curriculum = isStudent
-      ? getCurriculumSubjectsForClass(userClass, user?.group)
-      : Array.from(new Set([6, 7, 8, 9, 10, 11, 12].flatMap((l) => getCurriculumSubjectsForClass(l))));
-    const subs = Array.from(new Set([...curriculum, ...subsFromSubmissions]));
+    const subs = Array.from(new Set(parsedItemsMap.map((p) => p.parsed.subjectName).filter(Boolean)));
     return subs.sort((a, b) => a.localeCompare(b));
-  }, [parsedItemsMap, user?.classLevel, user?.group, isStudent]);
+  }, [parsedItemsMap]);
 
   // Correlated available dropdown options
   const availableClasses = useMemo(() => {

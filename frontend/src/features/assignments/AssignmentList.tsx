@@ -34,18 +34,18 @@ export function AssignmentList() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
+  const cacheKey = `assignments:full:list:${user?.id || "guest"}:${user?.role || "all"}`;
   const { data: allAssignments = [], isLoading } = useCachedData<AssignmentListItem[]>(
-    "assignments:full:list",
+    cacheKey,
     async () => {
       return await assignmentService.getAllAssignments();
-    }
+    },
+    { deps: [user?.id, user?.role] }
   );
 
-  // Unique lists from data (always guarantees full standard class levels 6 to 12)
+  // Unique lists from user's assignments (dynamically lists assigned classes & subjects)
   const allClassLevels = useMemo(() => {
-    const levels = Array.from(
-      new Set([6, 7, 8, 9, 10, 11, 12, ...allAssignments.map((a) => a.classLevel).filter(Boolean)])
-    );
+    const levels = Array.from(new Set(allAssignments.map((a) => a.classLevel).filter(Boolean)));
     return levels.sort((a, b) => a - b);
   }, [allAssignments]);
 
