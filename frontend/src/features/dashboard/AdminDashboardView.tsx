@@ -58,7 +58,7 @@ export function AdminDashboardView() {
   const needsSubmissionDetails =
     pieClassFilter !== "all" || pieSubjectFilter !== "all" || activeModal === "submissions";
 
-  const { data, isLoading } = useCachedData("dashboard:admin", () => dashboardService.getAdminDashboard());
+  const { data, isLoading, error, refetch: refetchDashboard } = useCachedData("dashboard:admin", () => dashboardService.getAdminDashboard());
   const { data: rawAssignments = [] } = useCachedData<AssignmentListItem[]>(
     "assignments:summary",
     async () => {
@@ -528,7 +528,17 @@ export function AdminDashboardView() {
   };
 
   if (isLoading) return <LoadingSpinner fullScreen label="Loading admin analytics..." />;
-  if (!data) return <p className="text-sm text-slate-500">Failed to load admin dashboard.</p>;
+  if (!data) return (
+    <div className="flex flex-col items-center justify-center py-20 gap-4">
+      <p className="text-sm text-slate-500 dark:text-slate-400">{error?.message || "Failed to load admin dashboard."}</p>
+      <button
+        onClick={() => refetchDashboard()}
+        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+      >
+        Try Again
+      </button>
+    </div>
+  );
 
 
   const monthlyAssignments = data.statistics.assignmentsCreatedPerMonth || {

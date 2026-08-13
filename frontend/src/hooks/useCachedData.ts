@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 type UseCachedDataOptions = {
   enabled?: boolean;
   deps?: unknown[];
+  retryCount?: number;
 };
 
 export function useCachedData<T>(
@@ -14,22 +15,44 @@ export function useCachedData<T>(
 ) {
   const enabled = options?.enabled ?? true;
   const deps = options?.deps ?? [];
+  const maxRetries = options?.retryCount ?? 3;
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
 
   const [data, setData] = useState<T | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(enabled);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchWithRetry = useCallback(
+    async (retries: number): Promise<T> => {
+      try {
+        return await fetcherRef.current();
+      } catch (err) {
+        if (retries > 0) {
+          // Exponential backoff: 500ms, 1000ms, 2000ms
+          const delay = 500 * Math.pow(2, maxRetries - retries);
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          return fetchWithRetry(retries - 1);
+        }
+        throw err;
+      }
+    },
+    [maxRetries]
+  );
 
   const refetch = useCallback(async () => {
     setIsLoading(true);
+    setError(null);
     try {
-      const result = await fetcherRef.current();
+      const result = await fetchWithRetry(maxRetries);
       setData(result);
       return result;
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Failed to fetch data"));
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [fetchWithRetry, maxRetries]);
 
   useEffect(() => {
     if (!enabled) {
@@ -39,14 +62,17 @@ export function useCachedData<T>(
 
     let cancelled = false;
     setIsLoading(true);
+    setError(null);
 
-    fetcherRef
-      .current()
+    fetchWithRetry(maxRetries)
       .then((result) => {
         if (cancelled) return;
         setData(result);
       })
-      .catch(() => {})
+      .catch((err) => {
+        if (cancelled) return;
+        setError(err instanceof Error ? err : new Error("Failed to fetch data"));
+      })
       .finally(() => {
         if (!cancelled) setIsLoading(false);
       });
@@ -54,9 +80,9 @@ export function useCachedData<T>(
     return () => {
       cancelled = true;
     };
-  }, [enabled, ...deps]);
+  }, [enabled, fetchWithRetry, maxRetries, ...deps]);
 
-  return { data, isLoading, refetch };
+  return { data, isLoading, error, refetch };
 }
 
 export function invalidateCached(_key: string) {}

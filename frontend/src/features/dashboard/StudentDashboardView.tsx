@@ -323,7 +323,17 @@ export function StudentDashboardView() {
   };
 
   if (isLoading) return <LoadingSpinner label="Loading dashboard..." />;
-  if (!data) return <p className="text-sm text-slate-500">Failed to load dashboard.</p>;
+  if (!data) return (
+    <div className="flex flex-col items-center justify-center py-20 gap-4">
+      <p className="text-sm text-slate-500 dark:text-slate-400">{"Failed to load dashboard."}</p>
+      <button
+        onClick={() => refetchDashboard()}
+        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
+      >
+        Try Again
+      </button>
+    </div>
+  );
 
   const displayName = data.studentName || user?.fullName || "Student";
   const firstName = displayName.split(" ")[0];
