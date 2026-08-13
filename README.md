@@ -8,6 +8,18 @@
 
 ---
 
+## 🔑 Demo Credentials
+
+All seeded demo accounts share the password **`Password123!`**:
+
+| Role | Email | Default Password | Notes |
+|------|-------|------------------|-------|
+| 🛡️ **Admin** | `admin@example.com` | `Password123!` | System Administrator |
+| 👨‍🏫 **Teacher** | `teacher@example.com` | `Password123!` | Mathematics Lead Teacher |
+| 🎓 **Student** | `student@example.com` | `Password123!` | Grade 10 Student |
+
+---
+
 ## ✨ Features & Role Capabilities
 
 | Role | Key Capabilities |
@@ -230,18 +242,6 @@ npm run dev
 ```
 
 The frontend app will be live at: `http://localhost:3000`
-
----
-
-## 🔑 Demo Credentials
-
-All seeded demo accounts share the password **`Password123!`**:
-
-| Role | Email | Default Password | Notes |
-|------|-------|------------------|-------|
-| 🛡️ **Admin** | `admin@example.com` | `Password123!` | System Administrator |
-| 👨‍🏫 **Teacher** | `teacher@example.com` | `Password123!` | Mathematics Lead Teacher |
-| 🎓 **Student** | `student@example.com` | `Password123!` | Grade 10 Student |
 
 ---
 
