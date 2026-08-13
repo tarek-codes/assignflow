@@ -2,8 +2,6 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using AssignmentManagement.Application.Abstractions.Services;
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Configuration;
-using StackExchange.Redis;
 
 namespace AssignmentManagement.Infrastructure.Services;
 
@@ -15,18 +13,11 @@ public sealed class DistributedCacheService : ICacheService
     };
 
     private readonly IDistributedCache _cache;
-    private readonly IConnectionMultiplexer? _redis;
-    private readonly string _instancePrefix;
     private readonly ConcurrentDictionary<string, byte> _memoryKeyRegistry = new();
 
-    public DistributedCacheService(
-        IDistributedCache cache,
-        IConfiguration configuration,
-        IConnectionMultiplexer? redis = null)
+    public DistributedCacheService(IDistributedCache cache)
     {
         _cache = cache;
-        _redis = redis;
-        _instancePrefix = configuration["Redis:InstanceName"] ?? "assignflow:";
     }
 
     public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
@@ -62,7 +53,7 @@ public sealed class DistributedCacheService : ICacheService
         }
         catch
         {
-            // Ignore caching failure if Redis/cache is down
+            // Ignore caching failure
         }
     }
 
@@ -98,35 +89,6 @@ public sealed class DistributedCacheService : ICacheService
 
     public async Task RemoveByPrefixAsync(string prefix, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            if (_redis is not null && _redis.IsConnected)
-            {
-                var database = _redis.GetDatabase();
-                var pattern = $"{_instancePrefix}{prefix}*";
-
-                foreach (var endpoint in _redis.GetEndPoints())
-                {
-                    var server = _redis.GetServer(endpoint);
-                    if (!server.IsConnected || server.IsReplica)
-                    {
-                        continue;
-                    }
-
-                    foreach (var key in server.Keys(database: database.Database, pattern: pattern))
-                    {
-                        await database.KeyDeleteAsync(key);
-                    }
-                }
-
-                return;
-            }
-        }
-        catch
-        {
-            // Fallback to local key registry if Redis pattern deletion fails
-        }
-
         var keysToRemove = _memoryKeyRegistry.Keys
             .Where(key => key.StartsWith(prefix, StringComparison.Ordinal))
             .ToList();
