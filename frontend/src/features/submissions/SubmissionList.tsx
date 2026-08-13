@@ -271,14 +271,13 @@ export function SubmissionList() {
               className="text-xs font-semibold rounded-lg border border-emerald-300 dark:border-emerald-700 bg-emerald-50/60 dark:bg-emerald-950/30 px-2.5 py-1.5 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all cursor-pointer"
             >
               <option value="all">All Classes</option>
-              {allClassLevels.map((lvl) => {
-                const isAvailable = availableClasses.includes(lvl);
-                return (
-                  <option key={lvl} value={lvl} disabled={!isAvailable}>
-                    Class {lvl} {!isAvailable ? "(No Subject Match)" : ""}
+              {allClassLevels
+                .filter((lvl) => availableClasses.includes(lvl))
+                .map((lvl) => (
+                  <option key={lvl} value={lvl}>
+                    Class {lvl}
                   </option>
-                );
-              })}
+                ))}
             </select>
           )}
 
@@ -289,14 +288,13 @@ export function SubmissionList() {
             className="text-xs font-semibold rounded-lg border border-violet-300 dark:border-violet-700 bg-violet-50/60 dark:bg-violet-950/30 px-2.5 py-1.5 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-violet-500/30 transition-all cursor-pointer"
           >
             <option value="all">All Subjects</option>
-            {allSubjects.map((sub) => {
-              const isAvailable = availableSubjects.includes(sub);
-              return (
-                <option key={sub} value={sub} disabled={!isAvailable}>
-                  {sub} {!isAvailable ? "(No Class Match)" : ""}
+            {allSubjects
+              .filter((sub) => availableSubjects.includes(sub))
+              .map((sub) => (
+                <option key={sub} value={sub}>
+                  {sub}
                 </option>
-              );
-            })}
+              ))}
           </select>
 
           {/* RESET BUTTON */}
