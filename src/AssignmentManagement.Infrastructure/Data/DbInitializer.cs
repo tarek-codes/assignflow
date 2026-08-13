@@ -694,7 +694,7 @@ public static class DbInitializer
 
                 int studentDueCount = 0;        // Target: 1 due assignment (unsubmitted)
                 int studentPendingCount = 0;    // Target: 2 pending assignments (unsubmitted)
-                int studentUngradedCount = 0;   // Target: EXACTLY 2 maximum submitted but not graded per student
+                int studentUngradedCount = 0;   // Target: At least 8 submitted but ungraded per student
                 int studentLateCount = 0;       // Target: 1 late submission per student
 
                 // Flatten all assignments for this student across all enrolled classes
@@ -710,7 +710,7 @@ public static class DbInitializer
                     // 1. Future / Active Assignments (Deadline in future)
                     if (asgn.DeadlineUtc > now)
                     {
-                        if (studentUngradedCount < 2)
+                        if (studentUngradedCount < 8)
                         {
                             studentUngradedCount++;
                             submissionsList.Add(new Submission
@@ -854,8 +854,8 @@ public static class DbInitializer
 
                 if (s < submitCount)
                 {
-                    // For 30% of submitting students, keep as Submitted (ungraded, awaiting teacher evaluation)
-                    bool isUngraded = (s % 3 == 0);
+                    // For 60% of submitting students, keep as Submitted (ungraded, awaiting teacher evaluation)
+                    bool isUngraded = (s % 5 != 0);
                     if (isUngraded)
                     {
                         extraSubmissions.Add(new Submission
