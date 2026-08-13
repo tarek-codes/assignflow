@@ -20,6 +20,8 @@ services:
       - key: Jwt__Audience
         value: AssignmentManagement.Web
       - key: Cors__AllowedOrigins__0
+        value: https://assignflow-bd.vercel.app
+      - key: Cors__AllowedOrigins__1
         value: http://localhost:3000
       - key: DOTNET_USE_POLLING_FILE_WATCHER
         value: "true"
