@@ -133,49 +133,49 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans-brand transition-colors duration-200 selection:bg-blue-200 selection:text-blue-950">
+    <div className="min-h-screen overflow-x-hidden bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans-brand transition-colors duration-200 selection:bg-blue-200 selection:text-blue-950">
       {/* ─── HERO & NAVIGATION CONTAINER (PERFECTLY CENTERED LANDING SCREEN) ─── */}
       <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[radial-gradient(#e2e8f0_1.2px,transparent_1.2px)] dark:bg-[radial-gradient(#1e293b_1.2px,transparent_1.2px)] [background-size:28px_28px]">
         {/* ─── FLOATING CAPSULE NAVIGATION BAR ─── */}
-        <header className="absolute top-0 left-0 right-0 z-40 w-full pt-6 sm:pt-8 lg:pt-10 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl rounded-full border-2 border-blue-600 dark:border-blue-500 bg-white/90 dark:bg-slate-900/90 shadow-xl shadow-slate-900/5 backdrop-blur-md px-5 py-3 sm:px-7 sm:py-3.5 flex items-center justify-between transition-all">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white shadow-md shadow-blue-500/25">
-                <BookOpenCheck className="h-4.5 w-4.5" />
+        <header className="absolute top-0 left-0 right-0 z-40 w-full pt-4 sm:pt-8 lg:pt-10 px-3 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl rounded-2xl sm:rounded-full border border-blue-600 dark:border-blue-500 sm:border-2 bg-white/90 dark:bg-slate-900/90 shadow-xl shadow-slate-900/5 backdrop-blur-md px-3 py-2.5 sm:px-7 sm:py-3.5 flex items-center justify-between gap-2 transition-all">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow-md shadow-blue-500/25 sm:h-9 sm:w-9">
+                <BookOpenCheck className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
               </div>
-              <div>
-                <span className="text-base font-black tracking-tight text-slate-950 dark:text-white">AssignFlow</span>
+              <div className="min-w-0">
+                <span className="text-sm font-black tracking-tight text-slate-950 dark:text-white sm:text-base">AssignFlow</span>
                 <span className="hidden sm:inline-block ml-2 text-xs font-semibold text-slate-400">
                   Academic Portal
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2.5">
-              <ThemeToggle />
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+              <ThemeToggle className="scale-90 sm:scale-100" />
 
               {isAuthenticated ? (
                 <Button
                   onClick={handlePortalRedirect}
-                  className="ml-1.5 gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-600/20 px-4 py-2"
+                  className="ml-0.5 gap-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs shadow-md shadow-blue-600/20 px-3 py-1.5 sm:px-4 sm:py-2"
                 >
-                  Go to Dashboard
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Go to </span>Dashboard
+                  <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                 </Button>
               ) : (
-                <div className="ml-1 flex items-center gap-1.5">
+                <div className="ml-0.5 flex items-center gap-1 sm:gap-1.5">
                   <Link
                     href={ROUTES.LOGIN}
-                    className="px-3.5 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="hidden sm:inline-block px-3.5 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/register"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-extrabold text-white shadow-md shadow-blue-600/20 hover:bg-blue-700 transition-all"
+                    className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1.5 text-[11px] font-extrabold text-white shadow-md shadow-blue-600/20 hover:bg-blue-700 transition-all sm:gap-1.5 sm:px-4 sm:py-2 sm:text-xs"
                   >
                     Register
-                    <ArrowRight className="h-3.5 w-3.5" />
+                    <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   </Link>
                 </div>
               )}
@@ -184,31 +184,32 @@ export default function HomePage() {
         </header>
 
         {/* ─── HERO SECTION (VERTICALLY & HORIZONTALLY CENTERED) ─── */}
-        <section className="w-full flex-1 flex items-center justify-center pt-24 pb-20 relative z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[26rem] w-[26rem] rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
+        <section className="w-full flex-1 flex items-center justify-center px-3 pt-28 pb-16 sm:px-0 sm:pt-24 sm:pb-20 relative z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[18rem] w-[18rem] sm:h-[26rem] sm:w-[26rem] rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
 
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center justify-center">
+          <div className="mx-auto w-full max-w-4xl px-1 sm:px-6 lg:px-8 text-center relative z-10 flex flex-col items-center justify-center">
             {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/90 dark:border-blue-800/80 bg-blue-50/90 dark:bg-blue-950/60 px-4 py-1.5 text-xs font-bold text-blue-700 dark:text-blue-300 shadow-xs backdrop-blur-md">
-              <Sparkles className="h-3.5 w-3.5 text-blue-500" />
-              <span>Next-Generation Assignment Management System</span>
+            <div className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-blue-200/90 dark:border-blue-800/80 bg-blue-50/90 dark:bg-blue-950/60 px-3 py-1.5 text-[11px] font-bold text-blue-700 dark:text-blue-300 shadow-xs backdrop-blur-md sm:gap-2 sm:px-4 sm:text-xs">
+              <Sparkles className="h-3 w-3 shrink-0 text-blue-500 sm:h-3.5 sm:w-3.5" />
+              <span className="sm:hidden">Next-Gen Assignment Platform</span>
+              <span className="hidden sm:inline">Next-Generation Assignment Management System</span>
             </div>
 
             {/* Brand emblem & Main heading */}
-            <div className="mt-6 flex flex-col items-center justify-center gap-3">
-              <div className="flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-3xl bg-blue-600 text-white shadow-2xl shadow-blue-600/40 ring-4 ring-blue-500/20 animate-pulse">
-                <BookOpenCheck className="h-11 w-11 sm:h-14 sm:w-14" />
+            <div className="mt-5 flex flex-col items-center justify-center gap-2.5 sm:mt-6 sm:gap-3">
+              <div className="flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center rounded-2xl sm:rounded-3xl bg-blue-600 text-white shadow-2xl shadow-blue-600/40 ring-4 ring-blue-500/20 animate-pulse">
+                <BookOpenCheck className="h-9 w-9 sm:h-14 sm:w-14" />
               </div>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-950 dark:text-white">
+              <h1 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-tight text-slate-950 dark:text-white">
                 Assign<span className="text-blue-600 dark:text-blue-400">Flow</span>
               </h1>
-              <p className="mt-4 text-sm sm:text-base lg:text-lg font-semibold text-slate-500 dark:text-slate-400 max-w-xl">
+              <p className="mt-3 max-w-xs text-sm font-semibold text-slate-500 dark:text-slate-400 sm:mt-4 sm:max-w-xl sm:text-base lg:text-lg">
                 Empowering Academic Excellence Through Seamless Assignment & Submission Workflows
               </p>
             </div>
 
             {/* CTA Buttons */}
-            <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto">
+            <div className="mt-6 flex w-full max-w-xs flex-col items-stretch justify-center gap-3 sm:mt-7 sm:max-w-none sm:w-auto sm:flex-row sm:items-center sm:gap-3.5">
               <Link
                 href={ROUTES.LOGIN}
                 className="inline-flex w-full sm:w-44 items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-extrabold text-sm shadow-xl shadow-blue-600/30 px-6 py-3.5 transition-all hover:-translate-y-0.5"
@@ -226,41 +227,41 @@ export default function HomePage() {
             </div>
 
             {/* Feature Highlight Pills */}
-            <div className="mt-14 flex flex-wrap items-center justify-center gap-2.5 text-xs font-semibold text-slate-600 dark:text-slate-400">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3.5 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs">
-                <ShieldCheck className="h-3.5 w-3.5 text-blue-500" /> 3 Dedicated Role Portals
+            <div className="mt-10 flex w-full max-w-sm flex-col items-stretch gap-2 text-[11px] font-semibold text-slate-600 dark:text-slate-400 sm:mt-14 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-2.5 sm:text-xs">
+              <span className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs sm:px-3.5">
+                <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-blue-500" /> 3 Dedicated Role Portals
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3.5 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs">
-                <Zap className="h-3.5 w-3.5 text-amber-500" /> Instant Marks & Feedback
+              <span className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs sm:px-3.5">
+                <Zap className="h-3.5 w-3.5 shrink-0 text-amber-500" /> Instant Marks & Feedback
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3.5 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs">
-                <BarChart3 className="h-3.5 w-3.5 text-violet-500" /> Admin Control & Analytics
+              <span className="inline-flex items-center justify-center gap-1.5 rounded-full bg-slate-100/80 dark:bg-slate-900/80 px-3 py-1.5 border border-slate-200/80 dark:border-slate-800 backdrop-blur-xs shadow-2xs sm:px-3.5">
+                <BarChart3 className="h-3.5 w-3.5 shrink-0 text-violet-500" /> Admin Control & Analytics
               </span>
             </div>
           </div>
         </section>
 
         {/* Floating Bouncing Scroll Indicator */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 opacity-75 hover:opacity-100 transition-opacity cursor-pointer">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 hidden sm:flex flex-col items-center gap-1 opacity-75 hover:opacity-100 transition-opacity cursor-pointer">
           <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">Scroll to Explore</span>
           <ChevronDown className="h-4 w-4 text-blue-600 dark:text-blue-400 animate-bounce" />
         </div>
       </div>
 
       {/* ─── CORE FEATURES GRID ─── */}
-      <section className="py-24 sm:py-36 bg-white dark:bg-slate-900/60 border-y border-slate-200/80 dark:border-slate-800">
+      <section className="py-16 sm:py-36 bg-white dark:bg-slate-900/60 border-y border-slate-200/80 dark:border-slate-800">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">System Capabilities</h2>
-            <p className="mt-2 text-2xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight">
+            <p className="mt-2 text-xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight">
               Engineered for Modern Educational Excellence
             </p>
-            <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-2 sm:px-0">
               Designed with a clean, high-contrast aesthetic that keeps educators and students focused on learning outcomes.
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {coreFeatures.map((feat) => {
               const Icon = feat.icon;
               return (
@@ -285,19 +286,19 @@ export default function HomePage() {
       </section>
 
       {/* ─── ROLE PILLARS ─── */}
-      <section className="py-16 sm:py-24">
+      <section className="py-14 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-xs font-bold uppercase tracking-widest text-violet-600 dark:text-violet-400">Tailored Workspaces</h2>
-            <p className="mt-2 text-2xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight">
+            <p className="mt-2 text-xl sm:text-4xl font-extrabold text-slate-950 dark:text-white tracking-tight">
               One Platform, Three Tailored Experiences
             </p>
-            <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400 px-2 sm:px-0">
               Each user role receives a bespoke interface optimized for their exact responsibilities.
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {rolePillars.map((pillar) => {
               const Icon = pillar.icon;
               return (
@@ -346,25 +347,27 @@ export default function HomePage() {
       </section>
 
       {/* ─── FOOTER ─── */}
-      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 text-white font-bold">
-              <BookOpenCheck className="h-3.5 w-3.5" />
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-6 sm:py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between gap-4 text-xs text-slate-500 sm:flex-row">
+          <div className="flex flex-col items-center gap-1.5 text-center sm:flex-row sm:gap-2 sm:text-left">
+            <div className="flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 text-white font-bold">
+                <BookOpenCheck className="h-3.5 w-3.5" />
+              </div>
+              <span className="font-bold text-slate-900 dark:text-slate-100">AssignFlow Portal</span>
             </div>
-            <span className="font-bold text-slate-900 dark:text-slate-100">AssignFlow Portal</span>
-            <span>&copy; {new Date().getFullYear()} All Rights Reserved.</span>
+            <span className="text-[11px] sm:text-xs">&copy; {new Date().getFullYear()} All Rights Reserved.</span>
           </div>
 
-          <div className="flex items-center gap-4 font-medium">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-medium">
             <Link href={ROUTES.LOGIN} className="hover:text-blue-600 transition-colors">
               Sign In
             </Link>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <Link href="/register" className="hover:text-blue-600 transition-colors">
               Register Account
             </Link>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <button onClick={handlePortalRedirect} className="hover:text-blue-600 transition-colors">
               Dashboard
             </button>

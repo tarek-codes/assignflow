@@ -1,5 +1,15 @@
 # Assignment Management System Database Schema
 
+## Project Information
+
+| Field | Value |
+|-------|-------|
+| **Project** | AssignFlow — Assignment & Submission Management System |
+| **Live Demo** | [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/) |
+| **Repository** | [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow) |
+| **Database** | PostgreSQL 15+ |
+| **ORM** | Entity Framework Core 10 (Code-First) |
+
 ## Overview
 
 This schema supports:

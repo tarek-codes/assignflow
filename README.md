@@ -2,6 +2,10 @@
 
 > A modern, full-stack enterprise academic platform for managing assignments, submissions, grading, and curriculum analytics across **Admin**, **Teacher**, and **Student** roles — built with **Next.js 16**, **ASP.NET Core 10 Web API**, and **PostgreSQL**.
 
+**🌐 Live Demo:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
+**📦 Repository:** [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow)  
+**🔌 API (Production):** `https://assignflow-api-tq42.onrender.com/api`
+
 ---
 
 ## ✨ Features & Role Capabilities

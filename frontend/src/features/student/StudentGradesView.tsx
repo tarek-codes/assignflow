@@ -4,10 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Award, BookOpen, CheckCircle2, Filter, MessageSquare, Search, Sparkles, TrendingUp, ArrowUpRight } from "lucide-react";
-import { dashboardService } from "@/services/dashboardService";
-import { submissionService } from "@/services/submissionService";
-import { apiClient } from "@/services/apiClient";
-import { StudentDashboardData, StudentGradeSummary } from "@/types/dashboard";
+import { useStudentDashboard } from "@/hooks/queries/useDataQueries";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Badge } from "@/components/ui/Badge";
@@ -37,20 +34,11 @@ const isSameSubject = (subA: string, subB: string): boolean => {
 export function StudentGradesView() {
   const router = useRouter();
   const { t, language, translateSubject } = useLanguage();
-  const [data, setData] = useState<StudentDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isPending: isLoading } = useStudentDashboard();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<string>("All");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
-
-  useEffect(() => {
-    dashboardService
-      .getStudentDashboard()
-      .then((res) => setData(res))
-      .catch(() => { })
-      .finally(() => setIsLoading(false));
-  }, []);
 
   const grades = data?.grades || [];
 

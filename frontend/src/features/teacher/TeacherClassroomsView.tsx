@@ -2,9 +2,13 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
-import { classService } from "@/services/classService";
 import { assignmentService } from "@/services/assignmentService";
-import { userService, StudentListItem } from "@/services/userService";
+import {
+  useAllAssignments,
+  useAllStudents,
+  useClassesPage,
+  useInvalidateDataCache,
+} from "@/hooks/queries/useDataQueries";
 import { ClassListItem } from "@/types/class";
 import { AssignmentListItem, AssignmentDetail } from "@/types/assignment";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -73,16 +77,19 @@ function getSubjectIcon(name: string) {
 export function TeacherClassroomsView() {
   const { showToast } = useToast();
   const { t, translateSubject, translateClass } = useLanguage();
-  const [classes, setClasses] = useState<ClassListItem[]>([]);
-  const [isLoadingClasses, setIsLoadingClasses] = useState(true);
+  const { invalidateAssignments, invalidateDashboards } = useInvalidateDataCache();
+  const { data: classes = [], isPending: isLoadingClasses } = useClassesPage(1, 100);
   const [selectedClassroom, setSelectedClassroom] = useState<ClassListItem | null>(null);
+  const { data: allStudents = [], isPending: studentsPending } = useAllStudents({
+    enabled: Boolean(selectedClassroom),
+  });
+  const { data: allAssignments = [], isPending: assignmentsPending } = useAllAssignments({
+    enabled: Boolean(selectedClassroom),
+  });
   const [activeSegment, setActiveSegment] = useState<"all" | "primary" | "secondary" | "higher_secondary">("all");
 
   // Classroom Detail State
   const [activeTab, setActiveTab] = useState<"assignments" | "students">("assignments");
-  const [students, setStudents] = useState<StudentListItem[]>([]);
-  const [assignments, setAssignments] = useState<AssignmentListItem[]>([]);
-  const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [studentSearch, setStudentSearch] = useState("");
   const [studentsPage, setStudentsPage] = useState(1);
   const [assignmentsPage, setAssignmentsPage] = useState(1);
@@ -98,48 +105,33 @@ export function TeacherClassroomsView() {
   const [formMaxMarks, setFormMaxMarks] = useState<number>(100);
   const [isSavingAssignment, setIsSavingAssignment] = useState(false);
 
-  // Load teacher classrooms on mount
-  useEffect(() => {
-    setIsLoadingClasses(true);
-    classService
-      .getClasses({ pageNumber: 1, pageSize: 100 })
-      .then((res) => setClasses(res.items))
-      .catch(() => showToast("Failed to load your assigned classrooms.", "error"))
-      .finally(() => setIsLoadingClasses(false));
-  }, []);
-
-  // Load detail when a classroom is selected
+  // Reset detail pagination when classroom changes
   useEffect(() => {
     if (!selectedClassroom) return;
-    setIsLoadingDetail(true);
     setStudentSearch("");
     setStudentsPage(1);
     setAssignmentsPage(1);
-
-    Promise.all([
-      userService.getAllStudents(),
-      assignmentService.getAllAssignments(),
-    ])
-      .then(([allStudents, allAssignments]) => {
-        // Filter students for this class level
-        const classStudents = allStudents.filter(
-          (s) => Number(s.classLevel) === Number(selectedClassroom.classLevel)
-        );
-        setStudents(classStudents);
-
-        // Filter assignments for this class level and subject
-        const classAssignments = allAssignments.filter((a) => {
-          const matchesLevel = Number(a.classLevel) === Number(selectedClassroom.classLevel);
-          const matchesSubject =
-            a.subjectName?.trim().toLowerCase() === selectedClassroom.subjectName?.trim().toLowerCase();
-          const matchesClassId = a.classId ? Number(a.classId) === Number(selectedClassroom.id) : true;
-          return matchesLevel && matchesSubject && matchesClassId;
-        });
-        setAssignments(classAssignments);
-      })
-      .catch(() => showToast("Failed to load classroom details.", "error"))
-      .finally(() => setIsLoadingDetail(false));
   }, [selectedClassroom]);
+
+  const students = useMemo(() => {
+    if (!selectedClassroom) return [];
+    return allStudents.filter((s) => Number(s.classLevel) === Number(selectedClassroom.classLevel));
+  }, [allStudents, selectedClassroom]);
+
+  const assignments = useMemo(() => {
+    if (!selectedClassroom) return [];
+    return allAssignments.filter((a) => {
+      const matchesLevel = Number(a.classLevel) === Number(selectedClassroom.classLevel);
+      const matchesSubject =
+        a.subjectName?.trim().toLowerCase() === selectedClassroom.subjectName?.trim().toLowerCase();
+      const matchesClassId = a.classId ? Number(a.classId) === Number(selectedClassroom.id) : true;
+      return matchesLevel && matchesSubject && matchesClassId;
+    });
+  }, [allAssignments, selectedClassroom]);
+
+  const isLoadingDetail =
+    Boolean(selectedClassroom) &&
+    ((studentsPending && allStudents.length === 0) || (assignmentsPending && allAssignments.length === 0));
 
   // Filtered students by search
   const filteredStudents = useMemo(() => {
@@ -233,18 +225,8 @@ export function TeacherClassroomsView() {
           allowResubmission: true,
         });
         showToast(`Assignment "${updated.title}" updated successfully.`, "success");
-        setAssignments((prev) =>
-          prev.map((a) =>
-            a.id === updated.id
-              ? {
-                ...a,
-                title: updated.title,
-                deadlineUtc: updated.deadlineUtc,
-                maxMarks: updated.maxMarks,
-              }
-              : a
-          )
-        );
+        await invalidateAssignments();
+        await invalidateDashboards();
       } else {
         // Create
         const created = await assignmentService.createAssignment({
@@ -257,20 +239,8 @@ export function TeacherClassroomsView() {
           allowResubmission: true,
         });
         showToast(`Assignment "${created.title}" created successfully!`, "success");
-        setAssignments((prev) => [
-          {
-            id: created.id,
-            classId: selectedClassroom.id,
-            subjectName: selectedClassroom.subjectName,
-            classLevel: selectedClassroom.classLevel,
-            title: created.title,
-            deadlineUtc: created.deadlineUtc,
-            maxMarks: created.maxMarks,
-            status: created.status || "Draft",
-            allowResubmission: true,
-          },
-          ...prev,
-        ]);
+        await invalidateAssignments();
+        await invalidateDashboards();
       }
       setIsAssignmentModalOpen(false);
     } catch (err: any) {
@@ -299,7 +269,8 @@ export function TeacherClassroomsView() {
     try {
       await assignmentService.deleteAssignment(id);
       showToast(`Assignment "${title}" deleted successfully.`, "success");
-      setAssignments((prev) => prev.filter((a) => a.id !== id));
+      await invalidateAssignments();
+      await invalidateDashboards();
     } catch (err: any) {
       showToast(err?.response?.data?.message || "Failed to delete assignment.", "error");
     }
@@ -311,15 +282,11 @@ export function TeacherClassroomsView() {
       if (assignment.status === "Draft") {
         await assignmentService.publishAssignment(assignment.id);
         showToast(`"${assignment.title}" published!`, "success");
-        setAssignments((prev) =>
-          prev.map((a) => (a.id === assignment.id ? { ...a, status: "Published" } : a))
-        );
+        await invalidateAssignments();
       } else {
         await assignmentService.saveDraft(assignment.id);
         showToast(`"${assignment.title}" saved as draft.`, "success");
-        setAssignments((prev) =>
-          prev.map((a) => (a.id === assignment.id ? { ...a, status: "Draft" } : a))
-        );
+        await invalidateAssignments();
       }
     } catch (err: any) {
       showToast(err?.response?.data?.message || "Failed to update status.", "error");

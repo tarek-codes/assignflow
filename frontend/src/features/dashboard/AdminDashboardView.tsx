@@ -16,11 +16,15 @@ import {
   Calendar,
   ArrowUpDown,
 } from "lucide-react";
-import { dashboardService } from "@/services/dashboardService";
-import { userService, UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
-import { assignmentService } from "@/services/assignmentService";
-import { submissionService } from "@/services/submissionService";
-import { AdminDashboardData } from "@/types/dashboard";
+import {
+  useAdminDashboard,
+  useAllAssignments,
+  useAllSubmissions,
+  useAllStudents,
+  useAllTeachers,
+  useAllUsers,
+} from "@/hooks/queries/useDataQueries";
+import { UserListItem, TeacherListItem, StudentListItem } from "@/services/userService";
 import { AssignmentListItem } from "@/types/assignment";
 import { SubmissionListItem } from "@/types/submission";
 import { PagedResult } from "@/types/api";
@@ -47,8 +51,20 @@ type ActiveModalType = "users" | "teachers" | "students" | "assignments" | "subm
 export function AdminDashboardView() {
   const { user } = useAuth();
   const { t } = useLanguage();
-  const [data, setData] = useState<AdminDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
+
+  const { data, isPending: isLoading } = useAdminDashboard();
+  const { data: rawAssignments = [], isPending: assignmentsPending, isFetching: assignmentsFetching } = useAllAssignments();
+  const { data: rawSubmissions = [], isPending: submissionsPending, isFetching: submissionsFetching } = useAllSubmissions();
+  const { data: allUsers = [], isPending: usersPending, isFetching: usersFetching } = useAllUsers({
+    enabled: activeModal === "users",
+  });
+  const { data: allTeachers = [], isPending: teachersPending, isFetching: teachersFetching } = useAllTeachers({
+    enabled: activeModal === "teachers",
+  });
+  const { data: allStudents = [], isPending: studentsPending, isFetching: studentsFetching } = useAllStudents({
+    enabled: activeModal === "students",
+  });
 
   // Filter state for Assignments Created (Bar Chart) card
   const [barClassFilter, setBarClassFilter] = useState("all");
@@ -58,12 +74,6 @@ export function AdminDashboardView() {
   const [pieClassFilter, setPieClassFilter] = useState("all");
   const [pieSubjectFilter, setPieSubjectFilter] = useState("all");
 
-  // Raw dataset for chart filtering
-  const [rawAssignments, setRawAssignments] = useState<AssignmentListItem[]>([]);
-  const [rawSubmissions, setRawSubmissions] = useState<SubmissionListItem[]>([]);
-
-  const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
-  const [modalLoading, setModalLoading] = useState(false);
   const [modalPage, setModalPage] = useState(1);
 
   // Search, Filter & Sorting state for modals
@@ -72,22 +82,75 @@ export function AdminDashboardView() {
   const [modalSortBy, setModalSortBy] = useState("default");
   const [modalSortOrder, setModalSortOrder] = useState<"asc" | "desc">("asc");
 
-  const [usersData, setUsersData] = useState<PagedResult<UserListItem> | null>(null);
-  const [teachersData, setTeachersData] = useState<PagedResult<TeacherListItem> | null>(null);
-  const [studentsData, setStudentsData] = useState<PagedResult<StudentListItem> | null>(null);
-  const [assignmentsData, setAssignmentsData] = useState<PagedResult<AssignmentListItem> | null>(null);
-  const [submissionsData, setSubmissionsData] = useState<PagedResult<SubmissionListItem> | null>(null);
+  const usersData = useMemo<PagedResult<UserListItem> | null>(() => {
+    if (!allUsers.length) return null;
+    return {
+      items: allUsers,
+      pageNumber: 1,
+      pageSize: allUsers.length,
+      totalCount: allUsers.length,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+    };
+  }, [allUsers]);
 
-  useEffect(() => {
-    dashboardService
-      .getAdminDashboard()
-      .then((res) => setData(res))
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
+  const teachersData = useMemo<PagedResult<TeacherListItem> | null>(() => {
+    if (!allTeachers.length) return null;
+    return {
+      items: allTeachers,
+      pageNumber: 1,
+      pageSize: allTeachers.length,
+      totalCount: allTeachers.length,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+    };
+  }, [allTeachers]);
 
-    assignmentService.getAllAssignments().then((res) => setRawAssignments(res || [])).catch(() => {});
-    submissionService.getAllSubmissionsFull().then((res) => setRawSubmissions(res || [])).catch(() => {});
-  }, []);
+  const studentsData = useMemo<PagedResult<StudentListItem> | null>(() => {
+    if (!allStudents.length) return null;
+    return {
+      items: allStudents,
+      pageNumber: 1,
+      pageSize: allStudents.length,
+      totalCount: allStudents.length,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+    };
+  }, [allStudents]);
+
+  const assignmentsData = useMemo<PagedResult<AssignmentListItem> | null>(() => {
+    if (!rawAssignments.length) return null;
+    return {
+      items: rawAssignments,
+      pageNumber: 1,
+      pageSize: rawAssignments.length,
+      totalCount: rawAssignments.length,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+    };
+  }, [rawAssignments]);
+
+  const submissionsData = useMemo<PagedResult<SubmissionListItem> | null>(() => {
+    if (!rawSubmissions.length) return null;
+    return {
+      items: rawSubmissions,
+      pageNumber: 1,
+      pageSize: rawSubmissions.length,
+      totalCount: rawSubmissions.length,
+      totalPages: 1,
+      hasPreviousPage: false,
+      hasNextPage: false,
+    };
+  }, [rawSubmissions]);
+
+  const modalLoading =
+    (activeModal === "users" && usersPending) ||
+    (activeModal === "teachers" && teachersPending) ||
+    (activeModal === "students" && studentsPending);
 
   // Helper for flexible subject matching (e.g. "Bangla" <-> "Bengali Literature", "Math" <-> "General Mathematics")
   const isSameSubject = (subA: string, subB: string): boolean => {
@@ -224,36 +287,6 @@ export function AdminDashboardView() {
 
   const PAGE_SIZE = 10;
 
-  const fetchModalData = (type: ActiveModalType) => {
-    if (!type) return;
-    setModalLoading(true);
-
-    const done = () => setModalLoading(false);
-    const fail = () => {};
-
-    if (type === "users") {
-      userService.getAllUsers().then((items) => {
-        setUsersData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
-      }).catch(fail).finally(done);
-    } else if (type === "teachers") {
-      userService.getAllTeachers().then((items) => {
-        setTeachersData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
-      }).catch(fail).finally(done);
-    } else if (type === "students") {
-      userService.getAllStudents().then((items) => {
-        setStudentsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
-      }).catch(fail).finally(done);
-    } else if (type === "assignments") {
-      assignmentService.getAllAssignments().then((items) => {
-        setAssignmentsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
-      }).catch(fail).finally(done);
-    } else if (type === "submissions") {
-      submissionService.getAllSubmissionsFull().then((items) => {
-        setSubmissionsData({ items, pageNumber: 1, pageSize: items.length, totalCount: items.length, totalPages: 1, hasPreviousPage: false, hasNextPage: false });
-      }).catch(fail).finally(done);
-    }
-  };
-
   const openModal = (type: ActiveModalType) => {
     setActiveModal(type);
     setModalPage(1);
@@ -261,7 +294,6 @@ export function AdminDashboardView() {
     setModalFilter("all");
     setModalSortBy("default");
     setModalSortOrder("asc");
-    fetchModalData(type);
   };
 
   // Reset to page 1 whenever search, filter, or sorting changes

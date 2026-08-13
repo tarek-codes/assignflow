@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,8 +15,7 @@ import {
   GraduationCap,
   User as UserIcon,
 } from "lucide-react";
-import { dashboardService } from "@/services/dashboardService";
-import { TeacherDashboardData } from "@/types/dashboard";
+import { useTeacherDashboard } from "@/hooks/queries/useDataQueries";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -30,16 +29,7 @@ import { ROUTES } from "@/constants/routes";
 export function TeacherDashboardView() {
   const { user } = useAuth();
   const { t } = useLanguage();
-  const [data, setData] = useState<TeacherDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    dashboardService
-      .getTeacherDashboard()
-      .then((res) => setData(res))
-      .catch(() => { })
-      .finally(() => setIsLoading(false));
-  }, []);
+  const { data, isPending: isLoading } = useTeacherDashboard();
 
   if (isLoading) return <LoadingSpinner label="Loading dashboard…" />;
   if (!data) return <p className="text-sm text-slate-500">Failed to load dashboard.</p>;

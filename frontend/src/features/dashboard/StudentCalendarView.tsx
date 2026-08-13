@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { dashboardService } from "@/services/dashboardService";
+import { useStudentDashboard, useInvalidateDataCache } from "@/hooks/queries/useDataQueries";
 import { useAuth } from "@/context/AuthContext";
 import { StudentDashboardData, StudentUpcomingAssignment } from "@/types/dashboard";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -45,9 +45,8 @@ export function StudentCalendarView() {
   const { user } = useAuth();
   const { showToast } = useToast();
   const { language, translateSubject } = useLanguage();
-
-  const [data, setData] = useState<StudentDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { invalidateDashboards, invalidateSubmissions } = useInvalidateDataCache();
+  const { data, isPending: isLoading, refetch } = useStudentDashboard();
 
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
@@ -59,14 +58,8 @@ export function StudentCalendarView() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fetch = () => {
-    dashboardService
-      .getStudentDashboard()
-      .then((r) => setData(r))
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
+    void refetch();
   };
-
-  useEffect(() => { fetch(); }, []);
 
   /* ── build calendar grid ── */
   const cells = useMemo<CalendarCell[]>(() => {
@@ -134,7 +127,9 @@ export function StudentCalendarView() {
       await submissionService.submitOrReplace(selectedAssignment.assignmentId, { file, submissionText: notes });
       showToast("Submitted successfully!", "success");
       closeModal();
-      fetch();
+      await invalidateDashboards();
+      await invalidateSubmissions();
+      await refetch();
     } catch (err: any) {
       showToast(err.response?.data?.message || "Submission failed.", "error");
     } finally {

@@ -1,7 +1,10 @@
 # Submission Guidelines
 
-## Assignment & Submission Management System — OnnoRokom Projukti Limited
+## AssignFlow — Assignment & Submission Management System
 
+**Author:** Tarek · [@tarek-codes](https://github.com/tarek-codes)  
+**Live Demo:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
+**Repository:** [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow)  
 **Submission Deadline:** 14 August, 2026
 
 ---
@@ -42,9 +45,9 @@ Provide working login credentials for all three roles:
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | | |
-| Teacher | | |
-| Student | | |
+| Admin | `admin@example.com` | `Password123!` |
+| Teacher | `teacher@example.com` | `Password123!` |
+| Student | `student@example.com` | `Password123!` |
 
 ### Environment Configuration
 - Do **not** commit real passwords, API keys, or other secrets.
@@ -58,8 +61,8 @@ README must give clear, complete instructions so the project can be run locally 
 ## 2. Optional Additions
 
 Not mandatory, but may be included:
-- Live project URL
-- API/Swagger URL
+- Live project URL: [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)
+- API/Swagger URL: `https://assignflow-api-tq42.onrender.com/swagger`
 - Pagination
 - Advanced filtering
 - Notifications

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
-import { assignmentService } from "@/services/assignmentService";
 import { AssignmentListItem } from "@/types/assignment";
+import { useAllAssignments } from "@/hooks/queries/useDataQueries";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -26,25 +26,14 @@ export function AssignmentList() {
     ? "Manage, view, and organize all your created class assignments"
     : "Browse, search, and manage course assignments";
 
-  const [allAssignments, setAllAssignments] = useState<AssignmentListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: allAssignments = [], isPending: isLoading } = useAllAssignments();
 
-  // Filters
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [page, setPage] = useState(1);
   const pageSize = 10;
-
-  useEffect(() => {
-    setIsLoading(true);
-    assignmentService
-      .getAllAssignments()
-      .then((res) => setAllAssignments(res || []))
-      .catch(() => {})
-      .finally(() => setIsLoading(false));
-  }, []);
 
   // Unique lists from data
   const allClassLevels = useMemo(() => {

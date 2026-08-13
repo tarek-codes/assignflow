@@ -1,5 +1,8 @@
 # Functional Requirements
-## Assignment & Submission Management System
+## AssignFlow — Assignment & Submission Management System
+
+**Live Demo:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
+**Repository:** [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow)
 
 ---
 

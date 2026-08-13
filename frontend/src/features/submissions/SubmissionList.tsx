@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
-import { submissionService } from "@/services/submissionService";
 import { SubmissionListItem } from "@/types/submission";
+import { useAllSubmissions } from "@/hooks/queries/useDataQueries";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -74,8 +74,7 @@ export function SubmissionList() {
     ? "Review and grade student submissions for your classrooms"
     : "Audit student submissions across classrooms";
 
-  const [allSubmissions, setAllSubmissions] = useState<SubmissionListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: allSubmissions = [], isPending: isLoading } = useAllSubmissions(isStudent ? "mine" : "all");
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
@@ -84,21 +83,6 @@ export function SubmissionList() {
   const [statusFilter, setStatusFilter] = useState(initialFilter);
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchFunc = isStudent
-      ? submissionService.getMySubmissionsFull()
-      : submissionService.getAllSubmissionsFull();
-
-    fetchFunc
-      .then((data: any) => {
-        const list = Array.isArray(data) ? data : data?.items || [];
-        setAllSubmissions(list);
-      })
-      .catch(() => setAllSubmissions([]))
-      .finally(() => setIsLoading(false));
-  }, [isStudent]);
 
   // Parse each item once
   const parsedItemsMap = useMemo(() => {

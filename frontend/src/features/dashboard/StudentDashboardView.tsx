@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { dashboardService } from "@/services/dashboardService";
 import { submissionService } from "@/services/submissionService";
+import { useStudentDashboard, useInvalidateDataCache } from "@/hooks/queries/useDataQueries";
 import { cn } from "@/utils/cn";
 
 import { useAuth } from "@/context/AuthContext";
@@ -196,12 +196,10 @@ function matchSubjectKey(subName: string, curriculumSubjects: string[]): string 
 export function StudentDashboardView() {
   const router = useRouter();
   const { user } = useAuth();
-  const { showToast } = useToast();
   const { t, language, translateSubject, translateClass, translateUserName } = useLanguage();
-  const [data, setData] = useState<StudentDashboardData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [selectedSubject, setSelectedSubject] = useState<SubjectGroup | null>(null);
+  const { showToast } = useToast();
+  const { invalidateDashboards, invalidateSubmissions } = useInvalidateDataCache();
+  const { data, isPending: isLoading, refetch: refetchDashboard } = useStudentDashboard();
   const [selectedAssignment, setSelectedAssignment] = useState<StudentUpcomingAssignment | null>(null);
   const [showPendingModal, setShowPendingModal] = useState(false);
   const [pendingPage, setPendingPage] = useState(1);
@@ -210,17 +208,7 @@ export function StudentDashboardView() {
   const [submissionText, setSubmissionText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchDashboard = () => {
-    dashboardService
-      .getStudentDashboard()
-      .then((res) => setData(res))
-      .catch(() => { })
-      .finally(() => setIsLoading(false));
-  };
-
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+  const [selectedSubject, setSelectedSubject] = useState<SubjectGroup | null>(null);
 
   const subjectGroups = useMemo<SubjectGroup[]>(() => {
     const level = data?.classLevel || 10;
@@ -297,12 +285,12 @@ export function StudentDashboardView() {
       showToast("Assignment submitted successfully!", "success");
       handleCloseModal();
 
-      // Fetch fresh student dashboard data
-      const res = await dashboardService.getStudentDashboard();
-      setData(res);
+      await invalidateDashboards();
+      await invalidateSubmissions();
+      const { data: res } = await refetchDashboard();
 
       // If user is currently in a subject drill-in view, sync selectedSubject with fresh data
-      if (selectedSubject) {
+      if (selectedSubject && res) {
         const level = res.classLevel || 10;
         const group = res.group || "Science";
         const curriculumSubjects = getCurriculumSubjectsForClass(level, group);

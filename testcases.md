@@ -2,6 +2,10 @@
 
 This document contains 100 comprehensive test cases covering all functional, architectural, security, and workflow requirements of the **AssignFlow Academic Portal**.
 
+**Live Demo:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
+**Repository:** [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow)  
+**API Base URL:** `https://assignflow-api-tq42.onrender.com/api`
+
 ---
 
 ## 1. Authentication & Authorization (TC-001 to TC-015)

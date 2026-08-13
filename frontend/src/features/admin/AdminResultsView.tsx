@@ -2,10 +2,13 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Award, BookOpen, Crown, Filter, Medal, Search, UserCheck, TrendingUp, CheckCircle2, AlertTriangle, Star } from "lucide-react";
-import { userService, StudentListItem } from "@/services/userService";
-import { submissionService } from "@/services/submissionService";
-import { classService } from "@/services/classService";
-import { assignmentService } from "@/services/assignmentService";
+import {
+  useAllAssignments,
+  useAllClasses,
+  useAllStudents,
+  useAllSubmissions,
+} from "@/hooks/queries/useDataQueries";
+import { StudentListItem } from "@/services/userService";
 import { ClassListItem } from "@/types/class";
 import { SubmissionListItem } from "@/types/submission";
 import { AssignmentListItem } from "@/types/assignment";
@@ -65,11 +68,15 @@ function parseSubClassAndSubject(sub: SubmissionListItem) {
 }
 
 export function AdminResultsView() {
-  const [students, setStudents] = useState<StudentListItem[]>([]);
-  const [submissions, setSubmissions] = useState<SubmissionListItem[]>([]);
-  const [classes, setClasses] = useState<ClassListItem[]>([]);
-  const [assignments, setAssignments] = useState<AssignmentListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: students = [], isPending: studentsPending } = useAllStudents();
+  const { data: submissions = [], isPending: submissionsPending } = useAllSubmissions();
+  const { data: classes = [], isPending: classesPending } = useAllClasses();
+  const { data: assignments = [], isPending: assignmentsPending } = useAllAssignments();
+  const isLoading =
+    (studentsPending && students.length === 0) ||
+    (submissionsPending && submissions.length === 0) ||
+    (classesPending && classes.length === 0) ||
+    (assignmentsPending && assignments.length === 0);
 
   // Filters
   const [selectedClass, setSelectedClass] = useState<string>("6"); // Class 6 default view
@@ -80,23 +87,6 @@ export function AdminResultsView() {
   // 7 record pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 7;
-
-  useEffect(() => {
-    setIsLoading(true);
-    Promise.all([
-      userService.getAllStudents().catch(() => []),
-      submissionService.getAllSubmissionsFull().catch(() => []),
-      classService.getAllClasses().catch(() => []),
-      assignmentService.getAllAssignments().catch(() => []),
-    ])
-      .then(([allStudents, allSubmissions, allClassList, allAssignments]) => {
-        setStudents(allStudents);
-        setSubmissions(allSubmissions);
-        setClasses(allClassList);
-        setAssignments(allAssignments);
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
 
   // Map assignments by ID for instant subject & class metadata lookup
   const assignmentMap = useMemo(() => {

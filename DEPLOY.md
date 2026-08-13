@@ -2,15 +2,19 @@
 
 This guide provides step-by-step instructions for deploying the **AssignFlow** full-stack application.
 
+**Live Frontend:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
+**Live API:** `https://assignflow-api-tq42.onrender.com/api`  
+**Repository:** [https://github.com/tarek-codes/assignflow](https://github.com/tarek-codes/assignflow)
+
 ---
 
 ## 📐 Architecture Overview
 
 | Component | Technology | Default Port | Production Deployment Target |
 | :--- | :--- | :--- | :--- |
-| **Backend API** | C# .NET 9 Web API | `5000` / `5001` | Render / Railway / Azure App Service / Docker |
+| **Backend API** | ASP.NET Core 10 Web API | `5196` / `8080` | Render / Railway / Azure App Service / Docker |
 | **Frontend** | Next.js 16 (App Router) | `3000` | Vercel / Netlify / Docker |
-| **Database** | PostgreSQL / SQL Server | `5432` / `1433` | Neon / Render Postgres / Azure SQL / AWS RDS |
+| **Database** | PostgreSQL 15+ | `5432` | Neon / Render Postgres / Azure SQL / AWS RDS |
 | **File Storage** | Local Disk / Volume | `./storage` | Mounted Persistent Volume / AWS S3 |
 
 ---
@@ -27,7 +31,7 @@ Set these environment variables in your deployment platform (or in `appsettings.
 | `Jwt__Secret` | `ProductionSecretKey_MustBeAtLeast256BitsLongAndSecure2026!` | Secret key for signing JWT tokens |
 | `Jwt__Issuer` | `AssignmentManagement` | JWT issuer string |
 | `Jwt__Audience` | `AssignmentManagement.Web` | JWT audience string |
-| `Cors__AllowedOrigins__0` | `https://assignflow-app.vercel.app` | Allowed frontend origin for CORS |
+| `Cors__AllowedOrigins__0` | `https://assignflow-bd.vercel.app` | Allowed frontend origin for CORS |
 | `Storage__SubmissionRootPath` | `/var/data/submissions` | Persistent directory path for student uploads |
 | `Storage__MaxUploadSizeMb` | `10` | Maximum file upload size limit (MB) |
 
@@ -71,7 +75,7 @@ Set these build-time environment variables in your frontend platform (e.g., Verc
    - `Jwt__Secret`: `AssignmentManagement_SuperStrongSecretKey_2026_With_More_Than_256_Bits!`
    - `Jwt__Issuer`: `AssignmentManagement`
    - `Jwt__Audience`: `AssignmentManagement.Web`
-   - `Cors__AllowedOrigins__0`: `https://your-frontend.vercel.app` (replace with your production frontend URL)
+   - `Cors__AllowedOrigins__0`: `https://assignflow-bd.vercel.app`
    - `DOTNET_USE_POLLING_FILE_WATCHER`: `true`
    - `DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE`: `false`
 5. Click **Create Web Service**. Render will automatically pull the multi-stage [`Dockerfile`](file:///c:/Users/Tarek/Desktop/assignment/Dockerfile), build the ASP.NET Core API image, execute EF Core migrations on Neon PostgreSQL, seed default users, and launch the API container.
@@ -87,7 +91,7 @@ Set these build-time environment variables in your frontend platform (e.g., Verc
    - **Root Directory**: `frontend`
    - **Build Command**: `npm run build`
 4. Under **Environment Variables**, add:
-   - `NEXT_PUBLIC_API_URL` = `https://assignflow-api.onrender.com/api`
+   - `NEXT_PUBLIC_API_URL` = `https://assignflow-api-tq42.onrender.com/api`
 5. Click **Deploy**. Vercel will build and publish your frontend application.
 
 ---
@@ -211,7 +215,7 @@ sudo certbot --nginx -d yourdomain.com
 ## 🖥️ Method 3: Windows Server & IIS Deployment
 
 ### Step 1: Install Prerequisites
-1. Download & install [.NET 9.0 Hosting Bundle](https://dotnet.microsoft.com/download/dotnet/9.0) on your Windows Server.
+1. Download & install [.NET 10.0 Hosting Bundle](https://dotnet.microsoft.com/download/dotnet/10.0) on your Windows Server.
 2. Ensure IIS is installed with **Web Management Tools** and **World Wide Web Services**.
 
 ### Step 2: Publish & Deploy Backend API
@@ -238,12 +242,13 @@ pm2 start npm --name "assignflow-frontend" -- start
 
 ## ✅ Post-Deployment Verification Checklist
 
-- [ ] **Backend Health Check**: Navigate to `https://your-api-domain.com/api/dashboard/summary` (Ensure API returns standard JSON or HTTP 401 Unauthorized for unauthenticated requests).
-- [ ] **Swagger Documentation**: Check `https://your-api-domain.com/swagger` (Enable in production if desired).
+- [ ] **Frontend Live Check**: Navigate to [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/) and verify the landing page, login, and role-based dashboards load correctly on desktop and mobile.
+- [ ] **Backend Health Check**: Navigate to `https://assignflow-api-tq42.onrender.com/api/dashboard/summary` (Ensure API returns standard JSON or HTTP 401 Unauthorized for unauthenticated requests).
+- [ ] **Swagger Documentation**: Check `https://assignflow-api-tq42.onrender.com/swagger` (Enable in production if desired).
 - [ ] **Seed Credentials Check**: Verify logins work for pre-seeded accounts:
-  - **Admin**: `admin@assignflow.edu` / `AdminPass123!`
-  - **Teacher**: `j.smith@school.edu` / `TeacherPass123!`
-  - **Student**: `alex.johnson@student.edu` / `StudentPass123!`
+  - **Admin**: `admin@example.com` / `Password123!`
+  - **Teacher**: `teacher@example.com` / `Password123!`
+  - **Student**: `student@example.com` / `Password123!`
 - [ ] **CORS Verification**: Log into frontend app and inspect browser DevTools console for zero CORS blocking errors.
 - [ ] **File Upload Test**: Submit a test PDF assignment as a student to confirm write permissions on `./storage/submissions`.
 

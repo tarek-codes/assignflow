@@ -15,7 +15,12 @@ import {
   X,
 } from "lucide-react";
 import { classService } from "@/services/classService";
-import { userService } from "@/services/userService";
+import {
+  useAllClasses,
+  useAllStudents,
+  useAllTeachers,
+  useInvalidateDataCache,
+} from "@/hooks/queries/useDataQueries";
 import { TeacherListItem, StudentListItem } from "@/services/userService";
 import { ClassListItem } from "@/types/class";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -37,46 +42,28 @@ interface ClassLevelGroup {
 
 export function ManageClassesView() {
   const { showToast } = useToast();
-
-  const [classes, setClasses] = useState<ClassListItem[]>([]);
-  const [students, setStudents] = useState<StudentListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { invalidateClasses, invalidateTeachers } = useInvalidateDataCache();
+  const { data: classes = [], isPending: isLoading } = useAllClasses();
+  const { data: students = [] } = useAllStudents();
 
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [subjectPage, setSubjectPage] = useState(1);
   const [activeSegment, setActiveSegment] = useState<"all" | "primary" | "secondary" | "higher_secondary">("all");
   const [assignTarget, setAssignTarget] = useState<ClassListItem | null>(null);
+  const { data: teachers = [], isFetching: teachersLoading, refetch: refetchTeachers } = useAllTeachers({
+    enabled: Boolean(assignTarget),
+  });
   const [classSubjectSearch, setClassSubjectSearch] = useState("");
   const [classSubjectFilter, setClassSubjectFilter] = useState<"all" | "assigned" | "unassigned">("all");
 
-  const [teachers, setTeachers] = useState<TeacherListItem[]>([]);
-  const [teachersLoading, setTeachersLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [assigningTeacherId, setAssigningTeacherId] = useState<number | null>(null);
 
-
   const loadTeachers = () => {
-    setTeachersLoading(true);
-    userService
-      .getAllTeachers()
-      .then((res) => setTeachers(res))
-      .catch(() => showToast("Failed to load teachers.", "error"))
-      .finally(() => setTeachersLoading(false));
-  };
-
-  const fetchClasses = () => {
-    setIsLoading(true);
-    classService
-      .getAllClasses()
-      .then(setClasses)
-      .catch(() => showToast("Failed to load classes.", "error"))
-      .finally(() => setIsLoading(false));
+    void invalidateTeachers();
   };
 
   useEffect(() => {
-    fetchClasses();
-    userService.getAllStudents().then(setStudents).catch(() => { });
-
     // Reload the teacher roster whenever a new teacher is approved elsewhere
     // (e.g. Account Approvals page) so this picker always shows fresh data.
     const handleRosterChange = () => loadTeachers();
@@ -223,8 +210,8 @@ export function ManageClassesView() {
 
     setAssigningTeacherId(teacher.id);
     try {
-      const updated = await classService.assignTeacher(assignTarget.id, { teacherId: teacher.id });
-      setClasses((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
+      await classService.assignTeacher(assignTarget.id, { teacherId: teacher.id });
+      await invalidateClasses();
       showToast(`${teacher.fullName || teacher.firstName} assigned to ${assignTarget.subjectName}.`, "success");
       closeAssignModal();
     } catch (err: any) {
