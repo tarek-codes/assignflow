@@ -191,4 +191,60 @@ public class AssignmentServiceTests
         Assert.Equal(AssignmentStatus.Published, assignment.Status);
         _repositoryMock.Verify(r => r.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    // Test Name: AssignmentService - GetAssignmentAsync Returns Assignment Detail Dto When Found
+    [Fact]
+    public async Task GetAssignmentAsync_ShouldReturnAssignmentDetail_WhenFound()
+    {
+        // Arrange
+        const int assignmentId = 1;
+        var existingAssignment = new Assignment
+        {
+            Id = assignmentId,
+            Title = "Physics Chapter 1 Quiz",
+            Description = "Kinematics questions",
+            MaxMarks = 50,
+            Status = AssignmentStatus.Published,
+            Class = new Class { Id = 2, ClassLevel = 10, Subject = new Subject { SubjectName = "Physics" } }
+        };
+
+        _repositoryMock.Setup(r => r.GetAssignmentAsync(assignmentId, false, It.IsAny<CancellationToken>())).ReturnsAsync(existingAssignment);
+
+        // Act
+        var result = await _assignmentService.GetAssignmentAsync(assignmentId);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("Physics Chapter 1 Quiz", result.Title);
+        Assert.Equal(50, result.MaxMarks);
+    }
+
+    // Test Name: AssignmentService - DeleteAssignmentAsync Removes Assignment When Owned By Teacher
+    [Fact]
+    public async Task DeleteAssignmentAsync_ShouldDeleteAssignment_WhenTeacherOwnsClass()
+    {
+        // Arrange
+        const int teacherUserId = 10;
+        const int assignmentId = 5;
+
+        _currentUserServiceMock.Setup(u => u.IsAuthenticated).Returns(true);
+        _currentUserServiceMock.Setup(u => u.UserId).Returns(teacherUserId);
+
+        var assignment = new Assignment
+        {
+            Id = assignmentId,
+            Class = new Class { Teacher = new Teacher { UserId = teacherUserId } }
+        };
+
+        _repositoryMock.Setup(r => r.GetAssignmentAsync(assignmentId, true, It.IsAny<CancellationToken>())).ReturnsAsync(assignment);
+
+        // Act
+        var result = await _assignmentService.DeleteAssignmentAsync(assignmentId);
+
+        // Assert
+        Assert.True(result);
+        _repositoryMock.Verify(r => r.Remove(assignment), Times.Once);
+        _repositoryMock.Verify(r => r.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
 }
+

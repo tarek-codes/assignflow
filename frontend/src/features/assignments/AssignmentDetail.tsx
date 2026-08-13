@@ -316,7 +316,7 @@ export function AssignmentDetail({ assignmentId }: { assignmentId: number }) {
 
             {(isTeacher || isAdmin) && (
               <div className="flex items-center gap-2">
-                <Badge variant={displayStatus === "Closed" ? "danger" : displayStatus === "Published" ? "success" : "default"}>
+                <Badge variant={displayStatus === "Closed" ? "error" : displayStatus === "Published" ? "success" : "default"}>
                   {displayStatus}
                 </Badge>
                 {isTeacher && !isAdmin && (

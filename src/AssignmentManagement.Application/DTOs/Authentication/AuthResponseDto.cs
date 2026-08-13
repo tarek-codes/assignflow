@@ -10,6 +10,8 @@ public sealed class AuthResponseDto
 
     public string Role { get; set; } = string.Empty;
 
+    public string Gender { get; set; } = "Male";
+
     public string AccessToken { get; set; } = string.Empty;
 
     public string RefreshToken { get; set; } = string.Empty;

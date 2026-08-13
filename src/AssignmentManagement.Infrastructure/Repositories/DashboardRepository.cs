@@ -283,7 +283,13 @@ public sealed class DashboardRepository : IDashboardRepository
         var studentNumber = student.StudentNumber;
         var classLevel = student.ClassLevel > 0 ? student.ClassLevel : 9;
 
-        // Assignments filtered ONLY by student's class level
+        var enrolledClassIds = await _context.StudentClasses
+            .AsNoTracking()
+            .Where(sc => sc.StudentId == studentId)
+            .Select(sc => sc.ClassId)
+            .ToListAsync(cancellationToken);
+
+        // Assignments filtered ONLY by student's enrolled classes
         var publishedAssignmentsQuery = _context.Assignments
             .AsNoTracking()
             .Include(a => a.Class)
@@ -291,7 +297,8 @@ public sealed class DashboardRepository : IDashboardRepository
             .Include(a => a.Class)
                 .ThenInclude(c => c!.Teacher)
                     .ThenInclude(t => t!.User)
-            .Where(a => a.Class != null && a.Class.ClassLevel == classLevel && a.Status == AssignmentStatus.Published);
+            .Where(a => a.Class != null && enrolledClassIds.Contains(a.ClassId) && a.Status == AssignmentStatus.Published);
+
 
         var studentSubmissions = await _context.Submissions
             .AsNoTracking()
@@ -413,10 +420,11 @@ public sealed class DashboardRepository : IDashboardRepository
                     AvgPercentage = avgPct
                 };
             })
-            .OrderByDescending(x => x.TotalMarks)
-            .ThenByDescending(x => x.AvgPercentage)
+            .OrderByDescending(x => x.AvgPercentage)
+            .ThenByDescending(x => x.TotalMarks)
             .ThenBy(x => x.StudentName)
             .ToList();
+
 
         int positionInClass = 1;
         var myIndex = rankedList.FindIndex(x => x.StudentId == studentId);

@@ -351,9 +351,9 @@ export function AdminResultsView() {
       if (rawGrp && rawGrp.toLowerCase() !== "none" && rawGrp.trim() !== "") {
         return rawGrp;
       }
-      const mod = Math.abs(stId) % 3;
-      return mod === 0 ? "Science" : mod === 1 ? "Business Studies" : "Humanities";
+      return "Science";
     };
+
 
     if (students && students.length > 0) {
       roster = students.map((st) => {
@@ -440,8 +440,8 @@ export function AdminResultsView() {
       const classTasks = classGroupTotalTaskCount[groupKey] || classGroupTotalTaskCount[`${st.classLevel}_All`] || 0;
       const totalTasks = Math.max(subData.totalGraded, classTasks > 0 ? classTasks : 0);
 
-      const uniformMax = uniformClassMaxMap[groupKey] > 0 ? uniformClassMaxMap[groupKey] : 100;
-      const rawPct = (totalScored / uniformMax) * 100;
+      const totalMax = subData.totalMaxMarks > 0 ? subData.totalMaxMarks : (uniformClassMaxMap[groupKey] > 0 ? uniformClassMaxMap[groupKey] : 100);
+      const rawPct = totalMax > 0 ? (totalScored / totalMax) * 100 : 0;
       const pctMark = Math.min(100, Math.max(0, rawPct));
 
       return {
@@ -453,9 +453,10 @@ export function AdminResultsView() {
         avgPercentage: Math.round(pctMark * 100) / 100,
         totalGraded: totalTasks,
         totalMarks: Math.round(totalScored * 100) / 100,
-        totalMaxMarks: Math.round(uniformMax * 100) / 100,
+        totalMaxMarks: Math.round(totalMax * 100) / 100,
         positionInClass: 0,
       };
+
     });
 
     // Groupwise ranking for grouped classes (Class 9, 10, 11, 12)

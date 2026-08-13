@@ -3,7 +3,8 @@ export type SubmissionStatus =
   | "Submitted"
   | "Late"
   | "UnderReview"
-  | "Graded";
+  | "Graded"
+  | "Missing";
 
 export interface SubmissionListItem {
   id: number;

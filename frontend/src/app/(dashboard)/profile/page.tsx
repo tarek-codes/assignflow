@@ -24,6 +24,7 @@ import { dashboardService } from "@/services/dashboardService";
 import { userService } from "@/services/userService";
 import { authService } from "@/services/authService";
 import { AvatarCropModal } from "@/components/profile/AvatarCropModal";
+import { Avatar } from "@/components/ui/Avatar";
 
 export default function ProfilePage() {
   const { user, updateAvatar, removeAvatar } = useAuth();
@@ -172,22 +173,16 @@ export default function ProfilePage() {
               />
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="group relative w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center cursor-pointer transition-all shadow-sm"
+                className="group relative w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center justify-center cursor-pointer transition-all shadow-sm shrink-0"
                 title="Click to upload profile picture"
               >
-                <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center">
-                  {user.avatarUrl ? (
-                    <img src={user.avatarUrl} alt={user.fullName} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-2xl sm:text-3xl font-bold uppercase font-mono">
-                      {user.fullName ? (
-                        user.fullName.trim().split(" ").length >= 2
-                          ? `${user.fullName.trim().split(" ")[0][0]}${user.fullName.trim().split(" ")[1][0]}`
-                          : user.fullName.substring(0, 2)
-                      ) : "U"}
-                    </span>
-                  )}
-                </div>
+                <Avatar
+                  name={user.fullName}
+                  gender={user.gender}
+                  isCurrentUser
+                  size="xl"
+                  className="w-full h-full border-0"
+                />
 
                 {/* ALWAYS-VISIBLE CAMERA BADGE */}
                 <div className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-blue-600 text-white ring-2 ring-white dark:ring-slate-900 shadow-md group-hover:bg-blue-700 group-hover:scale-110 transition-all">

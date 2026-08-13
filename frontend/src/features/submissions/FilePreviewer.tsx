@@ -136,7 +136,7 @@ Turnitin Integrity Status: Verified Clean (0% Plagiarism) - Page 1 of 1`;
         <div className="flex items-center gap-2 shrink-0">
           <Button
             size="sm"
-            variant={showPreview ? "default" : "outline"}
+            variant={showPreview ? "primary" : "outline"}
             leftIcon={showPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
             onClick={() => setShowPreview(!showPreview)}
           >

@@ -154,6 +154,8 @@ export function AssignmentsBarChart({
     { month: "Apr 2026", count: 32 },
     { month: "May 2026", count: 18 },
     { month: "Jun 2026", count: 20 },
+    { month: "Jul 2026", count: 25 },
+    { month: "Aug 2026", count: 30 },
   ];
 
   const standardMonths = ["Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026"];
@@ -180,7 +182,7 @@ export function AssignmentsBarChart({
     <div className={cardBase}>
       <CardHeader
         title="Assignments Created"
-        subtitle="Monthly assignment generation"
+        subtitle="No. of Assignments Created Per Month"
         icon={TrendingUp}
         badgeText={`${totalCreated} total`}
         classFilter={classFilter}
@@ -221,7 +223,7 @@ export function AssignmentsBarChart({
                     fill: "#1e293b",
                     fontSize: 11,
                     fontWeight: 700,
-                    formatter: (val: number) => val > 0 ? val : "",
+                    formatter: (val: any) => (val && Number(val) > 0 ? String(val) : ""),
                   }}
                 />
               </BarChart>

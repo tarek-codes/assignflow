@@ -7,8 +7,17 @@ import { MobileSidebar } from "@/components/layout/MobileSidebar";
 import { Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { ROLES } from "@/constants/roles";
+import { ROUTES } from "@/constants/routes";
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const { user } = useAuth();
+
+  const isAdminDashboard = user?.role === ROLES.ADMIN && pathname === ROUTES.DASHBOARD;
 
   return (
     <ProtectedRoute>
@@ -43,7 +52,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             {/* ─── MINIMAL THIN FOOTER ─── */}
             <footer className="relative mt-2 pt-2 border-t border-slate-200/60 dark:border-slate-800/60 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 gap-1 shrink-0">
-              <p>© {new Date().getFullYear()} AssignFlow System. All rights reserved.</p>
+              {!isAdminDashboard ? (
+                <p>© {new Date().getFullYear()} AssignFlow System. All rights reserved.</p>
+              ) : (
+                <span />
+              )}
               <div className="flex items-center gap-3 font-medium">
                 <span>Assignment Submission Platform</span>
                 <span>•</span>
@@ -56,3 +69,4 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     </ProtectedRoute>
   );
 }
+

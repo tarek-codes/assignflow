@@ -4,6 +4,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { dashboardService } from "@/services/dashboardService";
 import { submissionService } from "@/services/submissionService";
+import { cn } from "@/utils/cn";
+
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -21,14 +23,17 @@ import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Avatar } from "@/components/ui/Avatar";
 import {
   Award,
   BookOpen,
   CalendarDays,
   User as UserIcon,
   CheckCircle2,
+  Clock,
   Clock3,
   Timer,
+
   Send,
   ArrowLeft,
   ChevronRight,
@@ -80,20 +85,35 @@ function CountdownTimer({ deadlineUtc }: { deadlineUtc: string }) {
 
   if (timeLeft.isOverdue) {
     return (
-      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50 px-2 py-0.5 rounded-md border border-red-200/60 dark:border-red-900/60">
-        <Timer className="w-3 h-3 shrink-0" /> Deadline Passed
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-xs font-semibold border border-rose-200/80 dark:border-rose-900/60 shadow-xs">
+        <Clock className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+        <span>Past Deadline</span>
       </span>
     );
   }
 
+  const isUrgent = timeLeft.days === 0;
+
   return (
-    <span className="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-200/60 dark:border-amber-900/60">
-      <Timer className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
-      {timeLeft.days > 0 && `${timeLeft.days}d `}
-      {String(timeLeft.hours).padStart(2, "0")}h:{String(timeLeft.mins).padStart(2, "0")}m:{String(timeLeft.secs).padStart(2, "0")}s left
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border shadow-xs transition-colors",
+        isUrgent
+          ? "bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border-amber-200/80 dark:border-amber-800/80"
+          : "bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border-blue-200/80 dark:border-blue-800/80"
+      )}
+    >
+      <Clock className={cn("w-3.5 h-3.5 shrink-0", isUrgent ? "text-amber-500 animate-pulse" : "text-blue-500")} />
+      <span>
+        {timeLeft.days > 0
+          ? `${timeLeft.days}d ${String(timeLeft.hours).padStart(2, "0")}h ${String(timeLeft.mins).padStart(2, "0")}m ${String(timeLeft.secs).padStart(2, "0")}s left`
+          : `${String(timeLeft.hours).padStart(2, "0")}h ${String(timeLeft.mins).padStart(2, "0")}m ${String(timeLeft.secs).padStart(2, "0")}s left`}
+      </span>
+
     </span>
   );
 }
+
 
 function getSubjectThemeConfig(name: string) {
   const n = name.toLowerCase();
@@ -216,10 +236,7 @@ export function StudentDashboardView() {
       assignmentMap.get(key)!.push(a);
     });
 
-    const subjectSet = new Set([...curriculumSubjects, ...upcoming.map((a) => matchSubjectKey(a.subjectName, curriculumSubjects))]);
-    const allSubjectNames = Array.from(subjectSet);
-
-    return allSubjectNames.map((subjectName) => {
+    return curriculumSubjects.map((subjectName) => {
       const assignments = assignmentMap.get(subjectName) || [];
       return {
         subjectName,
@@ -231,6 +248,7 @@ export function StudentDashboardView() {
       };
     });
   }, [data]);
+
 
   const activeSubjectGroup = useMemo(() => {
     if (!selectedSubject) return null;
@@ -333,15 +351,15 @@ export function StudentDashboardView() {
       <section className="relative rounded-3xl bg-blue-600 px-6 py-7 text-white shadow-xl shadow-blue-600/10 sm:px-8 sm:py-8 z-10">
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4 sm:gap-6">
-            {/* CIRCULAR PROFILE AVATAR PLACE (SLEEK GLASS CIRCLE WITH DEFAULT USER ICON) */}
+            {/* CIRCULAR PROFILE AVATAR PLACE (SLEEK GLASS CIRCLE WITH DYNAMIC GENDER AVATAR OR CUSTOM PHOTO) */}
             <div className="shrink-0">
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-2 border-white/50 bg-white/15 backdrop-blur-md shadow-xl shadow-blue-900/20 flex items-center justify-center overflow-hidden shrink-0 ring-4 ring-white/10">
-                {user?.avatarUrl ? (
-                  <img src={user.avatarUrl} alt={user?.fullName || "Student"} className="w-full h-full object-cover" />
-                ) : (
-                  <UserIcon className="w-16 h-16 sm:w-20 sm:h-20 text-white/90" />
-                )}
-              </div>
+              <Avatar
+                name={user?.fullName || "Student"}
+                gender={user?.gender}
+                isCurrentUser
+                size="2xl"
+                className="border-2 border-white/50 bg-white/15 backdrop-blur-md shadow-xl shadow-blue-900/20 ring-4 ring-white/10"
+              />
             </div>
 
             {/* WELCOME TEXT (SHIFTED TO THE RIGHT) */}
@@ -559,9 +577,9 @@ export function StudentDashboardView() {
         onClose={() => { setShowPendingModal(false); setPendingPage(1); }}
         title={language === "bn" ? "অপেক্ষমান অ্যাসাইনমেন্টসমূহ" : "Pending Assignments"}
         description={language === "bn" ? "জমা দেওয়ার জন্য অপেক্ষমান সকল অ্যাসাইনমেন্ট" : "All pending assignments awaiting your submission"}
-        maxWidth="5xl"
+        maxWidth="6xl"
       >
-        <div className="space-y-4 pt-2">
+        <div className="space-y-4 pt-2 min-h-[420px] sm:min-h-[480px] flex flex-col justify-between">
           {pendingAssignments.length === 0 ? (
             <EmptyState
               icon={<CheckCircle2 className="w-10 h-10 text-emerald-500" />}
@@ -569,55 +587,58 @@ export function StudentDashboardView() {
               description={language === "bn" ? "আপনার সকল অ্যাসাইনমেন্ট জমা সম্পন্ন হয়েছে!" : "You have no pending assignments right now. All tasks are submitted!"}
             />
           ) : (() => {
-            const PENDING_PER_PAGE = 7;
+            const PENDING_PER_PAGE = 10;
             const totalPendingPages = Math.ceil(pendingAssignments.length / PENDING_PER_PAGE);
             const pagedPending = pendingAssignments.slice((pendingPage - 1) * PENDING_PER_PAGE, pendingPage * PENDING_PER_PAGE);
             return (
-              <div className="space-y-3">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{language === "bn" ? "শিরোনাম" : "Title"}</TableHead>
-                      <TableHead>{language === "bn" ? "বিষয়" : "Subject"}</TableHead>
-                      <TableHead>{language === "bn" ? "জমার শেষ তারিখ" : "Due Date"}</TableHead>
-                      <TableHead className="text-right">{language === "bn" ? "অবশিষ্ট সময়" : "Time Remaining"}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {pagedPending.map((a) => (
-                      <TableRow key={a.assignmentId}>
-                        <TableCell>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setShowPendingModal(false);
-                              setPendingPage(1);
-                              const g = subjectGroups.find(
-                                (sub) => sub.subjectName.trim().toLowerCase() === a.subjectName.trim().toLowerCase()
-                              );
-                              if (g) setSelectedSubject(g);
-                              handleOpenAssignment(a);
-                            }}
-                            className="font-semibold text-blue-600 dark:text-blue-400 hover:underline text-left cursor-pointer"
-                          >
-                            {a.title}
-                          </button>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="default" className="font-medium">
-                            {translateSubject(a.subjectName)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-xs text-slate-600 dark:text-slate-400 font-medium">
-                          {formatDate(a.deadlineUtc)}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <CountdownTimer deadlineUtc={a.deadlineUtc} />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+              <div className="space-y-4 flex-1 flex flex-col justify-between">
+                <div className="w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800/90 shadow-sm">
+                  <table className="w-full text-left border-collapse text-sm">
+                    <thead className="bg-slate-950 dark:bg-slate-900 text-white text-xs font-bold uppercase tracking-wider divide-x divide-slate-700/60">
+                      <tr>
+                        <th className="px-6 py-4 font-bold text-white w-2/5">{language === "bn" ? "শিরোনাম" : "Title"}</th>
+                        <th className="px-6 py-4 font-bold text-white w-1/5">{language === "bn" ? "বিষয়" : "Subject"}</th>
+                        <th className="px-6 py-4 font-bold text-white w-1/5">{language === "bn" ? "জমার শেষ তারিখ" : "Due Date"}</th>
+                        <th className="px-6 py-4 font-bold text-white text-right w-1/5">{language === "bn" ? "অবশিষ্ট সময়" : "Time Remaining"}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50 text-slate-800 dark:text-slate-200">
+                      {pagedPending.map((a) => (
+                        <tr key={a.assignmentId} className="hover:bg-slate-50/80 dark:hover:bg-slate-700/40 transition-colors duration-150 divide-x divide-slate-100 dark:divide-slate-700/50">
+                          <td className="px-6 py-4 text-sm font-semibold">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowPendingModal(false);
+                                setPendingPage(1);
+                                const g = subjectGroups.find(
+                                  (sub) => sub.subjectName.trim().toLowerCase() === a.subjectName.trim().toLowerCase()
+                                );
+                                if (g) setSelectedSubject(g);
+                                handleOpenAssignment(a);
+                              }}
+                              className="font-bold text-blue-600 dark:text-blue-400 hover:underline text-left cursor-pointer transition-colors"
+                            >
+                              {a.title}
+                            </button>
+                          </td>
+                          <td className="px-6 py-4 text-sm">
+                            <Badge variant="default" className="font-semibold text-xs px-2.5 py-1">
+                              {translateSubject(a.subjectName)}
+                            </Badge>
+                          </td>
+                          <td className="px-6 py-4 text-xs text-slate-600 dark:text-slate-400 font-medium">
+                            {formatDate(a.deadlineUtc)}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <CountdownTimer deadlineUtc={a.deadlineUtc} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
                 {totalPendingPages > 1 && (
                   <div className="flex items-center justify-between pt-1 px-1">
                     <p className="text-xs text-slate-400">

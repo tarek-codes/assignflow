@@ -5,7 +5,10 @@ export interface User {
   email: string;
   fullName: string;
   role: UserRole;
+  gender?: string;
   avatarUrl?: string;
+  classLevel?: number;
+  group?: string;
 }
 
 export interface AuthState {
@@ -26,6 +29,7 @@ export interface AuthResponse {
   fullName: string;
   email: string;
   role: UserRole;
+  gender?: string;
   accessToken: string;
   refreshToken: string;
   accessTokenExpiresAtUtc: string;

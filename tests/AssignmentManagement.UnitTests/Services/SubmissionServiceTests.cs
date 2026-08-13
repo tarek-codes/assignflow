@@ -252,4 +252,41 @@ public class SubmissionServiceTests
         Assert.Equal("assignment.pdf", result.FileName);
         Assert.True(result.IsInline);
     }
+
+    // Test Name: SubmissionService - GradeSubmissionAsync Evaluates Score And Calculates Grade Tier
+    [Fact]
+    public async Task GradeSubmissionAsync_ShouldGradeSubmission_WhenScoreIsValid()
+    {
+        // Arrange
+        const int teacherUserId = 10;
+        const int submissionId = 5;
+
+        _currentUserServiceMock.Setup(u => u.IsAuthenticated).Returns(true);
+        _currentUserServiceMock.Setup(u => u.UserId).Returns(teacherUserId);
+
+        var submission = new Submission
+        {
+            Id = submissionId,
+            Assignment = new Assignment
+            {
+                MaxMarks = 50,
+                Class = new Class { Teacher = new Teacher { UserId = teacherUserId } }
+            }
+        };
+
+        _submissionRepoMock.Setup(r => r.GetByIdAsync(submissionId, true, It.IsAny<CancellationToken>())).ReturnsAsync(submission);
+
+        var request = new GradeSubmissionRequestDto { Marks = 45, Feedback = "Excellent work!" };
+
+        // Act
+        var result = await _submissionService.GradeSubmissionAsync(submissionId, request);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(45, submission.Marks);
+        Assert.Equal("Excellent work!", submission.Feedback);
+        Assert.Equal(SubmissionStatus.Graded, submission.Status);
+        _submissionRepoMock.Verify(r => r.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
 }
+

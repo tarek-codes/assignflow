@@ -64,7 +64,30 @@ const CURRICULUM_SUBJECTS = [
   "Finance, Banking and Insurance 2nd Paper",
   "Business Organization and Management 1st Paper",
   "Business Organization and Management 2nd Paper",
+  "Marketing 1st Paper",
+  "Marketing 2nd Paper",
+  "Production Management & Marketing 1st Paper",
+  "Production Management & Marketing 2nd Paper",
+  "Economics 1st Paper",
+  "Economics 2nd Paper",
+  "Civics & Good Governance 1st Paper",
+  "Civics & Good Governance 2nd Paper",
+  "History 1st Paper",
+  "History 2nd Paper",
+  "Islamic History & Culture 1st Paper",
+  "Islamic History & Culture 2nd Paper",
+  "Logic 1st Paper",
+  "Logic 2nd Paper",
+  "Sociology 1st Paper",
+  "Sociology 2nd Paper",
+  "Social Work 1st Paper",
+  "Social Work 2nd Paper",
+  "Geography 1st Paper",
+  "Geography 2nd Paper",
+  "Psychology 1st Paper",
+  "Psychology 2nd Paper",
 ];
+
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

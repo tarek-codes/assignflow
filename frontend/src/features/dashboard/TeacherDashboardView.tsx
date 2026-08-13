@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Avatar } from "@/components/ui/Avatar";
 import { formatDate, formatFullDateTime } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
 
@@ -79,15 +80,15 @@ export function TeacherDashboardView() {
       <section className="relative overflow-hidden rounded-3xl bg-blue-600 px-6 py-7 text-white shadow-xl shadow-blue-600/10 sm:px-8 sm:py-8">
         <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4 sm:gap-6">
-            {/* CIRCULAR PROFILE AVATAR PLACE (SLEEK GLASS CIRCLE WITH DEFAULT USER ICON) */}
+            {/* CIRCULAR PROFILE AVATAR PLACE (SLEEK GLASS CIRCLE WITH DYNAMIC GENDER AVATAR OR CUSTOM PHOTO) */}
             <div className="shrink-0">
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-2 border-white/50 bg-white/15 backdrop-blur-md shadow-xl shadow-blue-900/20 flex items-center justify-center overflow-hidden shrink-0 ring-4 ring-white/10">
-                {user?.avatarUrl ? (
-                  <img src={user.avatarUrl} alt={user?.fullName || "Teacher"} className="w-full h-full object-cover" />
-                ) : (
-                  <UserIcon className="w-16 h-16 sm:w-20 sm:h-20 text-white/90" />
-                )}
-              </div>
+              <Avatar
+                name={user?.fullName || "Teacher"}
+                gender={user?.gender}
+                isCurrentUser
+                size="2xl"
+                className="border-2 border-white/50 bg-white/15 backdrop-blur-md shadow-xl shadow-blue-900/20 ring-4 ring-white/10"
+              />
             </div>
 
             {/* WELCOME TEXT (SHIFTED TO THE RIGHT) */}

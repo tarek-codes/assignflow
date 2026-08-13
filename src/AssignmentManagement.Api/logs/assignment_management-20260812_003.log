@@ -1431,3 +1431,25 @@ AssignmentManagement.Application.Common.NotFoundException: The specified submiss
 2026-08-12 16:40:31.252 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3998 (teacher4@school.edu.bd) logged out
 2026-08-12 16:41:28.145 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'teacher4@school.edu.bd' (length 12)
 2026-08-12 16:41:28.275 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3998 (teacher4@school.edu.bd) logged in successfully with role "Teacher"
+2026-08-12 16:48:22.947 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3998 (teacher4@school.edu.bd) logged out
+2026-08-12 16:48:25.982 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 16:48:26.105 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 16:48:38.083 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged out
+2026-08-12 16:48:39.879 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@example.com' (length 12)
+2026-08-12 16:48:39.996 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3994 (admin@example.com) logged in successfully with role "Admin"
+2026-08-12 16:48:51.739 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3994 (admin@example.com) logged out
+2026-08-12 16:48:53.981 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 16:48:54.100 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 16:49:06.674 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged out
+2026-08-12 16:49:10.213 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'admin@example.com' (length 12)
+2026-08-12 16:49:10.332 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3994 (admin@example.com) logged in successfully with role "Admin"
+2026-08-12 16:51:25.020 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 3994 (admin@example.com) logged out
+2026-08-12 16:51:27.440 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 16:51:27.561 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 16:51:44.347 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged out
+2026-08-12 16:51:57.704 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 16:51:57.822 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 16:52:14.827 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged out
+2026-08-12 16:52:16.258 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] Login attempt received for email 'student7@school.edu.bd' (length 12)
+2026-08-12 16:52:16.377 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged in successfully with role "Student"
+2026-08-12 16:52:45.091 +06:00 [INF] [AssignmentManagement.Application.Services.AuthService] User 4021 (student7@school.edu.bd) logged out

@@ -89,10 +89,3 @@
 | TR-7.2 | Tests use a mocking framework (e.g. Moq) and/or an in-memory/test database provider to isolate from the real PostgreSQL instance. |
 | TR-7.3 | Test project is included in the repository and runnable via `dotnet test`, with instructions in the README. |
 
----
-
-
-## 9. Out of Scope (unless added as optional enhancements)
-
-- Real-time notifications
-- Pagination and advanced filtering (optional per assignment brief)

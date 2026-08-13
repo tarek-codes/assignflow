@@ -541,7 +541,7 @@ export function AdminDashboardView() {
 
           <div className="flex items-center gap-3.5 rounded-2xl bg-white/10 dark:bg-slate-900/60 border border-white/25 dark:border-slate-800 px-4.5 py-2.5 backdrop-blur-xl self-center shadow-lg shadow-black/5 shrink-0 transition-all hover:bg-white/15">
             <div className="flex items-center justify-center ring-2 ring-white/50 dark:ring-blue-400/50 rounded-full shadow-sm">
-              <Avatar name={user?.fullName || "Admin"} size="sm" />
+              <Avatar name={user?.fullName || "Admin"} src={user?.avatarUrl} isCurrentUser size="sm" />
             </div>
             <div className="flex flex-col justify-center text-left">
               <span className="text-sm font-extrabold text-white tracking-tight leading-none">
@@ -552,10 +552,11 @@ export function AdminDashboardView() {
               </span>
             </div>
             <div className="h-7 w-px bg-white/20 dark:bg-slate-700/80 mx-0.5 self-center" />
-            <div className="flex items-center justify-center p-1.5 rounded-xl bg-white/15 dark:bg-slate-800/80 border border-white/20 dark:border-slate-700 hover:bg-white/25 transition-all">
-              <ThemeToggle />
+            <div className="flex items-center justify-center">
+              <ThemeToggle variant="banner" />
             </div>
           </div>
+
         </div>
       </section>
 

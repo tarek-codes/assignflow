@@ -165,4 +165,76 @@ public class AuthServiceTests
         // Assert
         _currentUserServiceMock.Verify(u => u.UserId, Times.Once);
     }
+
+    // Test Name: AuthService - ChangePasswordAsync Updates Password When Current Password Matches
+    [Fact]
+    public async Task ChangePasswordAsync_ShouldUpdatePassword_WhenCurrentPasswordIsValid()
+    {
+        // Arrange
+        const int userId = 5;
+        var request = new ChangePasswordRequestDto { CurrentPassword = "OldPassword123!", NewPassword = "NewPassword123!" };
+        var user = new User { Id = userId, Email = "student@example.com", PasswordHash = "old_hashed_password", IsActive = true };
+
+        _currentUserServiceMock.Setup(u => u.UserId).Returns(userId);
+        _userRepoMock.Setup(r => r.GetByIdAsync(userId, It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        _passwordHasherMock.Setup(h => h.Verify("OldPassword123!", "old_hashed_password")).Returns(true);
+        _passwordHasherMock.Setup(h => h.Hash("NewPassword123!")).Returns("new_hashed_password");
+
+        // Act
+        await _authService.ChangePasswordAsync(request);
+
+        // Assert
+        Assert.Equal("new_hashed_password", user.PasswordHash);
+        _userRepoMock.Verify(r => r.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    // Test Name: AuthService - ChangePasswordAsync Throws Unauthorized When Current Password Invalid
+    [Fact]
+    public async Task ChangePasswordAsync_ShouldThrowUnauthorized_WhenCurrentPasswordIsInvalid()
+    {
+        // Arrange
+        const int userId = 5;
+        var request = new ChangePasswordRequestDto { CurrentPassword = "WrongOldPassword", NewPassword = "NewPassword123!" };
+        var user = new User { Id = userId, Email = "student@example.com", PasswordHash = "old_hashed_password", IsActive = true };
+
+        _currentUserServiceMock.Setup(u => u.UserId).Returns(userId);
+        _userRepoMock.Setup(r => r.GetByIdAsync(userId, It.IsAny<CancellationToken>())).ReturnsAsync(user);
+        _passwordHasherMock.Setup(h => h.Verify("WrongOldPassword", "old_hashed_password")).Returns(false);
+
+        // Act & Assert
+        await Assert.ThrowsAsync<UnauthorizedAccessException>(() => _authService.ChangePasswordAsync(request));
+    }
+
+    // Test Name: AuthService - CheckEmailExistsAsync Returns True When Email Present In System
+    [Fact]
+    public async Task CheckEmailExistsAsync_ShouldReturnTrue_WhenEmailExists()
+    {
+        // Arrange
+        const string email = "existing@example.com";
+        var existingUser = new User { Id = 1, Email = email };
+        _userRepoMock.Setup(r => r.GetByEmailAsync(email, It.IsAny<CancellationToken>())).ReturnsAsync(existingUser);
+
+        // Act
+        var result = await _authService.CheckEmailExistsAsync(email);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    // Test Name: AuthService - CheckEmailExistsAsync Returns False When Email Available
+    [Fact]
+    public async Task CheckEmailExistsAsync_ShouldReturnFalse_WhenEmailAvailable()
+    {
+        // Arrange
+        const string email = "new.email@example.com";
+        _userRepoMock.Setup(r => r.GetByEmailAsync(email, It.IsAny<CancellationToken>())).ReturnsAsync((User?)null);
+
+        // Act
+        var result = await _authService.CheckEmailExistsAsync(email);
+
+        // Assert
+        Assert.False(result);
+    }
 }
+
+

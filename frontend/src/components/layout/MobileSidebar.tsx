@@ -137,10 +137,20 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
                 <LogOut className="h-5 w-5 shrink-0 text-red-500" />
                 <span>{t("navSignOut")}</span>
               </button>
+
+              {isAdmin && pathname === ROUTES.DASHBOARD && (
+                <div className="mt-auto mb-10 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 px-3.5 text-[11px] text-slate-400 dark:text-slate-500 font-medium text-left leading-relaxed">
+                  © {new Date().getFullYear()} AssignFlow. All rights reserved
+                </div>
+              )}
+
+
+
             </nav>
           </div>
         </div>
       </div>
     </div>
+
   );
 }

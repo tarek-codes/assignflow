@@ -54,6 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email: response.email,
       fullName: response.fullName,
       role: response.role,
+      gender: response.gender,
       avatarUrl: storedAvatar || undefined,
     };
 

@@ -12,47 +12,91 @@ export interface ThemeToggleProps {
 
 export function ThemeToggle({ className, variant = "default" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
 
   if (variant === "banner") {
     return (
       <button
+        type="button"
         onClick={toggleTheme}
-        aria-label="Toggle theme"
-        title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        aria-label="Toggle light and dark mode"
+        title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
         className={cn(
-          "flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/20 hover:bg-white/30 border border-white/40 text-white shadow-md backdrop-blur-md transition-all active:scale-95 font-semibold text-xs",
+          "relative flex items-center justify-between w-[72px] h-[34px] rounded-full p-1 cursor-pointer transition-colors duration-300 select-none backdrop-blur-md shadow-inner border focus:outline-none focus:ring-2 focus:ring-blue-400/50",
+          isDark
+            ? "bg-slate-900/80 border-slate-700/80 text-slate-300"
+            : "bg-white/30 border-white/50 text-white",
           className
         )}
       >
-        {theme === "dark" ? (
-          <>
-            <Sun className="w-4 h-4 text-amber-300 fill-amber-300" />
-            <span>Switch to Light</span>
-          </>
-        ) : (
-          <>
-            <Moon className="w-4 h-4 text-white fill-white" />
-            <span>Switch to Dark</span>
-          </>
-        )}
+        {/* Left Side: Sun (Light Mode) */}
+        <span className="flex items-center justify-center w-6 h-6 ml-0.5 z-0">
+          <Sun className={cn("w-3.5 h-3.5 transition-colors duration-200", isDark ? "text-slate-400" : "text-amber-300 fill-amber-300")} />
+        </span>
+
+        {/* Right Side: Moon (Dark Mode) */}
+        <span className="flex items-center justify-center w-6 h-6 mr-0.5 z-0">
+          <Moon className={cn("w-3.5 h-3.5 transition-colors duration-200", isDark ? "text-blue-300 fill-blue-300" : "text-white/70")} />
+        </span>
+
+        {/* Sliding Knob (Left to Right Toggle) */}
+        <span
+          className={cn(
+            "absolute top-1 left-1 w-6 h-6 rounded-full shadow-md backdrop-blur-lg transform transition-transform duration-300 ease-spring flex items-center justify-center border z-10",
+            isDark
+              ? "translate-x-[38px] bg-slate-800 border-slate-600 text-blue-400"
+              : "translate-x-0 bg-white border-amber-200 text-amber-500"
+          )}
+        >
+          {isDark ? (
+            <Moon className="w-3.5 h-3.5 fill-blue-400 text-blue-400" />
+          ) : (
+            <Sun className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+          )}
+        </span>
       </button>
     );
   }
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      aria-label="Toggle theme"
+      aria-label="Toggle light and dark mode"
+      title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
       className={cn(
-        "p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "relative flex items-center justify-between w-[68px] h-[32px] rounded-full p-1 cursor-pointer transition-colors duration-300 select-none border focus:outline-none focus:ring-2 focus:ring-blue-500/50 shadow-inner",
+        isDark
+          ? "bg-slate-900 border-slate-700 text-slate-400"
+          : "bg-slate-100 border-slate-300 text-slate-500",
         className
       )}
     >
-      {theme === "dark" ? (
-        <Sun className="w-4 h-4 text-amber-400 transition-transform duration-200 hover:rotate-45" />
-      ) : (
-        <Moon className="w-4 h-4 text-slate-700 transition-transform duration-200 hover:-rotate-12" />
-      )}
+      {/* Left Side: Sun (Light) */}
+      <span className="flex items-center justify-center w-5 h-5 ml-0.5 z-0">
+        <Sun className={cn("w-3.5 h-3.5 transition-colors duration-200", isDark ? "text-slate-500" : "text-amber-500")} />
+      </span>
+
+      {/* Right Side: Moon (Dark) */}
+      <span className="flex items-center justify-center w-5 h-5 mr-0.5 z-0">
+        <Moon className={cn("w-3.5 h-3.5 transition-colors duration-200", isDark ? "text-indigo-400" : "text-slate-400")} />
+      </span>
+
+      {/* Sliding Knob */}
+      <span
+        className={cn(
+          "absolute top-1 left-1 w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 ease-spring flex items-center justify-center border z-10",
+          isDark
+            ? "translate-x-[36px] bg-slate-800 border-slate-600 text-indigo-400"
+            : "translate-x-0 bg-white border-slate-200 text-amber-500"
+        )}
+      >
+        {isDark ? (
+          <Moon className="w-3.5 h-3.5 fill-indigo-400 text-indigo-400" />
+        ) : (
+          <Sun className="w-3.5 h-3.5 fill-amber-400 text-amber-500" />
+        )}
+      </span>
     </button>
   );
 }

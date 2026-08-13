@@ -1,0 +1,30 @@
+# Visual Studio / .NET
+**/bin/
+**/obj/
+**/logs/
+*.log
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+publish/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env.local
+frontend/.env*.local
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.betopia/
+
+# Storage uploads
+storage/submissions/*
+!storage/submissions/.gitkeep

@@ -21,17 +21,21 @@ public static class DbInitializer
         catch { }
 
         // 1. Wipe out existing database completely for a clean state
-        await context.Submissions.ExecuteDeleteAsync();
-        await context.Assignments.ExecuteDeleteAsync();
-        await context.StudentClasses.ExecuteDeleteAsync();
-        await context.Classes.ExecuteDeleteAsync();
-        await context.TeacherSubjects.ExecuteDeleteAsync();
-        await context.Teachers.ExecuteDeleteAsync();
-        await context.Students.ExecuteDeleteAsync();
-        await context.Subjects.ExecuteDeleteAsync();
-        await context.Admins.ExecuteDeleteAsync();
-        await context.AppSettings.ExecuteDeleteAsync();
-        await context.Users.ExecuteDeleteAsync();
+        try
+        {
+            await context.Submissions.ExecuteDeleteAsync();
+            await context.Assignments.ExecuteDeleteAsync();
+            await context.StudentClasses.ExecuteDeleteAsync();
+            await context.Classes.ExecuteDeleteAsync();
+            await context.TeacherSubjects.ExecuteDeleteAsync();
+            await context.Teachers.ExecuteDeleteAsync();
+            await context.Students.ExecuteDeleteAsync();
+            await context.Subjects.ExecuteDeleteAsync();
+            await context.Admins.ExecuteDeleteAsync();
+            await context.AppSettings.ExecuteDeleteAsync();
+            await context.Users.ExecuteDeleteAsync();
+        }
+        catch { }
 
         var now = DateTime.UtcNow;
         var passwordHash = BCrypt.Net.BCrypt.HashPassword("Password123!");
@@ -95,6 +99,28 @@ public static class DbInitializer
             ("FIN302", "Finance, Banking and Insurance 2nd Paper", "Higher Secondary Banking & Insurance"),
             ("BOM301", "Business Organization and Management 1st Paper", "Higher Secondary Business Foundations"),
             ("BOM302", "Business Organization and Management 2nd Paper", "Higher Secondary Management Principles"),
+            ("MKT301", "Marketing 1st Paper", "Higher Secondary Marketing Principles"),
+            ("MKT302", "Marketing 2nd Paper", "Higher Secondary Consumer Behavior & Promotion"),
+            ("PMM301", "Production Management & Marketing 1st Paper", "Higher Secondary Production Management"),
+            ("PMM302", "Production Management & Marketing 2nd Paper", "Higher Secondary Supply Chain & Marketing"),
+            ("ECO301", "Economics 1st Paper", "Higher Secondary Microeconomics"),
+            ("ECO302", "Economics 2nd Paper", "Higher Secondary Macroeconomics & Bangladesh Economy"),
+            ("CIV301", "Civics & Good Governance 1st Paper", "Higher Secondary Civics Principles"),
+            ("CIV302", "Civics & Good Governance 2nd Paper", "Higher Secondary Constitution & Governance"),
+            ("HIS301", "History 1st Paper", "Higher Secondary World History"),
+            ("HIS302", "History 2nd Paper", "Higher Secondary History of Subcontinent & Bangladesh"),
+            ("IHC301", "Islamic History & Culture 1st Paper", "Higher Secondary Islamic History"),
+            ("IHC302", "Islamic History & Culture 2nd Paper", "Higher Secondary Islamic Culture & Heritage"),
+            ("LOG301", "Logic 1st Paper", "Higher Secondary Deductive & Inductive Logic"),
+            ("LOG302", "Logic 2nd Paper", "Higher Secondary Scientific Method & Fallacies"),
+            ("SOC301", "Sociology 1st Paper", "Higher Secondary Sociological Concepts"),
+            ("SOC302", "Sociology 2nd Paper", "Higher Secondary Society of Bangladesh"),
+            ("SWK301", "Social Work 1st Paper", "Higher Secondary Social Work Foundations"),
+            ("SWK302", "Social Work 2nd Paper", "Higher Secondary Social Welfare Methods"),
+            ("GEO301", "Geography 1st Paper", "Higher Secondary Physical Geography"),
+            ("GEO302", "Geography 2nd Paper", "Higher Secondary Human & Economic Geography"),
+            ("PSY301", "Psychology 1st Paper", "Higher Secondary General Psychology"),
+            ("PSY302", "Psychology 2nd Paper", "Higher Secondary Educational & Applied Psychology"),
         };
 
         var subjectsList = subjectDefs
@@ -106,7 +132,8 @@ public static class DbInitializer
         // ───────────────────────── 3. 20 BANGLADESHI TEACHERS ─────────────────────────
         var teacherDefs = new (string FirstName, string LastName, string Designation, string Phone, int[] SubjectIndices)[]
         {
-            ("Anisur", "Rahman", "Head of Physics Department", "+8801711000001", new[] { 4, 22, 23 }),
+            ("Anisur", "Rahman", "Head of Physics Department", "+8801711000001", new[] { 4, 7, 12, 22, 23 }),
+
             ("Nusrat", "Jahan", "Senior Bengali Teacher", "+8801711000002", new[] { 0, 18, 19 }),
             ("Tanvir", "Ahmed", "Assistant Math Teacher", "+8801711000003", new[] { 2, 3, 28, 29 }),
             ("Fatema", "Begum", "Senior Chemistry Lecturer", "+8801711000004", new[] { 5, 24, 25 }),
@@ -155,6 +182,7 @@ public static class DbInitializer
         await context.Teachers.AddRangeAsync(teachersList);
         await context.SaveChangesAsync();
 
+        // ───────────────────────── 4. TEACHER SUBJECT MAPPINGS ─────────────────────────
         var teacherSubjectsList = new List<TeacherSubject>();
         for (int i = 0; i < teacherDefs.Length; i++)
         {
@@ -232,13 +260,64 @@ public static class DbInitializer
 
         var gradeCurriculumMap = new Dictionary<int, List<string>>
         {
-            [6] = new() { "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science", "Bangladesh & Global Studies", "Digital Technology" },
-            [7] = new() { "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science", "Bangladesh & Global Studies", "Digital Technology" },
-            [8] = new() { "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science", "Bangladesh & Global Studies", "Digital Technology" },
-            [9] = new() { "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Higher Mathematics", "Physics", "Chemistry", "Biology", "ICT" },
-            [10] = new() { "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Higher Mathematics", "Physics", "Chemistry", "Biology", "ICT" },
-            [11] = new() { "Bangla 1st Paper", "Bangla 2nd Paper", "English 1st Paper", "English 2nd Paper", "ICT", "Physics 1st Paper", "Physics 2nd Paper", "Chemistry 1st Paper", "Chemistry 2nd Paper" },
-            [12] = new() { "Bangla 1st Paper", "Bangla 2nd Paper", "English 1st Paper", "English 2nd Paper", "ICT", "Physics 1st Paper", "Physics 2nd Paper", "Chemistry 1st Paper", "Chemistry 2nd Paper" },
+            [6] = new()
+            {
+                "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science",
+                "Digital Technology", "History and Social Science", "Life and Livelihood", "Arts and Culture",
+                "Health Protection", "Religion & Moral Education", "Bangladesh & Global Studies"
+            },
+            [7] = new()
+            {
+                "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science",
+                "Digital Technology", "History and Social Science", "Life and Livelihood", "Arts and Culture",
+                "Health Protection", "Religion & Moral Education", "Bangladesh & Global Studies"
+            },
+            [8] = new()
+            {
+                "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Science",
+                "Digital Technology", "History and Social Science", "Life and Livelihood", "Arts and Culture",
+                "Health Protection", "Religion & Moral Education", "Bangladesh & Global Studies"
+            },
+            [9] = new()
+            {
+                "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Higher Mathematics",
+                "Physics", "Chemistry", "Biology", "ICT", "Bangladesh & Global Studies",
+                "Religion & Moral Education", "Principles of Accounting", "Finance & Banking"
+            },
+            [10] = new()
+            {
+                "Bengali Literature", "English Grammar & Composition", "General Mathematics", "Higher Mathematics",
+                "Physics", "Chemistry", "Biology", "ICT", "Bangladesh & Global Studies",
+                "Religion & Moral Education", "Principles of Accounting", "Finance & Banking"
+            },
+            [11] = new()
+            {
+                "Bangla 1st Paper", "Bangla 2nd Paper", "English 1st Paper", "English 2nd Paper", "ICT",
+                "Physics 1st Paper", "Physics 2nd Paper", "Chemistry 1st Paper", "Chemistry 2nd Paper",
+                "Biology 1st Paper", "Biology 2nd Paper", "Higher Mathematics 1st Paper", "Higher Mathematics 2nd Paper",
+                "Accounting 1st Paper", "Accounting 2nd Paper", "Finance, Banking and Insurance 1st Paper", "Finance, Banking and Insurance 2nd Paper",
+                "Business Organization and Management 1st Paper", "Business Organization and Management 2nd Paper",
+                "Marketing 1st Paper", "Marketing 2nd Paper", "Production Management & Marketing 1st Paper", "Production Management & Marketing 2nd Paper",
+                "Economics 1st Paper", "Economics 2nd Paper", "Civics & Good Governance 1st Paper", "Civics & Good Governance 2nd Paper",
+                "History 1st Paper", "History 2nd Paper", "Islamic History & Culture 1st Paper", "Islamic History & Culture 2nd Paper",
+                "Logic 1st Paper", "Logic 2nd Paper", "Sociology 1st Paper", "Sociology 2nd Paper",
+                "Social Work 1st Paper", "Social Work 2nd Paper", "Geography 1st Paper", "Geography 2nd Paper",
+                "Psychology 1st Paper", "Psychology 2nd Paper"
+            },
+            [12] = new()
+            {
+                "Bangla 1st Paper", "Bangla 2nd Paper", "English 1st Paper", "English 2nd Paper", "ICT",
+                "Physics 1st Paper", "Physics 2nd Paper", "Chemistry 1st Paper", "Chemistry 2nd Paper",
+                "Biology 1st Paper", "Biology 2nd Paper", "Higher Mathematics 1st Paper", "Higher Mathematics 2nd Paper",
+                "Accounting 1st Paper", "Accounting 2nd Paper", "Finance, Banking and Insurance 1st Paper", "Finance, Banking and Insurance 2nd Paper",
+                "Business Organization and Management 1st Paper", "Business Organization and Management 2nd Paper",
+                "Marketing 1st Paper", "Marketing 2nd Paper", "Production Management & Marketing 1st Paper", "Production Management & Marketing 2nd Paper",
+                "Economics 1st Paper", "Economics 2nd Paper", "Civics & Good Governance 1st Paper", "Civics & Good Governance 2nd Paper",
+                "History 1st Paper", "History 2nd Paper", "Islamic History & Culture 1st Paper", "Islamic History & Culture 2nd Paper",
+                "Logic 1st Paper", "Logic 2nd Paper", "Sociology 1st Paper", "Sociology 2nd Paper",
+                "Social Work 1st Paper", "Social Work 2nd Paper", "Geography 1st Paper", "Geography 2nd Paper",
+                "Psychology 1st Paper", "Psychology 2nd Paper"
+            },
         };
 
         var classList = new List<Class>();
@@ -268,11 +347,39 @@ public static class DbInitializer
         await context.Classes.AddRangeAsync(classList);
         await context.SaveChangesAsync();
 
+        // Helper to check if a Class 11/12 subject belongs to a student's group stream
+        static bool IsSubjectForGroup(string subjectName, string group)
+        {
+            var s = subjectName.Trim().ToLower();
+            if (s.Contains("bangla") || s.Contains("english")) return true;
+
+            var g = group.Trim().ToLower();
+            if (g.Contains("science"))
+            {
+                return s.Contains("physics") || s.Contains("chemistry") || s.Contains("biology") || s.Contains("higher mathematics");
+            }
+            if (g.Contains("humanities") || g.Contains("arts"))
+            {
+                return s.Contains("history") || s.Contains("civics") || s.Contains("economics") || s.Contains("geography");
+            }
+            if (g.Contains("business"))
+            {
+                return s.Contains("accounting") || s.Contains("finance") || s.Contains("business organization") || s.Contains("production management");
+            }
+            return true;
+        }
+
+
         // ───────────────────────── 6. ENROLL STUDENTS IN CLASSES ─────────────────────────
         var studentClassesList = new List<StudentClass>();
         foreach (var student in studentsList)
         {
-            foreach (var targetClass in classList.Where(c => c.ClassLevel == student.ClassLevel))
+            var matchingClasses = classList
+                .Where(c => c.ClassLevel == student.ClassLevel)
+                .Where(c => student.ClassLevel < 11 || IsSubjectForGroup(c.Subject?.SubjectName ?? "", student.Group))
+                .ToList();
+
+            foreach (var targetClass in matchingClasses)
             {
                 studentClassesList.Add(new StudentClass
                 {
@@ -284,6 +391,7 @@ public static class DbInitializer
         }
         await context.StudentClasses.AddRangeAsync(studentClassesList);
         await context.SaveChangesAsync();
+
 
         // ───────────────────────── 7. CREATE ASSIGNMENTS ─────────────────────────
         // Required assignment mark range: 20 to 50 range!
@@ -470,6 +578,8 @@ public static class DbInitializer
             assignmentCounter++;
         }
 
+
+
         // --- 5. Add 50 assignments in June 2026 and 50 assignments in August 2026 specifically for Class 11 and Class 12 classes ---
         var extraJuneAssignments = new List<Assignment>();
         var extraAugAssignments = new List<Assignment>();
@@ -616,6 +726,8 @@ public static class DbInitializer
                             studentPendingCount++;
                         }
                     }
+
+
                     // 2. Past Strict Deadline Quiz (AllowResubmission = false)
                     else if (!asgn.AllowResubmission)
                     {

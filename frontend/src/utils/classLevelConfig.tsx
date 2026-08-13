@@ -439,13 +439,14 @@ export function getCurriculumSubjectsForClass(classLevel: number, group?: string
         "Bangla 2nd Paper",
         "English 1st Paper",
         "English 2nd Paper",
-        "ICT",
         "Accounting 1st Paper",
         "Accounting 2nd Paper",
-        "Finance and Banking 1st Paper",
-        "Finance and Banking 2nd Paper",
-        "Business Organization and Management",
-        "Statistics",
+        "Finance, Banking and Insurance 1st Paper",
+        "Finance, Banking and Insurance 2nd Paper",
+        "Business Organization and Management 1st Paper",
+        "Business Organization and Management 2nd Paper",
+        "Production Management & Marketing 1st Paper",
+        "Production Management & Marketing 2nd Paper",
       ];
     } else if (g?.includes("humanities") || g?.includes("arts")) {
       list = [
@@ -453,11 +454,14 @@ export function getCurriculumSubjectsForClass(classLevel: number, group?: string
         "Bangla 2nd Paper",
         "English 1st Paper",
         "English 2nd Paper",
-        "ICT",
+        "History 1st Paper",
+        "History 2nd Paper",
+        "Civics & Good Governance 1st Paper",
+        "Civics & Good Governance 2nd Paper",
         "Economics 1st Paper",
         "Economics 2nd Paper",
-        "Civics",
-        "Logic",
+        "Geography 1st Paper",
+        "Geography 2nd Paper",
       ];
     } else {
       // Default to Science Group
@@ -466,7 +470,6 @@ export function getCurriculumSubjectsForClass(classLevel: number, group?: string
         "Bangla 2nd Paper",
         "English 1st Paper",
         "English 2nd Paper",
-        "ICT",
         "Physics 1st Paper",
         "Physics 2nd Paper",
         "Chemistry 1st Paper",
@@ -477,6 +480,7 @@ export function getCurriculumSubjectsForClass(classLevel: number, group?: string
         "Higher Mathematics 2nd Paper",
       ];
     }
+
   } else {
     list = [
       "Bangla",
