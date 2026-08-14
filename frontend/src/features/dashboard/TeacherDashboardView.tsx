@@ -123,7 +123,7 @@ export function TeacherDashboardView() {
               </div>
               <div className="mt-1.5 flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-100">
                 <CalendarDays className="h-4 w-4 text-blue-200 shrink-0" />
-                <span>{formatFullDateTime()}</span>
+                <span>{formatFullDateTime(undefined, language)}</span>
               </div>
               <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
                 {t("teacherDashboardWelcome")}

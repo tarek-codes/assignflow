@@ -27,12 +27,13 @@ export function formatRelativeTime(dateString?: string | Date): string {
   return formatDate(date);
 }
 
-export function formatFullDateTime(date?: Date | string): string {
+export function formatFullDateTime(date?: Date | string, lang: "en" | "bn" = "en"): string {
   const d = date ? (typeof date === "string" ? new Date(date) : date) : new Date();
   if (isNaN(d.getTime())) return "N/A";
-  const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(d);
-  const monthDayYear = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(d);
-  const time = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", hour12: true }).format(d);
+  const locale = lang === "bn" ? "bn-BD" : "en-US";
+  const weekday = new Intl.DateTimeFormat(locale, { weekday: "long" }).format(d);
+  const monthDayYear = new Intl.DateTimeFormat(locale, { month: "long", day: "numeric", year: "numeric" }).format(d);
+  const time = new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "2-digit", hour12: true }).format(d);
   return `${weekday}, ${monthDayYear} • ${time}`;
 }
 export function formatFileSize(bytes: number): string {

@@ -33,6 +33,7 @@ import {
 } from "./DashboardCharts";
 import { RecentActivityCard } from "./RecentActivityCard";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { formatFullDateTime } from "@/utils/formatters";
 import { Modal } from "@/components/ui/Modal";
 import { Badge } from "@/components/ui/Badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
@@ -584,21 +585,7 @@ export function AdminDashboardView() {
     return "Good Evening";
   })();
 
-  const formattedDateTime = (() => {
-    const now = new Date();
-    const dateStr = now.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-    const timeStr = now.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-    return `${dateStr} • ${timeStr}`;
-  })();
+  const formattedDateTime = formatFullDateTime(new Date(), language);
 
   return (
     <div className="pt-3 sm:pt-4 space-y-4">
@@ -624,10 +611,10 @@ export function AdminDashboardView() {
             </div>
             <div className="flex flex-col justify-center text-left">
               <span className="text-sm font-extrabold text-white tracking-tight leading-none">
-                {user?.fullName || "Admin"}
+                {language === "bn" ? translateUserName(user?.fullName || "Admin") : (user?.fullName || "Admin")}
               </span>
               <span className="text-[11px] font-semibold text-blue-100 dark:text-blue-300 capitalize mt-1">
-                {user?.role || "Admin"}
+                {String(user?.role || "").includes("Admin") ? t("roleSystemAdmin") : (user?.role || t("roleAdmin"))}
               </span>
             </div>
             <div className="h-7 w-px bg-white/20 dark:bg-slate-700/80 mx-0.5 self-center" />

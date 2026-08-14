@@ -199,7 +199,7 @@ function matchSubjectKey(subName: string, curriculumSubjects: string[]): string 
 export function StudentDashboardView() {
   const router = useRouter();
   const { user } = useAuth();
-  const { t, language, translateSubject, translateClass, translateUserName } = useLanguage();
+  const { t, language, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
   const { showToast } = useToast();
   const { data, isLoading, refetch: refetchDashboard } = useCachedData(
     "dashboard:student",
@@ -350,7 +350,7 @@ export function StudentDashboardView() {
     </div>
   );
 
-  const displayName = data.studentName || user?.fullName || "Student";
+  const displayName = user?.fullName || data.studentName || "Student";
   const firstName = displayName.split(" ")[0];
   const studentClass = data.classLevel ? translateClass(data.classLevel) : translateClass(9);
   const rawGroup = data.group && data.group !== "None" ? data.group : "Science";
@@ -385,12 +385,12 @@ export function StudentDashboardView() {
                   {language === "bn" ? `হ্যালো, ${translateUserName(firstName)}` : `Hi, ${firstName}`}
                 </h1>
                 <span className="inline-flex items-center rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold text-white border border-white/30 shadow-xs">
-                  Student
+                  {t("navRoleStudent")}
                 </span>
               </div>
               <div className="mt-1.5 flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-100">
                 <CalendarDays className="h-4 w-4 text-blue-200 shrink-0" />
-                <span>{formatFullDateTime()}</span>
+                <span>{formatFullDateTime(undefined, language)}</span>
               </div>
               <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
                 {t("studentDashboardWelcome")}
@@ -412,7 +412,7 @@ export function StudentDashboardView() {
                     </span>
                   )}
                 </div>
-                <p className="mt-0.5 font-mono text-[11px] text-blue-100">{studentId}</p>
+                <p className="mt-0.5 font-mono text-[11px] text-blue-100">{toBanglaDigits(studentId)}</p>
               </div>
             </div>
 
@@ -427,10 +427,10 @@ export function StudentDashboardView() {
       {/* STATS ROW */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {[
-          { label: t("lblPendingSubmissions"), value: data.totalPending, helper: t("hlpNeedsAttention"), icon: Clock3, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", onClick: () => setShowPendingModal(true) },
-          { label: t("lblTotalSubmissions"), value: data.totalSubmitted, helper: t("hlpWorkTurnedIn"), icon: CheckCircle2, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", onClick: () => router.push(ROUTES.SUBMISSIONS) },
-          { label: t("lblLateSubmissions"), value: data.totalLate, helper: t("hlpPastDeadline"), icon: Clock3, color: "bg-red-50 text-red-600 dark:bg-red-950/50 dark:text-red-300", onClick: () => router.push(`${ROUTES.SUBMISSIONS}?status=late`) },
-          { label: t("lblGradedSubmissions"), value: data.grades ? data.grades.length : (data.totalGraded || 0), helper: t("hlpFeedbackPublished"), icon: Award, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", onClick: () => router.push(`${ROUTES.SUBMISSIONS}?status=graded`) },
+          { label: t("lblPendingSubmissions"), value: toBanglaDigits(data.totalPending), helper: t("hlpNeedsAttention"), icon: Clock3, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", onClick: () => setShowPendingModal(true) },
+          { label: t("lblTotalSubmissions"), value: toBanglaDigits(data.totalSubmitted), helper: t("hlpWorkTurnedIn"), icon: CheckCircle2, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", onClick: () => router.push(ROUTES.SUBMISSIONS) },
+          { label: t("lblLateSubmissions"), value: toBanglaDigits(data.totalLate), helper: t("hlpPastDeadline"), icon: Clock3, color: "bg-red-50 text-red-600 dark:bg-red-950/50 dark:text-red-300", onClick: () => router.push(`${ROUTES.SUBMISSIONS}?status=late`) },
+          { label: t("lblGradedSubmissions"), value: toBanglaDigits(data.grades ? data.grades.length : (data.totalGraded || 0)), helper: t("hlpFeedbackPublished"), icon: Award, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", onClick: () => router.push(`${ROUTES.SUBMISSIONS}?status=graded`) },
         ].map(({ label, value, helper, icon: Icon, color, onClick }) => (
           <button key={label} onClick={onClick} className="text-left w-full cursor-pointer rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-700 sm:p-5">
             <div className="flex items-start justify-between gap-3">

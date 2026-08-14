@@ -19,6 +19,7 @@ interface LanguageContextType {
   translateClass: (level?: number | string) => string;
   translateUserName: (name?: string) => string;
   translateDetailText: (text?: string) => string;
+  toBanglaDigits: (strOrNum?: string | number) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -89,6 +90,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return `Class ${level}`;
   };
 
+  const toBanglaDigits = (strOrNum?: string | number): string => {
+    if (strOrNum === undefined || strOrNum === null) return "";
+    const str = String(strOrNum);
+    if (language !== "bn") return str;
+    const banglaNums = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return str.replace(/[0-9]/g, (digit) => banglaNums[parseInt(digit, 10)]);
+  };
+
   const translateUserName = (name?: string): string => {
     return transliterateName(name, language);
   };
@@ -107,6 +116,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         translateClass,
         translateUserName,
         translateDetailText,
+        toBanglaDigits,
       }}
     >
       {children}

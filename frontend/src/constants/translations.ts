@@ -198,6 +198,12 @@ export const englishTranslations = {
   manageAssignTeachersDesc: "Browse each class level with subjects, & assign the right teacher.",
   manageClassManagementTag: "Class management",
 
+  // Fullscreen & User Roles
+  btnGoFullscreen: "Go Fullscreen",
+  btnExitFullscreen: "Exit Fullscreen",
+  roleSystemAdmin: "System Admin",
+  roleAdmin: "Admin",
+
   // Toast / Messages
   msgLangSwitchedEn: "Language set to English",
   msgLangSwitchedBn: "ভাষা বাংলায় পরিবর্তিত (Bangla)",
@@ -221,9 +227,9 @@ export const banglaTranslations: Record<TranslationKey, string> = {
   navSignOut: "সাইন আউট",
   navRoleStudent: "শিক্ষার্থী",
   navRoleTeacher: "শিক্ষক",
-  navRoleAdmin: "এডমিন",
+  navRoleAdmin: "অ্যাডমিন",
   brandPortal: "এসাইনফ্লো পোর্টাল",
-  authRoleAdminTitle: "এডমিন",
+  authRoleAdminTitle: "অ্যাডমিন",
   navApprovals: "অনুমোদন তালিকা",
   navCalendar: "ক্যালেন্ডার",
   navMyGrades: "আমার গ্রেডসমূহ",
@@ -402,6 +408,12 @@ export const banglaTranslations: Record<TranslationKey, string> = {
   manageAssignTeachersTitle: "শিক্ষক পরিচালনা ও বরাদ্দ",
   manageAssignTeachersDesc: "বিষয়সহ প্রতিটি ক্লাসের স্তর দেখুন এবং সঠিক শিক্ষক বরাদ্দ করুন।",
   manageClassManagementTag: "ক্লাস ব্যবস্থাপনা",
+
+  // Fullscreen & User Roles
+  btnGoFullscreen: "ফুলস্ক্রিন করুন",
+  btnExitFullscreen: "ফুলস্ক্রিন থেকে বের হন",
+  roleSystemAdmin: "সিস্টেম অ্যাডমিন",
+  roleAdmin: "অ্যাডমিন",
 
   // Toast / Messages
   msgLangSwitchedEn: "Language set to English",
