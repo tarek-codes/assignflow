@@ -39,7 +39,8 @@ interface ClassLevelGroup {
 }
 
 export function ManageClassesView() {
-  const { t, translateSubject, translateUserName } = useLanguage();
+  const { language, t, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
+  const isBn = language === "bn";
   const { showToast } = useToast();
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [subjectPage, setSubjectPage] = useState(1);
@@ -235,16 +236,18 @@ export function ManageClassesView() {
         <div className="space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-1 border-b border-slate-200/80 dark:border-slate-800">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">Academic Segments</h2>
+              <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                {isBn ? "একাডেমিক পর্যায়সমূহ" : "Academic Segments"}
+              </h2>
             </div>
 
             {/* Segment Filter Tabs */}
             <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 self-start sm:self-auto">
               {[
-                { id: "all", label: "All Levels" },
-                { id: "primary", label: "Primary (1-5)" },
-                { id: "secondary", label: "Secondary (6-10)" },
-                { id: "higher_secondary", label: "Higher Secondary (11-12)" },
+                { id: "all", label: isBn ? "সকল পর্যায়" : "All Levels" },
+                { id: "primary", label: isBn ? "প্রাথমিক (১-৫)" : "Primary (1-5)" },
+                { id: "secondary", label: isBn ? "মাধ্যমিক (৬-১০)" : "Secondary (6-10)" },
+                { id: "higher_secondary", label: isBn ? "উচ্চ মাধ্যমিক (১১-১২)" : "Higher Secondary (11-12)" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -262,8 +265,8 @@ export function ManageClassesView() {
 
           {levelGroups.length === 0 ? (
             <EmptyState
-              title="No classes found"
-              description="Create classes and subjects first to manage teacher assignments."
+              title={isBn ? "কোন শ্রেণী পাওয়া যায়নি" : "No classes found"}
+              description={isBn ? "শিক্ষক নির্ধারণ পরিচালনা করতে প্রথমে শ্রেণী ও বিষয় তৈরি করুন।" : "Create classes and subjects first to manage teacher assignments."}
               icon={<Layers className="w-10 h-10 text-slate-400" />}
             />
           ) : (
@@ -294,20 +297,28 @@ export function ManageClassesView() {
                           </div>
                           <div className="flex flex-col items-end gap-1">
                             <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${config.badgeBg}`}>
-                              Class {group.classLevel}
+                              {translateClass(group.classLevel)}
                             </span>
                             <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                              {config.segment.name}
+                              {isBn
+                                ? (config.segment.name === "Primary"
+                                    ? "প্রাথমিক পর্যায়"
+                                    : config.segment.name === "Secondary"
+                                    ? "মাধ্যমিক পর্যায়"
+                                    : "উচ্চ মাধ্যমিক পর্যায়")
+                                : config.segment.name}
                             </span>
                           </div>
                         </div>
                         <h3 className={`mt-4 text-base font-bold text-slate-800 transition-colors dark:text-slate-100 group-hover:${config.textColor}`}>
-                          Class {group.classLevel}
+                          {translateClass(group.classLevel)}
                         </h3>
                         <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-semibold">
                           <BookOpen className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                           <span>
-                            {subjectCount} Subject{subjectCount === 1 ? "" : "s"}
+                            {isBn
+                              ? `${toBanglaDigits(subjectCount)} টি বিষয়`
+                              : `${subjectCount} Subject${subjectCount === 1 ? "" : "s"}`}
                           </span>
                         </div>
                       </div>
@@ -335,10 +346,14 @@ export function ManageClassesView() {
               </button>
               <div className="min-w-0">
                 <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 truncate">
-                  Class {selectedGroup.classLevel} · All Available Subjects
+                  {isBn
+                    ? `${translateClass(selectedGroup.classLevel)} · সকল উপলব্ধ বিষয়`
+                    : `Class ${selectedGroup.classLevel} · All Available Subjects`}
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Showing {filteredClassSubjects.length} of {selectedGroup.subjects.length} subject record{selectedGroup.subjects.length !== 1 ? "s" : ""} · Click Assign/Re-Assign to manage teachers
+                  {isBn
+                    ? `${toBanglaDigits(selectedGroup.subjects.length)} টির মধ্যে ${toBanglaDigits(filteredClassSubjects.length)} টি বিষয় দেখাচ্ছে · শিক্ষক পরিচালনা করতে বরাদ্দ/পুনরায় বরাদ্দে ক্লিক করুন`
+                    : `Showing ${filteredClassSubjects.length} of ${selectedGroup.subjects.length} subject record${selectedGroup.subjects.length !== 1 ? "s" : ""} · Click Assign/Re-Assign to manage teachers`}
                 </p>
               </div>
             </div>
@@ -349,7 +364,7 @@ export function ManageClassesView() {
                 <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Search subject or teacher…"
+                  placeholder={isBn ? "বিষয় বা শিক্ষক খুঁজুন..." : "Search subject or teacher…"}
                   value={classSubjectSearch}
                   onChange={(e) => {
                     setClassSubjectSearch(e.target.value);
@@ -378,9 +393,9 @@ export function ManageClassesView() {
                 }}
                 className="px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-colors cursor-pointer"
               >
-                <option value="all">All Subjects</option>
-                <option value="assigned">Assigned Only</option>
-                <option value="unassigned">Unassigned Only</option>
+                <option value="all">{isBn ? "সকল বিষয়" : "All Subjects"}</option>
+                <option value="assigned">{isBn ? "শুধুমাত্র বরাদ্দকৃত" : "Assigned Only"}</option>
+                <option value="unassigned">{isBn ? "শুধুমাত্র অসম্পূর্ণ" : "Unassigned Only"}</option>
               </select>
             </div>
           </div>
@@ -398,7 +413,7 @@ export function ManageClassesView() {
                 {filteredClassSubjects.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={3} className="py-16 text-center text-slate-400">
-                      No subjects match your search or filter criteria.
+                      {isBn ? "আপনার অনুসন্ধান বা ফিল্টার এর সাথে মেলে এমন কোন বিষয় নেই।" : "No subjects match your search or filter criteria."}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -422,7 +437,7 @@ export function ManageClassesView() {
                                 </span>
                                 <div className="mt-0.5 sm:hidden">
                                   <Badge size="sm" variant={isAssigned ? "success" : "warning"}>
-                                    {isAssigned ? "Assigned" : "Unassigned"}
+                                    {isBn ? (isAssigned ? "বরাদ্দকৃত" : "অসম্পূর্ণ") : (isAssigned ? "Assigned" : "Unassigned")}
                                   </Badge>
                                 </div>
                               </div>
@@ -439,15 +454,17 @@ export function ManageClassesView() {
                                     {translateUserName(subject.teacherName)}
                                   </p>
                                   <Badge size="sm" variant="success" className="mt-0.5 font-medium">
-                                    Assigned
+                                    {isBn ? "বরাদ্দকৃত" : "Assigned"}
                                   </Badge>
                                 </div>
                               </div>
                             ) : (
                               <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500">
-                                <span className="text-xs font-semibold italic">No teacher assigned yet</span>
+                                <span className="text-xs font-semibold italic">
+                                  {isBn ? "এখনও শিক্ষক বরাদ্দ করা হয়নি" : "No teacher assigned yet"}
+                                </span>
                                 <Badge size="sm" variant="warning" className="font-medium">
-                                  Unassigned
+                                  {isBn ? "অসম্পূর্ণ" : "Unassigned"}
                                 </Badge>
                               </div>
                             )}
@@ -462,7 +479,11 @@ export function ManageClassesView() {
                               className="inline-flex items-center gap-1.5 font-semibold"
                             >
                               <UserCog className="w-4 h-4" />
-                              <span>{isAssigned ? "Re-Assign" : "Assign Teacher"}</span>
+                              <span>
+                                {isBn
+                                  ? (isAssigned ? "পুনরায় বরাদ্দ করুন" : "শিক্ষক বরাদ্দ করুন")
+                                  : (isAssigned ? "Re-Assign" : "Assign Teacher")}
+                              </span>
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -490,15 +511,21 @@ export function ManageClassesView() {
       <Modal
         isOpen={assignTarget !== null}
         onClose={closeAssignModal}
-        title={assignTarget ? `Assign teacher — ${assignTarget.subjectName}` : ""}
-        description={assignTarget ? `Class ${assignTarget.classLevel}` : ""}
+        title={
+          assignTarget
+            ? isBn
+              ? `শিক্ষক বরাদ্দ করুন — ${translateSubject(assignTarget.subjectName)}`
+              : `Assign teacher — ${assignTarget.subjectName}`
+            : ""
+        }
+        description={assignTarget ? (isBn ? translateClass(assignTarget.classLevel) : `Class ${assignTarget.classLevel}`) : ""}
         maxWidth="2xl"
       >
         {assignTarget && (
           <div className="space-y-4">
             <Input
               autoFocus
-              placeholder="Search teacher by name, email, or designation…"
+              placeholder={isBn ? "নাম, ইমেইল বা পদবী দিয়ে শিক্ষক খুঁজুন..." : "Search teacher by name, email, or designation…"}
               leftIcon={<Search className="w-4 h-4" />}
               rightIcon={
                 searchTerm ? (
@@ -515,34 +542,41 @@ export function ManageClassesView() {
               <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 text-xs dark:border-blue-900/50 dark:bg-blue-950/40">
                 <Avatar name={assignTarget.teacherName} size="sm" />
                 <div className="min-w-0">
-                  <p className="font-semibold text-blue-900 dark:text-blue-200">Currently assigned</p>
-                  <p className="truncate text-blue-700 dark:text-blue-300">{assignTarget.teacherName}</p>
+                  <p className="font-semibold text-blue-900 dark:text-blue-200">
+                    {isBn ? "বর্তমানে বরাদ্দকৃত" : "Currently assigned"}
+                  </p>
+                  <p className="truncate text-blue-700 dark:text-blue-300">
+                    {translateUserName(assignTarget.teacherName)}
+                  </p>
                 </div>
               </div>
             )}
 
             <div className="max-h-[480px] overflow-y-auto rounded-xl border border-slate-100 dark:border-slate-800 divide-y divide-slate-100 dark:divide-slate-800">
               {teachersLoading ? (
-                <LoadingSpinner label="Loading teachers…" />
+                <LoadingSpinner label={isBn ? "শিক্ষকদের তথ্য লোড হচ্ছে..." : "Loading teachers…"} />
               ) : filteredTeachers.length === 0 ? (
                 <div className="py-12 text-center">
-                  <p className="text-sm text-slate-400">No teachers match your search.</p>
+                  <p className="text-sm text-slate-400">
+                    {isBn ? "আপনার অনুসন্ধানের সাথে কোন শিক্ষক পাওয়া যায়নি।" : "No teachers match your search."}
+                  </p>
                 </div>
               ) : (
                 filteredTeachers.map((teacher) => {
                   const isCurrent = teacher.id === assignTarget.teacherId;
                   const isAssigning = assigningTeacherId === teacher.id;
-                  const name = teacher.fullName || `${teacher.firstName || ""} ${teacher.lastName || ""}`.trim();
+                  const rawName = teacher.fullName || `${teacher.firstName || ""} ${teacher.lastName || ""}`.trim();
+                  const name = translateUserName(rawName);
                   const isQualified = isTeacherQualified(teacher, assignTarget.subjectName);
 
                   return (
                     <div key={teacher.id} className="flex items-center gap-3.5 px-4 py-3.5">
-                      <Avatar name={name || "Teacher"} size="sm" />
+                      <Avatar name={rawName || "Teacher"} size="sm" />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <p className="truncate text-sm font-semibold text-slate-800 dark:text-slate-200">{name || "Teacher"}</p>
-                          {isCurrent && <Badge size="sm" variant="primary">Current</Badge>}
-                          {!isQualified && <Badge size="sm" variant="warning">Not Qualified</Badge>}
+                          {isCurrent && <Badge size="sm" variant="primary">{isBn ? "বর্তমান" : "Current"}</Badge>}
+                          {!isQualified && <Badge size="sm" variant="warning">{isBn ? "যোগ্যতা নেই" : "Not Qualified"}</Badge>}
                         </div>
                         <div className="mt-0.5 flex items-center gap-1.5 text-xs text-slate-400">
                           <Mail className="w-3.5 h-3.5" />
@@ -551,7 +585,9 @@ export function ManageClassesView() {
                         {teacher.taughtSubjects && teacher.taughtSubjects.length > 0 && (
                           <div className="mt-1.5 flex flex-wrap gap-1">
                             {teacher.taughtSubjects.slice(0, 3).map((s, i) => (
-                              <Badge key={i} size="sm" variant={isTeacherQualified(teacher, s) ? "info" : "default"}>{s}</Badge>
+                              <Badge key={i} size="sm" variant={isTeacherQualified(teacher, s) ? "info" : "default"}>
+                                {translateSubject(s)}
+                              </Badge>
                             ))}
                           </div>
                         )}
@@ -563,7 +599,11 @@ export function ManageClassesView() {
                         isLoading={isAssigning}
                         onClick={() => handleAssign(teacher)}
                       >
-                        {isCurrent ? "Assigned" : isQualified ? "Assign" : "Not Qualified"}
+                        {isCurrent
+                          ? (isBn ? "বরাদ্দকৃত" : "Assigned")
+                          : isQualified
+                          ? (isBn ? "বরাদ্দ করুন" : "Assign")
+                          : (isBn ? "যোগ্যতা নেই" : "Not Qualified")}
                       </Button>
                     </div>
                   );
