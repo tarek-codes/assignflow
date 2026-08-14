@@ -223,8 +223,8 @@ public sealed class DashboardRepository : IDashboardRepository
             {
                 Id = a.Id,
                 Title = a.Title,
-                SubjectName = a.Class!.Subject!.SubjectName,
-                ClassLevel = a.Class.ClassLevel,
+                SubjectName = a.Class != null && a.Class.Subject != null ? a.Class.Subject.SubjectName : "General",
+                ClassLevel = a.Class != null ? a.Class.ClassLevel : 6,
                 DeadlineUtc = a.DeadlineUtc,
                 Status = a.Status,
                 SubmissionCount = a.Submissions.Count
@@ -243,9 +243,11 @@ public sealed class DashboardRepository : IDashboardRepository
             {
                 SubmissionId = s.Id,
                 AssignmentId = s.AssignmentId,
-                AssignmentTitle = s.Assignment!.Title,
-                StudentName = $"{s.Student!.User!.FirstName} {s.Student.User.LastName}".Trim(),
-                StudentNumber = s.Student.StudentNumber,
+                AssignmentTitle = s.Assignment != null ? s.Assignment.Title : "Assignment",
+                StudentName = s.Student != null && s.Student.User != null
+                    ? (s.Student.User.FirstName + " " + s.Student.User.LastName).Trim()
+                    : "Student",
+                StudentNumber = s.Student != null ? s.Student.StudentNumber : "",
                 SubmittedAtUtc = s.SubmittedAtUtc ?? s.UpdatedAtUtc,
                 Status = s.Status
             })

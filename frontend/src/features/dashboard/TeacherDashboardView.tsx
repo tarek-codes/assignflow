@@ -41,6 +41,20 @@ export function TeacherDashboardView() {
     () => dashboardService.getTeacherDashboard()
   );
 
+  const sortedPendingReviews = useMemo(() => {
+    return [...(data?.pendingReviews || [])].sort((a, b) => {
+      const timeA = a.submittedAtUtc ? new Date(a.submittedAtUtc).getTime() : (a.submissionId || 0);
+      const timeB = b.submittedAtUtc ? new Date(b.submittedAtUtc).getTime() : (b.submissionId || 0);
+      return timeB - timeA;
+    });
+  }, [data?.pendingReviews]);
+
+  const sortedRecentAssignments = useMemo(() => {
+    return [...(data?.recentAssignments || [])]
+      .filter((a) => a.status === "Published" || a.status === "Draft")
+      .sort((a, b) => (b.id || 0) - (a.id || 0));
+  }, [data?.recentAssignments]);
+
   // Proactive background prefetching immediately after teacher dashboard loads
   useEffect(() => {
     if (!isLoading && data && user) {
@@ -70,21 +84,8 @@ export function TeacherDashboardView() {
   const displayName = user?.fullName || "Teacher";
   const firstName = displayName.split(" ")[0];
 
-  const sortedPendingReviews = useMemo(() => {
-    return [...(data?.pendingReviews || [])].sort((a, b) => {
-      const timeA = a.submittedAtUtc ? new Date(a.submittedAtUtc).getTime() : (a.submissionId || 0);
-      const timeB = b.submittedAtUtc ? new Date(b.submittedAtUtc).getTime() : (b.submissionId || 0);
-      return timeB - timeA;
-    });
-  }, [data?.pendingReviews]);
-
-  const sortedRecentAssignments = useMemo(() => {
-    return [...(data?.recentAssignments || [])]
-      .filter((a) => a.status === "Published" || a.status === "Draft")
-      .sort((a, b) => (b.id || 0) - (a.id || 0));
-  }, [data?.recentAssignments]);
-  const totalReviewed = data.totalGraded;
-  const totalSubmissionsToReview = data.totalPendingReviews + data.totalGraded;
+  const totalReviewed = data.totalGraded || 0;
+  const totalSubmissionsToReview = (data.totalPendingReviews || 0) + (data.totalGraded || 0);
   const reviewProgress = totalSubmissionsToReview > 0 ? Math.round((totalReviewed / totalSubmissionsToReview) * 100) : 0;
 
   const stats = [
