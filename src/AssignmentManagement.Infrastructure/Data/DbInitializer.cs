@@ -694,7 +694,7 @@ public static class DbInitializer
 
                 int studentDueCount = 0;        // Target: 1 due assignment (unsubmitted)
                 int studentPendingCount = 0;    // Target: 2 pending assignments (unsubmitted)
-                int studentUngradedCount = 0;   // Target: At least 8 submitted but ungraded per student
+                int studentSubmittedCount = 0;  // Target: 5 submitted but ungraded assignments per student profile
                 int studentLateCount = 0;       // Target: 1 late submission per student
 
                 // Flatten all assignments for this student across all enrolled classes
@@ -710,9 +710,9 @@ public static class DbInitializer
                     // 1. Future / Active Assignments (Deadline in future)
                     if (asgn.DeadlineUtc > now)
                     {
-                        if (studentUngradedCount < 8)
+                        if (studentSubmittedCount < 5)
                         {
-                            studentUngradedCount++;
+                            studentSubmittedCount++;
                             submissionsList.Add(new Submission
                             {
                                 AssignmentId = asgn.Id,
@@ -720,15 +720,15 @@ public static class DbInitializer
                                 SubmissionText = $"Respected Teacher, please find attached my solution draft for {asgn.Title}.",
                                 FileUrl = "student_solution.pdf",
                                 SubmittedAtUtc = now.AddHours(-2),
-                                Marks = null, // Ungraded
+                                Marks = null, // Kept ungraded!
                                 Feedback = "Submitted solution received. Pending teacher evaluation.",
-                                Status = SubmissionStatus.Submitted, // Submitted but ungraded!
+                                Status = SubmissionStatus.Submitted, // Submitted state
                                 UpdatedAtUtc = now,
                             });
                         }
                         else
                         {
-                            // Remaining future active assignments stay unsubmitted (Pending Task)
+                            // Remaining future active assignments stay unsubmitted
                             studentPendingCount++;
                         }
                     }
