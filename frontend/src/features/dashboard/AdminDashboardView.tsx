@@ -51,7 +51,8 @@ type ActiveModalType = "users" | "teachers" | "students" | "assignments" | "subm
 
 export function AdminDashboardView() {
   const { user } = useAuth();
-  const { t, language, translateUserName, toBanglaDigits } = useLanguage();
+  const { t, language, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
+  const isBn = language === "bn";
   const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
   const [barClassFilter, setBarClassFilter] = useState("all");
   const [barSubjectFilter, setBarSubjectFilter] = useState("all");
@@ -541,22 +542,22 @@ export function AdminDashboardView() {
   const paginatedSubmissions = useMemo(() => filteredSubmissions.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE), [filteredSubmissions, currentPage]);
 
   const modalTitle: Record<string, string> = {
-    users: "Total Registered Users",
-    teachers: "Assigned Teachers Directory",
-    students: "Enrolled Students Directory",
-    assignments: "All Assignments Repository",
-    submissions: "System-Wide Submissions Overview",
+    users: isBn ? "মোট নিবন্ধিত ব্যবহারকারী" : "Total Registered Users",
+    teachers: isBn ? "বরাদ্দকৃত শিক্ষক ডিরেক্টরি" : "Assigned Teachers Directory",
+    students: isBn ? "নিবন্ধিত শিক্ষার্থী ডিরেক্টরি" : "Enrolled Students Directory",
+    assignments: isBn ? "সকল অ্যাসাইনমেন্টের রিপোজিটরি" : "All Assignments Repository",
+    submissions: isBn ? "সিস্টেম সাবমিশন ওভারভিউ" : "System-Wide Submissions Overview",
   };
 
-  if (isLoading) return <LoadingSpinner fullScreen label="Loading admin analytics..." />;
+  if (isLoading) return <LoadingSpinner fullScreen label={isBn ? "অ্যাডমিন অ্যানালিটিক্স লোড হচ্ছে..." : "Loading admin analytics..."} />;
   if (!data) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
-      <p className="text-sm text-slate-500 dark:text-slate-400">{error?.message || "Failed to load admin dashboard."}</p>
+      <p className="text-sm text-slate-500 dark:text-slate-400">{error?.message || (isBn ? "অ্যাডমিন ড্যাশবোর্ড লোড করতে ব্যর্থ হয়েছে।" : "Failed to load admin dashboard.")}</p>
       <button
         onClick={() => refetchDashboard()}
         className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-sm cursor-pointer"
       >
-        Try Again
+        {isBn ? "আবার চেষ্টা করুন" : "Try Again"}
       </button>
     </div>
   );
@@ -569,11 +570,11 @@ export function AdminDashboardView() {
   };
 
   const stats = [
-    { label: t("lblTotalUsers"), value: toBanglaDigits(data.totalUsers), key: "users" as const, icon: Users, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", textColor: "text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300", actionMsg: "View Users" },
-    { label: t("navTeachers"), value: toBanglaDigits(data.totalTeachers), key: "teachers" as const, icon: GraduationCap, color: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300", textColor: "text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300", actionMsg: "View Teachers" },
-    { label: t("navStudents"), value: toBanglaDigits(data.totalStudents), key: "students" as const, icon: BookOpen, color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50 dark:text-cyan-300", textColor: "text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-300", actionMsg: "View Students" },
-    { label: t("lblTotalAssignments"), value: toBanglaDigits(data.totalAssignments), key: "assignments" as const, icon: ClipboardList, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", textColor: "text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300", actionMsg: "View Assignments" },
-    { label: t("lblTotalSubmissions"), value: toBanglaDigits(data.totalSubmissions), key: "submissions" as const, icon: Inbox, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", textColor: "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300", actionMsg: "View Submissions" },
+    { label: t("lblTotalUsers"), value: toBanglaDigits(data.totalUsers), key: "users" as const, icon: Users, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", textColor: "text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300", actionMsg: isBn ? "ব্যবহারকারী দেখুন" : "View Users" },
+    { label: t("navTeachers"), value: toBanglaDigits(data.totalTeachers), key: "teachers" as const, icon: GraduationCap, color: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300", textColor: "text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300", actionMsg: isBn ? "শিক্ষকগণ দেখুন" : "View Teachers" },
+    { label: t("navStudents"), value: toBanglaDigits(data.totalStudents), key: "students" as const, icon: BookOpen, color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50 dark:text-cyan-300", textColor: "text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-300", actionMsg: isBn ? "শিক্ষার্থীবৃন্দ দেখুন" : "View Students" },
+    { label: t("lblTotalAssignments"), value: toBanglaDigits(data.totalAssignments), key: "assignments" as const, icon: ClipboardList, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", textColor: "text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300", actionMsg: isBn ? "অ্যাসাইনমেন্টসমূহ দেখুন" : "View Assignments" },
+    { label: t("lblTotalSubmissions"), value: toBanglaDigits(data.totalSubmissions), key: "submissions" as const, icon: Inbox, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", textColor: "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300", actionMsg: isBn ? "সাবমিশনসমূহ দেখুন" : "View Submissions" },
   ];
 
   const firstName = user?.fullName?.split(" ")[0] || "Admin";
@@ -703,7 +704,11 @@ export function AdminDashboardView() {
                 type="text"
                 value={modalSearch}
                 onChange={(e) => setModalSearch(e.target.value)}
-                placeholder={`Search ${activeModal || "items"} by name, title, email...`}
+                placeholder={
+                  isBn
+                    ? `নাম, শিরোনাম বা ইমেইল দিয়ে খুঁজুন...`
+                    : `Search ${activeModal || "items"} by name, title, email...`
+                }
                 className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-blue-500/30 focus:bg-white dark:focus:bg-slate-900 transition-all font-medium"
               />
             </div>
@@ -719,9 +724,9 @@ export function AdminDashboardView() {
                     onChange={(e) => setModalGenderFilter(e.target.value)}
                     className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
                   >
-                    <option value="all">Gender: All</option>
-                    <option value="male">Male (♂)</option>
-                    <option value="female">Female (♀)</option>
+                    <option value="all">{isBn ? "লিঙ্গ: সকল" : "Gender: All"}</option>
+                    <option value="male">{isBn ? "পুরুষ (♂)" : "Male (♂)"}</option>
+                    <option value="female">{isBn ? "মহিলা (♀)" : "Female (♀)"}</option>
                   </select>
                 </div>
 
@@ -733,26 +738,26 @@ export function AdminDashboardView() {
                     onChange={(e) => setModalSubjectFilter(e.target.value)}
                     className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
                   >
-                    <option value="all">Subject: All</option>
-                    <option value="Bangla">Bangla</option>
-                    <option value="English">English</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Higher Mathematics">Higher Mathematics</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="ICT">Information & Communication Tech (ICT)</option>
-                    <option value="Bangladesh & Global Studies">Bangladesh & Global Studies</option>
-                    <option value="Science">Science</option>
-                    <option value="Religion">Religion & Moral Education</option>
-                    <option value="Accounting">Accounting</option>
-                    <option value="Finance & Banking">Finance & Banking</option>
-                    <option value="Business Entrepreneurship">Business Entrepreneurship</option>
-                    <option value="Economics">Economics</option>
-                    <option value="Civics">Civics & Citizenship</option>
-                    <option value="Geography">Geography & Environment</option>
-                    <option value="History">History of Bangladesh & World Civ</option>
-                    <option value="General Studies">General Studies / Other</option>
+                    <option value="all">{isBn ? "বিষয়: সকল" : "Subject: All"}</option>
+                    <option value="Bangla">{translateSubject("Bangla")}</option>
+                    <option value="English">{translateSubject("English")}</option>
+                    <option value="Mathematics">{translateSubject("Mathematics")}</option>
+                    <option value="Higher Mathematics">{translateSubject("Higher Mathematics")}</option>
+                    <option value="Physics">{translateSubject("Physics")}</option>
+                    <option value="Chemistry">{translateSubject("Chemistry")}</option>
+                    <option value="Biology">{translateSubject("Biology")}</option>
+                    <option value="ICT">{translateSubject("ICT")}</option>
+                    <option value="Bangladesh & Global Studies">{translateSubject("Bangladesh & Global Studies")}</option>
+                    <option value="Science">{translateSubject("Science")}</option>
+                    <option value="Religion">{translateSubject("Religion")}</option>
+                    <option value="Accounting">{translateSubject("Accounting")}</option>
+                    <option value="Finance & Banking">{translateSubject("Finance & Banking")}</option>
+                    <option value="Business Entrepreneurship">{translateSubject("Business Entrepreneurship")}</option>
+                    <option value="Economics">{translateSubject("Economics")}</option>
+                    <option value="Civics">{translateSubject("Civics")}</option>
+                    <option value="Geography">{translateSubject("Geography")}</option>
+                    <option value="History">{translateSubject("History")}</option>
+                    <option value="General Studies">{isBn ? "সাধারণ শিক্ষা / অন্যান্য" : "General Studies / Other"}</option>
                   </select>
                 </div>
               </>
@@ -764,34 +769,34 @@ export function AdminDashboardView() {
                   onChange={(e) => setModalFilter(e.target.value)}
                   className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
                 >
-                  <option value="all">Filter: All</option>
+                  <option value="all">{isBn ? "ফিল্টার: সকল" : "Filter: All"}</option>
 
                   {/* USERS FILTERS */}
                   {activeModal === "users" && (
-                    <optgroup label="User Roles & Status">
-                      <option value="admin">Admin Role</option>
-                      <option value="teacher">Teacher Role</option>
-                      <option value="student">Student Role</option>
-                      <option value="active">Active Only</option>
-                      <option value="inactive">Inactive Only</option>
+                    <optgroup label={isBn ? "ব্যবহারকারীর ভূমিকা ও স্থিতি" : "User Roles & Status"}>
+                      <option value="admin">{isBn ? "অ্যাডমিন ভূমিকা" : "Admin Role"}</option>
+                      <option value="teacher">{isBn ? "শিক্ষক ভূমিকা" : "Teacher Role"}</option>
+                      <option value="student">{isBn ? "শিক্ষার্থী ভূমিকা" : "Student Role"}</option>
+                      <option value="active">{isBn ? "শুধুমাত্র সক্রিয়" : "Active Only"}</option>
+                      <option value="inactive">{isBn ? "শুধুমাত্র নিষ্ক্রিয়" : "Inactive Only"}</option>
                     </optgroup>
                   )}
 
                   {/* STUDENTS FILTERS */}
                   {activeModal === "students" && (
                     <>
-                      <optgroup label="Gender">
-                        <option value="male">Male (♂)</option>
-                        <option value="female">Female (♀)</option>
+                      <optgroup label={isBn ? "লিঙ্গ" : "Gender"}>
+                        <option value="male">{isBn ? "পুরুষ (♂)" : "Male (♂)"}</option>
+                        <option value="female">{isBn ? "মহিলা (♀)" : "Female (♀)"}</option>
                       </optgroup>
-                      <optgroup label="Class Level">
-                        <option value="class_6">Class 6</option>
-                        <option value="class_7">Class 7</option>
-                        <option value="class_8">Class 8</option>
-                        <option value="class_9">Class 9</option>
-                        <option value="class_10">Class 10</option>
-                        <option value="class_11">Class 11</option>
-                        <option value="class_12">Class 12</option>
+                      <optgroup label={isBn ? "শ্রেণী পর্যায়" : "Class Level"}>
+                        <option value="class_6">{translateClass(6)}</option>
+                        <option value="class_7">{translateClass(7)}</option>
+                        <option value="class_8">{translateClass(8)}</option>
+                        <option value="class_9">{translateClass(9)}</option>
+                        <option value="class_10">{translateClass(10)}</option>
+                        <option value="class_11">{translateClass(11)}</option>
+                        <option value="class_12">{translateClass(12)}</option>
                       </optgroup>
                     </>
                   )}
@@ -799,29 +804,29 @@ export function AdminDashboardView() {
                   {/* ASSIGNMENTS FILTERS */}
                   {activeModal === "assignments" && (
                     <>
-                      <optgroup label="Publishing Status">
-                        <option value="published">Published Only</option>
-                        <option value="draft">Draft Only</option>
+                      <optgroup label={isBn ? "প্রকাশনা অবস্থা" : "Publishing Status"}>
+                        <option value="published">{isBn ? "শুধুমাত্র প্রকাশিত" : "Published Only"}</option>
+                        <option value="draft">{isBn ? "শুধুমাত্র খসড়া" : "Draft Only"}</option>
                       </optgroup>
-                      <optgroup label="Class Level">
-                        <option value="class_6">Class 6</option>
-                        <option value="class_7">Class 7</option>
-                        <option value="class_8">Class 8</option>
-                        <option value="class_9">Class 9</option>
-                        <option value="class_10">Class 10</option>
-                        <option value="class_11">Class 11</option>
-                        <option value="class_12">Class 12</option>
+                      <optgroup label={isBn ? "শ্রেণী পর্যায়" : "Class Level"}>
+                        <option value="class_6">{translateClass(6)}</option>
+                        <option value="class_7">{translateClass(7)}</option>
+                        <option value="class_8">{translateClass(8)}</option>
+                        <option value="class_9">{translateClass(9)}</option>
+                        <option value="class_10">{translateClass(10)}</option>
+                        <option value="class_11">{translateClass(11)}</option>
+                        <option value="class_12">{translateClass(12)}</option>
                       </optgroup>
                     </>
                   )}
 
                   {/* SUBMISSIONS FILTERS */}
                   {activeModal === "submissions" && (
-                    <optgroup label="Submission Status">
-                      <option value="graded">Graded</option>
-                      <option value="submitted">Pending Review</option>
-                      <option value="late">Late Submissions</option>
-                      <option value="missing">Missing / Overdue</option>
+                    <optgroup label={isBn ? "সাবমিশন অবস্থা" : "Submission Status"}>
+                      <option value="graded">{isBn ? "মূল্যায়িত" : "Graded"}</option>
+                      <option value="submitted">{isBn ? "পর্যালোচনার অপেক্ষায়" : "Pending Review"}</option>
+                      <option value="late">{isBn ? "বিলম্বিত সাবমিশন" : "Late Submissions"}</option>
+                      <option value="missing">{isBn ? "অনুপস্থিত / সময়োত্তীর্ণ" : "Missing / Overdue"}</option>
                     </optgroup>
                   )}
                 </select>
@@ -836,43 +841,43 @@ export function AdminDashboardView() {
                 onChange={(e) => setModalSortBy(e.target.value)}
                 className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
               >
-                <option value="default">Sort: Default</option>
+                <option value="default">{isBn ? "সাজান: ডিফল্ট" : "Sort: Default"}</option>
                 {activeModal === "users" && (
                   <>
-                    <option value="name">Name (A-Z)</option>
-                    <option value="email">Email</option>
-                    <option value="role">Role</option>
+                    <option value="name">{isBn ? "নাম (অ-ক্ষর)" : "Name (A-Z)"}</option>
+                    <option value="email">{t("thEmail")}</option>
+                    <option value="role">{t("thRole")}</option>
                   </>
                 )}
                 {activeModal === "teachers" && (
                   <>
-                    <option value="name">Name (A-Z)</option>
-                    <option value="email">Email</option>
-                    <option value="designation">Designation</option>
+                    <option value="name">{isBn ? "নাম (অ-ক্ষর)" : "Name (A-Z)"}</option>
+                    <option value="email">{t("thEmail")}</option>
+                    <option value="designation">{t("thDesignation")}</option>
                   </>
                 )}
                 {activeModal === "students" && (
                   <>
-                    <option value="name">Name (A-Z)</option>
-                    <option value="email">Email</option>
-                    <option value="class">Class Level</option>
-                    <option value="studentNumber">Student Number</option>
+                    <option value="name">{isBn ? "নাম (অ-ক্ষর)" : "Name (A-Z)"}</option>
+                    <option value="email">{t("thEmail")}</option>
+                    <option value="class">{t("thClassLevel")}</option>
+                    <option value="studentNumber">{t("thStudentId")}</option>
                   </>
                 )}
                 {activeModal === "assignments" && (
                   <>
-                    <option value="title">Title (A-Z)</option>
-                    <option value="date">Date Created</option>
-                    <option value="class">Class Level</option>
-                    <option value="marks">Max Marks</option>
+                    <option value="title">{isBn ? "শিরোনাম (অ-ক্ষর)" : "Title (A-Z)"}</option>
+                    <option value="date">{isBn ? "তৈরির তারিখ" : "Date Created"}</option>
+                    <option value="class">{t("thClassLevel")}</option>
+                    <option value="marks">{t("thMaxMarks")}</option>
                   </>
                 )}
                 {activeModal === "submissions" && (
                   <>
-                    <option value="title">Assignment Title</option>
-                    <option value="date">Submission Date</option>
-                    <option value="student">Student Name</option>
-                    <option value="grade">Grade / Score</option>
+                    <option value="title">{t("thAssignmentTitle")}</option>
+                    <option value="date">{isBn ? "জমার তারিখ" : "Submission Date"}</option>
+                    <option value="student">{t("thStudent")}</option>
+                    <option value="grade">{isBn ? "গ্রেড / নম্বর" : "Grade / Score"}</option>
                   </>
                 )}
               </select>
@@ -890,7 +895,7 @@ export function AdminDashboardView() {
       >
         {modalLoading ? (
           <div className="py-12 flex justify-center">
-            <LoadingSpinner label={`Loading ${activeModal || "data"} details…`} />
+            <LoadingSpinner label={isBn ? "তথ্য লোড হচ্ছে..." : `Loading ${activeModal || "data"} details…`} />
           </div>
         ) : (
           <div className="space-y-4">
@@ -899,34 +904,40 @@ export function AdminDashboardView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>{t("thName")}</TableHead>
+                    <TableHead>{t("thEmail")}</TableHead>
+                    <TableHead>{t("thRole")}</TableHead>
+                    <TableHead>{t("thStatus")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredUsers.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={4} className="text-center text-xs text-slate-400 py-6">
-                        No users match your search and filter criteria.
+                        {isBn ? "আপনার অনুসন্ধান এবং ফিল্টারের সাথে মিল থাকা কোনো ব্যবহারকারী পাওয়া যায়নি।" : "No users match your search and filter criteria."}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedUsers.map((u) => (
-                      <TableRow key={u.id}>
-                        <TableCell className="font-medium">{u.firstName} {u.lastName}</TableCell>
-                        <TableCell className="text-slate-500 dark:text-slate-400">{u.email}</TableCell>
-                        <TableCell>
-                          <Badge variant={u.role === "Admin" ? "primary" : u.role === "Teacher" ? "info" : "default"} size="sm">{u.role}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={u.isActive ? "success" : "default"} size="sm">
-                            {u.isActive ? "Active" : "Inactive"}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    paginatedUsers.map((u) => {
+                      const rawName = `${u.firstName || ""} ${u.lastName || ""}`.trim() || "User";
+                      const name = translateUserName(rawName);
+                      const roleLabel = u.role === "Admin" ? (isBn ? "অ্যাডমিন" : "Admin") : u.role === "Teacher" ? (isBn ? "শিক্ষক" : "Teacher") : (isBn ? "শিক্ষার্থী" : "Student");
+                      const statusLabel = u.isActive ? (isBn ? "সক্রিয়" : "Active") : (isBn ? "নিষ্ক্রিয়" : "Inactive");
+                      return (
+                        <TableRow key={u.id}>
+                          <TableCell className="font-medium">{name}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{u.email}</TableCell>
+                          <TableCell>
+                            <Badge variant={u.role === "Admin" ? "primary" : u.role === "Teacher" ? "info" : "default"} size="sm">{roleLabel}</Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={u.isActive ? "success" : "default"} size="sm">
+                              {statusLabel}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>
@@ -936,26 +947,31 @@ export function AdminDashboardView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Gender</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Designation</TableHead>
-                    <TableHead>Subjects</TableHead>
+                    <TableHead>{t("thName")}</TableHead>
+                    <TableHead>{isBn ? "লিঙ্গ" : "Gender"}</TableHead>
+                    <TableHead>{t("thEmail")}</TableHead>
+                    <TableHead>{t("thDesignation")}</TableHead>
+                    <TableHead>{t("lblSubject")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredTeachers.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center text-xs text-slate-400 py-6">
-                        No teachers match your search and filter criteria.
+                        {isBn ? "আপনার অনুসন্ধান এবং ফিল্টারের সাথে মিল থাকা কোনো শিক্ষক পাওয়া যায়নি।" : "No teachers match your search and filter criteria."}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedTeachers.map((t) => {
-                      const name = t.fullName || `${t.firstName || ""} ${t.lastName || ""}`.trim() || "Teacher";
-                      const isFemale = (t.gender || "").toLowerCase() === "female";
+                    paginatedTeachers.map((tItem) => {
+                      const rawName = tItem.fullName || `${tItem.firstName || ""} ${tItem.lastName || ""}`.trim() || "Teacher";
+                      const name = translateUserName(rawName);
+                      const isFemale = (tItem.gender || "").toLowerCase() === "female";
+                      const genderLabel = isFemale ? (isBn ? "মহিলা" : "Female") : (isBn ? "পুরুষ" : "Male");
+                      const designationLabel = isBn
+                        ? (tItem.designation === "Senior Teacher" ? "সিনিয়র শিক্ষক" : tItem.designation === "Assistant Teacher" ? "সহকারী শিক্ষক" : "শিক্ষক")
+                        : (tItem.designation || "Teacher");
                       return (
-                        <TableRow key={t.id}>
+                        <TableRow key={tItem.id}>
                           <TableCell className="font-medium">{name}</TableCell>
                           <TableCell>
                             <span
@@ -966,15 +982,15 @@ export function AdminDashboardView() {
                               }`}
                             >
                               <span>{isFemale ? "♀" : "♂"}</span>
-                              <span>{isFemale ? "Female" : "Male"}</span>
+                              <span>{genderLabel}</span>
                             </span>
                           </TableCell>
-                          <TableCell className="text-slate-500 dark:text-slate-400">{t.email}</TableCell>
-                          <TableCell>{t.designation || "Teacher"}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{tItem.email}</TableCell>
+                          <TableCell>{designationLabel}</TableCell>
                           <TableCell>
                             <div className="flex flex-wrap gap-1">
-                              {(t.taughtSubjects && t.taughtSubjects.length > 0 ? t.taughtSubjects : ["General Studies"]).map((sub, i) => (
-                                <Badge key={i} variant="default" size="sm">{sub}</Badge>
+                              {(tItem.taughtSubjects && tItem.taughtSubjects.length > 0 ? tItem.taughtSubjects : ["General Studies"]).map((sub, i) => (
+                                <Badge key={i} variant="default" size="sm">{translateSubject(sub)}</Badge>
                               ))}
                             </div>
                           </TableCell>
@@ -990,28 +1006,30 @@ export function AdminDashboardView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Student #</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Gender</TableHead>
-                    <TableHead>Class</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Phone Number</TableHead>
+                    <TableHead>{t("thStudentId")}</TableHead>
+                    <TableHead>{t("thStudent")}</TableHead>
+                    <TableHead>{isBn ? "লিঙ্গ" : "Gender"}</TableHead>
+                    <TableHead>{t("thClassLevel")}</TableHead>
+                    <TableHead>{t("thEmail")}</TableHead>
+                    <TableHead>{isBn ? "ফোন নম্বর" : "Phone Number"}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredStudents.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-xs text-slate-400 py-6">
-                        No students match your search and filter criteria.
+                        {isBn ? "আপনার অনুসন্ধান এবং ফিল্টারের সাথে মিল থাকা কোনো শিক্ষার্থী পাওয়া যায়নি।" : "No students match your search and filter criteria."}
                       </TableCell>
                     </TableRow>
                   ) : (
                     paginatedStudents.map((s) => {
-                      const name = s.fullName || `${s.firstName || ""} ${s.lastName || ""}`.trim() || "Student";
+                      const rawName = s.fullName || `${s.firstName || ""} ${s.lastName || ""}`.trim() || "Student";
+                      const name = translateUserName(rawName);
                       const isFemale = (s.gender || "").toLowerCase() === "female";
+                      const genderLabel = isFemale ? (isBn ? "মহিলা" : "Female") : (isBn ? "পুরুষ" : "Male");
                       return (
                         <TableRow key={s.id}>
-                          <TableCell className="font-mono text-xs text-slate-500">{s.studentNumber}</TableCell>
+                          <TableCell className="font-mono text-xs text-slate-500">{toBanglaDigits(s.studentNumber)}</TableCell>
                           <TableCell className="font-medium">{name}</TableCell>
                           <TableCell>
                             <span
@@ -1022,12 +1040,12 @@ export function AdminDashboardView() {
                               }`}
                             >
                               <span>{isFemale ? "♀" : "♂"}</span>
-                              <span>{isFemale ? "Female" : "Male"}</span>
+                              <span>{genderLabel}</span>
                             </span>
                           </TableCell>
-                          <TableCell>Class {s.classLevel || 9}</TableCell>
+                          <TableCell>{translateClass(s.classLevel || 9)}</TableCell>
                           <TableCell className="text-slate-500 dark:text-slate-400">{s.email}</TableCell>
-                          <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs">{s.phone || "—"}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 font-mono text-xs">{s.phone ? toBanglaDigits(s.phone) : "—"}</TableCell>
                         </TableRow>
                       );
                     })
@@ -1040,49 +1058,53 @@ export function AdminDashboardView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Class · Subject</TableHead>
-                    <TableHead>Created By</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead>Deadline</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Marks</TableHead>
+                    <TableHead>{t("thAssignmentTitle")}</TableHead>
+                    <TableHead>{isBn ? "শ্রেণী · বিষয়" : "Class · Subject"}</TableHead>
+                    <TableHead>{isBn ? "তৈরি করেছেন" : "Created By"}</TableHead>
+                    <TableHead>{isBn ? "তৈরির তারিখ" : "Created"}</TableHead>
+                    <TableHead>{t("thDeadline")}</TableHead>
+                    <TableHead>{t("thStatus")}</TableHead>
+                    <TableHead>{t("thMaxMarks")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredAssignments.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={7} className="text-center text-xs text-slate-400 py-6">
-                        No assignments match your search and filter criteria.
+                        {isBn ? "আপনার অনুসন্ধান এবং ফিল্টারের সাথে মিল থাকা কোনো অ্যাসাইনমেন্ট পাওয়া যায়নি।" : "No assignments match your search and filter criteria."}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedAssignments.map((a) => (
-                      <TableRow key={a.id}>
-                        <TableCell>
-                          <Link
-                            href={ROUTES.ASSIGNMENT_DETAILS(a.id)}
-                            className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
-                          >
-                            <span>{a.title}</span>
-                            <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
-                          </Link>
-                        </TableCell>
-                        <TableCell>Class {a.classLevel} · {a.subjectName}</TableCell>
-                        <TableCell className="text-slate-500 dark:text-slate-400">{a.teacherName || "Teacher"}</TableCell>
-                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.createdAtUtc)}</TableCell>
-                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.deadlineUtc)}</TableCell>
-                        <TableCell>
-                          <Badge
-                            size="sm"
-                            variant={a.status === "Published" ? "success" : a.status === "Draft" ? "warning" : "default"}
-                          >
-                            {a.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="tabular-nums font-medium">{a.maxMarks}</TableCell>
-                      </TableRow>
-                    ))
+                    paginatedAssignments.map((a) => {
+                      const teacherName = translateUserName(a.teacherName || "Teacher");
+                      const statusLabel = a.status === "Published" ? (isBn ? "প্রকাশিত" : "Published") : a.status === "Draft" ? (isBn ? "খসড়া" : "Draft") : a.status;
+                      return (
+                        <TableRow key={a.id}>
+                          <TableCell>
+                            <Link
+                              href={ROUTES.ASSIGNMENT_DETAILS(a.id)}
+                              className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
+                            >
+                              <span>{a.title}</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                            </Link>
+                          </TableCell>
+                          <TableCell>{translateClass(a.classLevel)} · {translateSubject(a.subjectName)}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{teacherName}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.createdAtUtc, language)}</TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(a.deadlineUtc, language)}</TableCell>
+                          <TableCell>
+                            <Badge
+                              size="sm"
+                              variant={a.status === "Published" ? "success" : a.status === "Draft" ? "warning" : "default"}
+                            >
+                              {statusLabel}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="tabular-nums font-medium">{toBanglaDigits(a.maxMarks)}</TableCell>
+                        </TableRow>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>
@@ -1092,52 +1114,65 @@ export function AdminDashboardView() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Class · Subject</TableHead>
-                    <TableHead>Assignment</TableHead>
-                    <TableHead>Student</TableHead>
-                    <TableHead>Submitted</TableHead>
-                    <TableHead>Grade</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>{isBn ? "শ্রেণী · বিষয়" : "Class · Subject"}</TableHead>
+                    <TableHead>{t("thAssignmentTitle")}</TableHead>
+                    <TableHead>{t("thStudent")}</TableHead>
+                    <TableHead>{isBn ? "জমা দেওয়া হয়েছে" : "Submitted"}</TableHead>
+                    <TableHead>{isBn ? "গ্রেড" : "Grade"}</TableHead>
+                    <TableHead>{t("thStatus")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredSubmissions.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-xs text-slate-400 py-6">
-                        No submissions match your search and filter criteria.
+                        {isBn ? "আপনার অনুসন্ধান এবং ফিল্টারের সাথে মিল থাকা কোনো সাবমিশন পাওয়া যায়নি।" : "No submissions match your search and filter criteria."}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    paginatedSubmissions.map((sub) => (
-                      <TableRow key={sub.id}>
-                        <TableCell className="text-slate-500 dark:text-slate-400">{sub.classSubject || "Class 9 · Physics"}</TableCell>
-                        <TableCell>
-                          <Link
-                            href={sub.assignmentId ? ROUTES.ASSIGNMENT_DETAILS(sub.assignmentId) : ROUTES.SUBMISSION_DETAILS(sub.id)}
-                            className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
-                          >
-                            <span>{sub.assignmentTitle}</span>
-                            <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
-                          </Link>
-                        </TableCell>
-                        <TableCell>{sub.studentName} <span className="text-xs text-slate-400">({sub.studentNumber})</span></TableCell>
-                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(sub.submittedAtUtc)}</TableCell>
-                        <TableCell className="tabular-nums font-medium">
-                          {sub.status === "Graded" && sub.marks !== undefined ? `${sub.marks}/${sub.maxMarks}` : `—/${sub.maxMarks}`}
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            size="sm"
-                            variant={
-                              sub.status === "Graded" ? "success" :
-                              sub.status === "Late" ? "warning" : "info"
-                            }
-                          >
-                            {sub.status}
-                          </Badge>
-                        </TableCell>
-                      </TableRow>
-                    ))
+                    paginatedSubmissions.map((sub) => {
+                      const studentName = translateUserName(sub.studentName);
+                      const studentNum = toBanglaDigits(sub.studentNumber);
+                      const statusLabel = sub.status === "Graded" ? (isBn ? "মূল্যায়িত" : "Graded") : sub.status === "Late" ? (isBn ? "বিলম্বিত" : "Late") : (isBn ? "জমা দেওয়া হয়েছে" : "Submitted");
+                      const gradeText = sub.status === "Graded" && sub.marks !== undefined
+                        ? `${toBanglaDigits(sub.marks)}/${toBanglaDigits(sub.maxMarks)}`
+                        : `—/${toBanglaDigits(sub.maxMarks)}`;
+
+                      const classSubjectText = sub.classLevel && sub.subjectName
+                        ? `${translateClass(sub.classLevel)} · ${translateSubject(sub.subjectName)}`
+                        : sub.classSubject
+                        ? sub.classSubject
+                        : `${translateClass(9)} · ${translateSubject("Physics")}`;
+
+                      return (
+                        <TableRow key={sub.id}>
+                          <TableCell className="text-slate-500 dark:text-slate-400">{classSubjectText}</TableCell>
+                          <TableCell>
+                            <Link
+                              href={sub.assignmentId ? ROUTES.ASSIGNMENT_DETAILS(sub.assignmentId) : ROUTES.SUBMISSION_DETAILS(sub.id)}
+                              className="inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-bold hover:underline transition-colors group"
+                            >
+                              <span>{sub.assignmentTitle}</span>
+                              <ArrowUpRight className="w-3.5 h-3.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
+                            </Link>
+                          </TableCell>
+                          <TableCell>{studentName} <span className="text-xs text-slate-400">({studentNum})</span></TableCell>
+                          <TableCell className="text-slate-500 dark:text-slate-400 text-xs">{formatDate(sub.submittedAtUtc, language)}</TableCell>
+                          <TableCell className="tabular-nums font-medium">{gradeText}</TableCell>
+                          <TableCell>
+                            <Badge
+                              size="sm"
+                              variant={
+                                sub.status === "Graded" ? "success" :
+                                sub.status === "Late" ? "warning" : "info"
+                              }
+                            >
+                              {statusLabel}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
                   )}
                 </TableBody>
               </Table>
@@ -1145,7 +1180,7 @@ export function AdminDashboardView() {
 
             <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
               <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                {activeFilteredList.length} total items
+                {isBn ? `${toBanglaDigits(activeFilteredList.length)} টি আইটেম` : `${activeFilteredList.length} total items`}
               </span>
               <Pagination
                 currentPage={currentPage}
