@@ -21,7 +21,7 @@ import { TrendingUp, BarChart3, PieChart as PieChartIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const cardBase =
-  "bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md";
+  "bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-2xl shadow-xs overflow-hidden transition-all duration-200 hover:shadow-md";
 
 function CardHeader({
   title,

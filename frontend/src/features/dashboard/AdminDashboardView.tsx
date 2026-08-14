@@ -662,13 +662,13 @@ export function AdminDashboardView() {
             <button
               key={stat.key}
               onClick={() => openModal(stat.key)}
-              className="group rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-4.5 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md focus:outline-none dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
+              className="group rounded-2xl border border-slate-300 bg-white p-4 sm:p-4.5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus:outline-none dark:border-slate-800 dark:bg-slate-900 cursor-pointer flex flex-col justify-between"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className={`flex h-9.5 w-9.5 items-center justify-center rounded-xl ${stat.color}`}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <div className={`inline-flex items-center gap-1 text-[11px] font-extrabold ${stat.textColor} bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 px-2 py-1 rounded-lg transition-all shadow-2xs group-hover:border-current`}>
+                <div className={`inline-flex items-center gap-1 text-[11px] font-extrabold ${stat.textColor} bg-slate-50/90 dark:bg-slate-800/80 border border-slate-300/80 dark:border-slate-700/70 px-2 py-1 rounded-lg transition-all shadow-2xs group-hover:border-current`}>
                   <span>{stat.actionMsg}</span>
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
                 </div>
