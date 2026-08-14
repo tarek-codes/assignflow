@@ -864,7 +864,9 @@ export function AdminDashboardView() {
         }
       >
         {modalLoading ? (
-          <LoadingSpinner label="Loading…" />
+          <div className="py-12 flex justify-center">
+            <LoadingSpinner label={`Loading ${activeModal || "data"} details…`} />
+          </div>
         ) : (
           <div className="space-y-4">
 
