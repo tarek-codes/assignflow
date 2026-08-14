@@ -21,6 +21,19 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Fix native select options dropdown text color in dark mode */
+  .dark select option,
+  .dark select optgroup {
+    background-color: #0f172a !important; /* slate-900 */
+    color: #f8fafc !important; /* slate-50 */
+  }
+
+  select option,
+  select optgroup {
+    background-color: #ffffff;
+    color: #0f172a;
+  }
+
   ::selection {
     @apply bg-blue-200 text-blue-950 dark:bg-blue-800 dark:text-blue-50;
   }
