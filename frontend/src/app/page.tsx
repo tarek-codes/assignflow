@@ -154,31 +154,21 @@ export default function HomePage() {
             <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
               <ThemeToggle className="scale-90 sm:scale-100" />
 
-              {isAuthenticated ? (
-                <Button
-                  onClick={handlePortalRedirect}
-                  className="ml-0.5 gap-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] sm:text-xs shadow-md shadow-blue-600/20 px-3 py-1.5 sm:px-4 sm:py-2"
+              <div className="ml-0.5 flex items-center gap-1 sm:gap-1.5">
+                <Link
+                  href={ROUTES.LOGIN}
+                  className="hidden sm:inline-block px-3.5 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
-                  <span className="hidden sm:inline">Go to </span>Dashboard
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1.5 text-[11px] font-extrabold text-white shadow-md shadow-blue-600/20 hover:bg-blue-700 transition-all sm:gap-1.5 sm:px-4 sm:py-2 sm:text-xs"
+                >
+                  Register
                   <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                </Button>
-              ) : (
-                <div className="ml-0.5 flex items-center gap-1 sm:gap-1.5">
-                  <Link
-                    href={ROUTES.LOGIN}
-                    className="hidden sm:inline-block px-3.5 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="inline-flex items-center gap-1 rounded-full bg-blue-600 px-3 py-1.5 text-[11px] font-extrabold text-white shadow-md shadow-blue-600/20 hover:bg-blue-700 transition-all sm:gap-1.5 sm:px-4 sm:py-2 sm:text-xs"
-                  >
-                    Register
-                    <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  </Link>
-                </div>
-              )}
+                </Link>
+              </div>
             </div>
           </div>
         </header>
@@ -367,10 +357,6 @@ export default function HomePage() {
             <Link href="/register" className="hover:text-blue-600 transition-colors">
               Register Account
             </Link>
-            <span className="hidden sm:inline">&bull;</span>
-            <button onClick={handlePortalRedirect} className="hover:text-blue-600 transition-colors">
-              Dashboard
-            </button>
           </div>
         </div>
       </footer>
