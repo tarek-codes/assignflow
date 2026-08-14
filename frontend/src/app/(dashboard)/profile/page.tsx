@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/context/ToastContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import {
@@ -29,6 +30,7 @@ import { Avatar } from "@/components/ui/Avatar";
 export default function ProfilePage() {
   const { user, updateAvatar, removeAvatar } = useAuth();
   const { showToast } = useToast();
+  const { language, t, translateUserName, translateSubject, translateClass, toBanglaDigits } = useLanguage();
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const [studentDetails, setStudentDetails] = useState<{ studentNumber?: string; classLevel?: number; group?: string } | null>(null);
@@ -101,6 +103,7 @@ export default function ProfilePage() {
   const isAdmin = user.role === "Admin";
   const isTeacher = user.role === "Teacher";
   const isStudent = user.role === "Student";
+  const isBn = language === "bn";
 
   const showGroup = isStudent && (studentDetails?.classLevel ?? 9) >= 9 && studentDetails?.group && studentDetails.group !== "None";
 
@@ -112,15 +115,15 @@ export default function ProfilePage() {
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentPassword || !newPassword || !confirmPassword) {
-      showToast("Please fill in all password fields", "error");
+      showToast(isBn ? "অনুগ্রহ করে পাসওয়ার্ডের সকল ঘর পূরণ করুন" : "Please fill in all password fields", "error");
       return;
     }
     if (newPassword !== confirmPassword) {
-      showToast("New password and confirm password do not match", "error");
+      showToast(isBn ? "নতুন পাসওয়ার্ড এবং নিশ্চিতকরণ পাসওয়ার্ড মিলছে না" : "New password and confirm password do not match", "error");
       return;
     }
     if (newPassword.length < 6) {
-      showToast("Password must be at least 6 characters long", "error");
+      showToast(isBn ? "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে" : "Password must be at least 6 characters long", "error");
       return;
     }
 
@@ -130,7 +133,7 @@ export default function ProfilePage() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      showToast("Password changed successfully! Next time log in with your new password.", "success");
+      showToast(isBn ? "পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!" : "Password changed successfully!", "success");
     } catch (err: any) {
       const msg = err.response?.data?.message || err.message || "Failed to change password";
       showToast(msg, "error");
@@ -146,19 +149,19 @@ export default function ProfilePage() {
         <div className="text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-              User Profile & Security
+              {isBn ? "ব্যবহারকারী প্রোফাইল ও নিরাপত্তা" : "User Profile & Security"}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-              Personal account details and security password management
+              {isBn ? "ব্যক্তিগত অ্যাকাউন্ট বিবরণ এবং নিরাপত্তা পাসওয়ার্ড ব্যবস্থাপনা" : "Personal account details and security password management"}
             </p>
           </div>
           <div className="self-center sm:self-auto inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/60 text-blue-700 dark:text-blue-300 text-xs font-semibold">
             <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span>Verified Account</span>
+            <span>{isBn ? "যাচাইকৃত অ্যাকাউন্ট" : "Verified Account"}</span>
           </div>
         </div>
 
-        {/* ─── UNIFIED PROFILE CARD (NO GRADIENTS, CONSISTENT WITH APP) ─── */}
+        {/* ─── UNIFIED PROFILE CARD ─── */}
         <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-7 shadow-sm space-y-6">
           {/* Header Row: Avatar + Name + Badges */}
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 pb-6 border-b border-slate-100 dark:border-slate-800/80">
@@ -198,7 +201,7 @@ export default function ProfilePage() {
                   className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline cursor-pointer"
                 >
                   <Camera className="w-3.5 h-3.5" />
-                  <span>{user.avatarUrl ? "Change Photo" : "Upload Photo"}</span>
+                  <span>{user.avatarUrl ? (isBn ? "ছবি পরিবর্তন" : "Change Photo") : (isBn ? "ছবি আপলোড" : "Upload Photo")}</span>
                 </button>
 
                 {user.avatarUrl && (
@@ -208,11 +211,11 @@ export default function ProfilePage() {
                       type="button"
                       onClick={() => {
                         removeAvatar();
-                        showToast("Profile picture removed", "info");
+                        showToast(isBn ? "প্রোফাইল ছবি সরানো হয়েছে" : "Profile picture removed", "info");
                       }}
                       className="text-xs font-semibold text-red-500 hover:text-red-600 hover:underline cursor-pointer"
                     >
-                      Remove
+                      {isBn ? "সরিয়ে ফেলুন" : "Remove"}
                     </button>
                   </>
                 )}
@@ -224,7 +227,7 @@ export default function ProfilePage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                    {user.fullName || "User"}
+                    {translateUserName(user.fullName || "User")}
                   </h2>
                   <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
                     <Mail className="w-4 h-4 text-slate-400 shrink-0" />
@@ -237,24 +240,24 @@ export default function ProfilePage() {
                 <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
                   <Badge variant="primary" size="md">
                     <Shield className="w-3.5 h-3.5 mr-1" />
-                    {user.role}
+                    {isAdmin ? t("roleSystemAdmin") : isTeacher ? t("navRoleTeacher") : t("navRoleStudent")}
                   </Badge>
                   {isTeacher && (
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/60">
                       <Award className="w-3.5 h-3.5 mr-1 text-amber-600 dark:text-amber-400" />
-                      {teacherDetails?.designation || "Senior Lecturer"}
+                      {isBn ? "সিনিয়র লেকচারার" : (teacherDetails?.designation || "Senior Lecturer")}
                     </span>
                   )}
                   {isStudent && (
                     <Badge variant="success" size="md">
                       <BookOpen className="w-3.5 h-3.5 mr-1" />
-                      Class {studentDetails?.classLevel || 9}
+                      {translateClass(studentDetails?.classLevel || 9)}
                     </Badge>
                   )}
                   {showGroup && (
                     <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border border-purple-200/60 dark:border-purple-800/60">
                       <GraduationCap className="w-3.5 h-3.5 mr-1 text-purple-600 dark:text-purple-400" />
-                      {studentDetails?.group}
+                      {isBn ? (studentDetails?.group === "Science" ? "বিজ্ঞান বিভাগ" : studentDetails?.group === "Commerce" ? "ব্যবসায় শিক্ষা" : "মানবিক বিভাগ") : studentDetails?.group}
                     </span>
                   )}
                 </div>
@@ -267,11 +270,11 @@ export default function ProfilePage() {
             {/* Account Status */}
             <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
               <span className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Account Status
+                <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {isBn ? "অ্যাকাউন্ট স্ট্যাটাস" : "Account Status"}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/40">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Active
+                {isBn ? "সক্রিয়" : "Active"}
               </span>
             </div>
 
@@ -279,10 +282,10 @@ export default function ProfilePage() {
             {isAdmin && (
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
                 <span className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-slate-400" /> Portal Scope
+                  <Building2 className="w-4 h-4 text-slate-400" /> {isBn ? "পোর্টাল স্কোপ" : "Portal Scope"}
                 </span>
                 <span className="font-bold text-slate-900 dark:text-slate-100">
-                  Global Administrator
+                  {isBn ? "সার্বিক প্রশাসক" : "Global Administrator"}
                 </span>
               </div>
             )}
@@ -291,10 +294,10 @@ export default function ProfilePage() {
             {isTeacher && (
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
                 <span className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2">
-                  <Award className="w-4 h-4 text-amber-500 shrink-0" /> Designation
+                  <Award className="w-4 h-4 text-amber-500 shrink-0" /> {isBn ? "পদবী" : "Designation"}
                 </span>
                 <span className="font-bold text-slate-900 dark:text-slate-100">
-                  {teacherDetails?.designation || "Senior Lecturer"}
+                  {isBn ? "সিনিয়র লেকচারার" : (teacherDetails?.designation || "Senior Lecturer")}
                 </span>
               </div>
             )}
@@ -303,10 +306,10 @@ export default function ProfilePage() {
             {isStudent && (
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
                 <span className="text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2">
-                  <Hash className="w-4 h-4 text-slate-400" /> Student ID Number
+                  <Hash className="w-4 h-4 text-slate-400" /> {isBn ? "শিক্ষার্থী আইডি নম্বর" : "Student ID Number"}
                 </span>
                 <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
-                  {studentDetails?.studentNumber || "BD-2026-001"}
+                  {toBanglaDigits(studentDetails?.studentNumber || "BD-2026-001")}
                 </span>
               </div>
             )}
@@ -317,7 +320,7 @@ export default function ProfilePage() {
             <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
                 <BookOpen className="w-4 h-4 text-blue-500 shrink-0" />
-                <span>Assigned Subjects Taught</span>
+                <span>{isBn ? "অ্যাসাইনকৃত পঠিত বিষয়সমূহ" : "Assigned Subjects Taught"}</span>
               </div>
               <div className="flex items-center gap-2 flex-wrap pt-0.5">
                 {(teacherDetails?.subjects || ["Mathematics", "Physics", "Chemistry", "English"]).map((subject, idx) => (
@@ -326,7 +329,7 @@ export default function ProfilePage() {
                     className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-900/60 shadow-2xs"
                   >
                     <GraduationCap className="w-3.5 h-3.5 mr-1.5 text-blue-600 dark:text-blue-400" />
-                    {subject}
+                    {translateSubject(subject)}
                   </span>
                 ))}
               </div>
@@ -334,7 +337,7 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* ─── SECURITY CARD (NO GRADIENTS, CONSISTENT WITH APP) ─── */}
+        {/* ─── SECURITY CARD ─── */}
         <div className="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-7 shadow-sm space-y-5">
           <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/80">
             <div className="flex items-center gap-3">
@@ -343,45 +346,45 @@ export default function ProfilePage() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-                  Security & Password Management
+                  {isBn ? "নিরাপত্তা ও পাসওয়ার্ড ব্যবস্থাপনা" : "Security & Password Management"}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  Update your account password
+                  {isBn ? "আপনার অ্যাকাউন্টের পাসওয়ার্ড আপডেট করুন" : "Update your account password"}
                 </p>
               </div>
             </div>
             <Badge variant="warning" size="sm">
-              Password Security
+              {isBn ? "পাসওয়ার্ড নিরাপত্তা" : "Password Security"}
             </Badge>
           </div>
 
           <form onSubmit={handleChangePassword} className="space-y-4 max-w-xl">
             <Input
-              label="Current Password"
+              label={isBn ? "বর্তমান পাসওয়ার্ড" : "Current Password"}
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
+              placeholder={isBn ? "বর্তমান পাসওয়ার্ড দিন" : "Enter current password"}
               leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
               className="h-10 text-xs rounded-xl bg-slate-50/70 dark:bg-slate-800/50"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
-                label="New Password"
+                label={isBn ? "নতুন পাসওয়ার্ড" : "New Password"}
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="Enter new password"
+                placeholder={isBn ? "নতুন পাসওয়ার্ড দিন" : "Enter new password"}
                 leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
                 className="h-10 text-xs rounded-xl bg-slate-50/70 dark:bg-slate-800/50"
               />
               <Input
-                label="Confirm New Password"
+                label={isBn ? "নতুন পাসওয়ার্ড নিশ্চিত করুন" : "Confirm New Password"}
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm new password"
+                placeholder={isBn ? "নতুন পাসওয়ার্ডটি পুনরায় দিন" : "Confirm new password"}
                 leftIcon={<Lock className="h-4 w-4 text-slate-400" />}
                 className="h-10 text-xs rounded-xl bg-slate-50/70 dark:bg-slate-800/50"
               />
@@ -394,7 +397,7 @@ export default function ProfilePage() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all disabled:opacity-50 cursor-pointer"
               >
                 <KeyRound className="w-3.5 h-3.5" />
-                {isChangingPassword ? "Updating Password..." : "Update Password"}
+                {isChangingPassword ? (isBn ? "পাসওয়ার্ড আপডেট হচ্ছে..." : "Updating Password...") : (isBn ? "পাসওয়ার্ড আপডেট করুন" : "Update Password")}
               </button>
             </div>
           </form>
@@ -408,7 +411,7 @@ export default function ProfilePage() {
           onSave={(croppedBase64) => {
             updateAvatar(croppedBase64);
             setCropImageSrc(null);
-            showToast("Profile picture updated successfully!", "success");
+            showToast(isBn ? "প্রোফাইল ছবি সফলভাবে আপডেট করা হয়েছে!" : "Profile picture updated successfully!", "success");
           }}
         />
       )}

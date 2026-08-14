@@ -103,15 +103,18 @@ function CardHeader({
 
 // Custom Glassmorphism Tooltip Component
 function CustomTooltip({ active, payload, label, unit }: any) {
+  const { toBanglaDigits, language } = useLanguage();
   if (active && payload && payload.length) {
     const data = payload[0];
+    const displayVal = toBanglaDigits(data.value);
+    const displayUnit = language === "bn" ? (unit === "assignments" ? "টি অ্যাসাইনমেন্ট" : unit === "submissions" ? "টি সাবমিশন" : unit || "") : (unit || "");
     return (
       <div className="rounded-xl border border-slate-200/80 bg-white/95 px-3.5 py-2.5 shadow-xl backdrop-blur-md dark:border-slate-700/80 dark:bg-slate-900/95">
         <p className="text-xs font-bold text-slate-800 dark:text-slate-200">{label || data.name}</p>
         <div className="mt-1 flex items-center gap-2 text-xs">
           <span className="h-2 w-2 rounded-full" style={{ backgroundColor: data.color || data.fill || "#2563eb" }} />
           <span className="font-semibold text-slate-900 dark:text-white tabular-nums">
-            {data.value} {unit || ""}
+            {displayVal} {displayUnit}
           </span>
         </div>
       </div>
@@ -147,6 +150,7 @@ export function AssignmentsBarChart({
   availableSubjects?: string[];
 }) {
   const mounted = useHasMounted();
+  const { language, toBanglaDigits } = useLanguage();
   const entries = Object.entries(data);
 
   const defaultData = [
@@ -161,6 +165,17 @@ export function AssignmentsBarChart({
   ];
 
   const standardMonths = ["Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026"];
+  const banglaMonthMap: Record<string, string> = {
+    "Jan 2026": "জানুয়ারি ২০২৬",
+    "Feb 2026": "ফেব্রুয়ারি ২০২৬",
+    "Mar 2026": "মার্চ ২০২৬",
+    "Apr 2026": "এপ্রিল ২০২৬",
+    "May 2026": "মে ২০২৬",
+    "Jun 2026": "জুন ২০২৬",
+    "Jul 2026": "জুলাই ২০২৬",
+    "Aug 2026": "আগস্ট ২০২৬",
+  };
+
   const countsByMonth: Record<string, number> = {};
   if (entries.length > 0) {
     entries.forEach(([month, count]) => {
@@ -173,14 +188,13 @@ export function AssignmentsBarChart({
   }
 
   const chartData = standardMonths.map((m) => ({
-    month: m,
+    rawMonth: m,
+    month: language === "bn" ? (banglaMonthMap[m] || m) : m,
     count: countsByMonth[m] || 0,
   }));
   const totalCreated = entries.length > 0
     ? entries.reduce((acc, [_, count]) => acc + count, 0)
     : chartData.reduce((acc, curr) => acc + curr.count, 0);
-
-  const { language } = useLanguage();
 
   return (
     <div className={cardBase}>
@@ -188,7 +202,7 @@ export function AssignmentsBarChart({
         title={language === "bn" ? "অ্যাসাইনমেন্ট তৈরি" : "Assignments Created"}
         subtitle={language === "bn" ? "প্রতি মাসে তৈরিকৃত অ্যাসাইনমেন্টের সংখ্যা" : "No. of Assignments Created Per Month"}
         icon={TrendingUp}
-        badgeText={language === "bn" ? `মোট ${totalCreated} টি` : `${totalCreated} total`}
+        badgeText={language === "bn" ? `মোট ${toBanglaDigits(totalCreated)} টি` : `${totalCreated} total`}
         classFilter={classFilter}
         onClassChange={onClassChange}
         subjectFilter={subjectFilter}
@@ -214,7 +228,13 @@ export function AssignmentsBarChart({
                   tick={{ fontSize: 12, fontWeight: 500, fill: "#64748b" }}
                   dy={6}
                 />
-                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fontWeight: 500, fill: "#64748b" }} allowDecimals={false} />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fontWeight: 500, fill: "#64748b" }}
+                  allowDecimals={false}
+                  tickFormatter={(val) => toBanglaDigits(val)}
+                />
                 <Tooltip content={<CustomTooltip unit="assignments" />} />
                 <Bar
                   dataKey="count"
@@ -225,7 +245,7 @@ export function AssignmentsBarChart({
                   label={{
                     position: "top",
                     className: "fill-slate-800 dark:fill-white text-[11px] font-bold",
-                    formatter: (val: any) => (val && Number(val) > 0 ? String(val) : ""),
+                    formatter: (val: any) => (val && Number(val) > 0 ? toBanglaDigits(val) : ""),
                   }}
                 />
               </BarChart>
@@ -240,27 +260,6 @@ export function AssignmentsBarChart({
 // ─────────────────────────────────────────────────────────────────────────────
 // 2. PIE CHART: Submission Status Distribution (4 Exact Categories with Percentages)
 // ─────────────────────────────────────────────────────────────────────────────
-const renderPieSliceLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, value }: any) => {
-  if (!percent || percent < 0.04) return null;
-  const RADIAN = Math.PI / 180;
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.55;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="#ffffff"
-      textAnchor="middle"
-      dominantBaseline="central"
-      className="text-xs font-extrabold select-none pointer-events-none drop-shadow-md"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
-
 export function SubmissionPieChart({
   data,
   classFilter,
@@ -277,7 +276,7 @@ export function SubmissionPieChart({
   availableSubjects?: string[];
 }) {
   const mounted = useHasMounted();
-  const { language } = useLanguage();
+  const { language, toBanglaDigits } = useLanguage();
 
   // Normalize incoming backend keys to the required 4 categories:
   // On-Time Submission, Late Submission, Missing, Graded
@@ -285,8 +284,6 @@ export function SubmissionPieChart({
   const lateCount = (data["Late"] ?? 0) + (data["Late Submission"] ?? 0);
   const missingCount = (data["NotSubmitted"] ?? 0) + (data["Missing"] ?? 0) + (data["UnderReview"] ?? 0);
   const gradedCount = data["Graded"] ?? 0;
-
-  const rawSum = onTimeCount + lateCount + missingCount + gradedCount;
 
   const chartData = [
     { name: language === "bn" ? "সময়মতো জমা" : "On-Time Submission", value: onTimeCount, color: "#2563eb" },
@@ -303,7 +300,7 @@ export function SubmissionPieChart({
         title={language === "bn" ? "সাবমিশনের অবস্থা" : "Submission Status"}
         subtitle={language === "bn" ? "সামগ্রিক বণ্টন" : "Overall distribution"}
         icon={PieChartIcon}
-        badgeText={language === "bn" ? `মোট ${total} টি` : `${total} total`}
+        badgeText={language === "bn" ? `মোট ${toBanglaDigits(total)} টি` : `${total} total`}
         classFilter={classFilter}
         onClassChange={onClassChange}
         subjectFilter={subjectFilter}
@@ -345,8 +342,8 @@ export function SubmissionPieChart({
                   <span className="font-semibold text-slate-700 dark:text-slate-200">{item.name}</span>
                 </div>
                 <div className="flex items-center gap-2 tabular-nums">
-                  <span className="font-bold text-slate-900 dark:text-white">{item.value}</span>
-                  <span className="font-extrabold text-xs" style={{ color: item.color }}>({pct}%)</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{toBanglaDigits(item.value)}</span>
+                  <span className="font-extrabold text-xs" style={{ color: item.color }}>({toBanglaDigits(pct)}%)</span>
                 </div>
               </div>
             );

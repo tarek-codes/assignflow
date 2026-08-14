@@ -2,9 +2,19 @@ import React from "react";
 import { RecentActivity } from "@/types/dashboard";
 import { formatDate } from "@/utils/formatters";
 import { Activity } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function RecentActivityCard({ activities }: { activities: RecentActivity[] }) {
+  const { language, t, translateUserName, translateDetailText, toBanglaDigits } = useLanguage();
   const top4 = activities.slice(0, 4);
+
+  const translateRole = (role?: string) => {
+    if (!role) return language === "bn" ? "ব্যবহারকারী" : "User";
+    if (role.toLowerCase().includes("admin")) return t("roleSystemAdmin");
+    if (role.toLowerCase().includes("teacher")) return t("navRoleTeacher");
+    if (role.toLowerCase().includes("student")) return t("navRoleStudent");
+    return role;
+  };
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
@@ -14,29 +24,41 @@ export function RecentActivityCard({ activities }: { activities: RecentActivity[
             <Activity className="h-4.5 w-4.5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">Recent Activity</h3>
-            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">Latest system events</p>
+            <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+              {language === "bn" ? "সাম্প্রতিক কার্যক্রম" : "Recent Activity"}
+            </h3>
+            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+              {language === "bn" ? "সর্বশেষ সিস্টেম ইভেন্টসমূহ" : "Latest system events"}
+            </p>
           </div>
         </div>
         {top4.length > 0 && (
           <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-            {top4.length} events
+            {language === "bn" ? `${toBanglaDigits(top4.length)} টি ইভেন্ট` : `${top4.length} events`}
           </span>
         )}
       </div>
 
       {top4.length === 0 ? (
         <div className="p-6 text-center">
-          <p className="text-sm text-slate-400">No recent activity.</p>
+          <p className="text-sm text-slate-400">
+            {language === "bn" ? "কোন সাম্প্রতিক কার্যক্রম নেই।" : "No recent activity."}
+          </p>
         </div>
       ) : (
         <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
           {top4.map((act, index) => (
             <div key={index} className="flex items-center justify-between px-5 py-3 text-xs sm:text-sm hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
               <div className="flex items-center gap-2.5 truncate pr-2">
-                <span className="font-bold text-slate-800 dark:text-slate-200 shrink-0">{act.userName || "System"}</span>
-                <span className="text-xs text-slate-400 dark:text-slate-500 shrink-0 font-medium">({act.userRole || "User"})</span>
-                <span className="text-slate-600 dark:text-slate-300 truncate font-medium">{act.description}</span>
+                <span className="font-bold text-slate-800 dark:text-slate-200 shrink-0">
+                  {translateUserName(act.userName || "System")}
+                </span>
+                <span className="text-xs text-slate-400 dark:text-slate-500 shrink-0 font-medium">
+                  ({translateRole(act.userRole)})
+                </span>
+                <span className="text-slate-600 dark:text-slate-300 truncate font-medium">
+                  {translateDetailText(act.description)}
+                </span>
               </div>
               <span className="text-xs font-medium text-slate-400 dark:text-slate-500 shrink-0 tabular-nums">
                 {formatDate(act.timestampUtc)}
