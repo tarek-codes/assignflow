@@ -12,6 +12,20 @@ type UseCachedDataOptions = {
 // Global in-memory browser cache store
 const memoryCache = new Map<string, { data: unknown; timestamp: number }>();
 
+// Global event listeners for active components to subscribe to real-time cache mutations & invalidations
+type CacheSubscriber = (invalidatedPrefix: string, updatedData?: unknown) => void;
+const cacheSubscribers = new Set<CacheSubscriber>();
+
+function notifySubscribers(prefix: string, updatedData?: unknown) {
+  cacheSubscribers.forEach((cb) => {
+    try {
+      cb(prefix, updatedData);
+    } catch {
+      // Ignore subscriber errors
+    }
+  });
+}
+
 export function useCachedData<T>(
   key: string,
   fetcher: () => Promise<T>,
@@ -80,7 +94,6 @@ export function useCachedData<T>(
     if (currentCached) {
       setData(currentCached.data as T);
       setIsLoading(false);
-      // If data is still fresh within TTL, don't trigger background revalidation
       if (isFresh) return;
     } else {
       setIsLoading(true);
@@ -96,7 +109,6 @@ export function useCachedData<T>(
       })
       .catch((err) => {
         if (cancelled) return;
-        // Only surface error if there was no stale cached data to show
         if (!currentCached) {
           setError(err instanceof Error ? err : new Error("Failed to fetch data"));
         }
@@ -109,6 +121,32 @@ export function useCachedData<T>(
       cancelled = true;
     };
   }, [enabled, key, ttlMs, fetchWithRetry, maxRetries, ...deps]);
+
+  // Real-time reactive cache subscription: components re-fetch instantly when cache is mutated/invalidated
+  useEffect(() => {
+    if (!enabled) return;
+
+    const handleCacheChange: CacheSubscriber = (prefix, updatedData) => {
+      const isMatch =
+        prefix === "" ||
+        key.startsWith(prefix) ||
+        prefix.startsWith(key) ||
+        key === prefix;
+
+      if (isMatch) {
+        if (updatedData !== undefined && key === prefix) {
+          setData(updatedData as T);
+        } else {
+          void refetch();
+        }
+      }
+    };
+
+    cacheSubscribers.add(handleCacheChange);
+    return () => {
+      cacheSubscribers.delete(handleCacheChange);
+    };
+  }, [enabled, key, refetch]);
 
   return { data, isLoading, error, refetch };
 }
@@ -140,12 +178,34 @@ export async function fetchCachedData<T>(
 
 export function invalidateCached(key: string) {
   memoryCache.delete(key);
+  notifySubscribers(key);
 }
 
 export function invalidateCachedPrefix(prefix: string) {
+  if (!prefix || prefix === "") {
+    memoryCache.clear();
+    notifySubscribers("");
+    return;
+  }
   for (const k of memoryCache.keys()) {
     if (k.startsWith(prefix)) {
       memoryCache.delete(k);
     }
   }
+  notifySubscribers(prefix);
+}
+
+export function mutateCache<T>(
+  key: string,
+  dataOrUpdater: T | ((prev: T | undefined) => T)
+) {
+  const current = memoryCache.get(key);
+  const oldVal = current ? (current.data as T) : undefined;
+  const newVal =
+    typeof dataOrUpdater === "function"
+      ? (dataOrUpdater as (prev: T | undefined) => T)(oldVal)
+      : dataOrUpdater;
+
+  memoryCache.set(key, { data: newVal, timestamp: Date.now() });
+  notifySubscribers(key, newVal);
 }

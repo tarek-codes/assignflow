@@ -8,6 +8,7 @@ import {
   UpdateSubmissionStatusRequest,
 } from "@/types/submission";
 import { PagedResult, PaginationQuery } from "@/types/api";
+import { invalidateCachedPrefix } from "@/hooks/useCachedData";
 
 export const submissionService = {
   async submitOrReplace(assignmentId: number | string, data: SubmitAssignmentRequest): Promise<SubmissionDetail> {
@@ -24,6 +25,7 @@ export const submissionService = {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
+    invalidateCachedPrefix("");
     return response.data;
   },
 
@@ -109,11 +111,13 @@ export const submissionService = {
 
   async gradeSubmission(id: number | string, data: GradeSubmissionRequest): Promise<SubmissionDetail> {
     const response = await apiClient.post<SubmissionDetail>(API_ENDPOINTS.SUBMISSIONS.GRADE(id), data);
+    invalidateCachedPrefix("");
     return response.data;
   },
 
   async updateStatus(id: number | string, data: UpdateSubmissionStatusRequest): Promise<SubmissionDetail> {
     const response = await apiClient.patch<SubmissionDetail>(API_ENDPOINTS.SUBMISSIONS.UPDATE_STATUS(id), data);
+    invalidateCachedPrefix("");
     return response.data;
   },
 

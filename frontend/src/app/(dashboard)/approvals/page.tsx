@@ -12,6 +12,7 @@ import { useToast } from "@/context/ToastContext";
 import { apiClient } from "@/services/apiClient";
 import { Pagination } from "@/components/common/Pagination";
 import { useLanguage } from "@/context/LanguageContext";
+import { invalidateCachedPrefix } from "@/hooks/useCachedData";
 
 export default function ApprovalsPage() {
   const { showToast } = useToast();
@@ -124,6 +125,8 @@ export default function ApprovalsPage() {
         r.id === req.id ? { ...r, status: "Approved" } : r
       );
       persistRequests(updated);
+
+      invalidateCachedPrefix("");
 
       // Notify other views (e.g. Manage Classes) that the teacher roster changed
       // so they can reload fresh data instead of showing a stale cached list.

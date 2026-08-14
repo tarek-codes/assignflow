@@ -1,6 +1,7 @@
 import { apiClient } from "./apiClient";
 import { ClassListItem, AssignTeacherRequest } from "@/types/class";
 import { PagedResult, PaginationQuery } from "@/types/api";
+import { invalidateCachedPrefix } from "@/hooks/useCachedData";
 
 const MAX_PAGE_SIZE = 100;
 const MAX_PAGES_TO_FETCH = 20;
@@ -36,6 +37,7 @@ export const classService = {
 
   async assignTeacher(classId: number, data: AssignTeacherRequest): Promise<ClassListItem> {
     const response = await apiClient.patch<ClassListItem>(`/classes/${classId}/assign-teacher`, data);
+    invalidateCachedPrefix("");
     return response.data;
   },
 };

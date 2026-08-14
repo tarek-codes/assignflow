@@ -7,6 +7,7 @@ import {
   UpdateAssignmentRequest,
 } from "@/types/assignment";
 import { PagedResult, PaginationQuery } from "@/types/api";
+import { invalidateCachedPrefix } from "@/hooks/useCachedData";
 
 export const assignmentService = {
   async getAssignments(query?: PaginationQuery): Promise<PagedResult<AssignmentListItem>> {
@@ -23,26 +24,31 @@ export const assignmentService = {
 
   async createAssignment(data: CreateAssignmentRequest): Promise<AssignmentDetail> {
     const response = await apiClient.post<AssignmentDetail>(API_ENDPOINTS.ASSIGNMENTS.BASE, data);
+    invalidateCachedPrefix("");
     return response.data;
   },
 
   async updateAssignment(id: number | string, data: UpdateAssignmentRequest): Promise<AssignmentDetail> {
     const response = await apiClient.put<AssignmentDetail>(API_ENDPOINTS.ASSIGNMENTS.BY_ID(id), data);
+    invalidateCachedPrefix("");
     return response.data;
   },
 
   async publishAssignment(id: number | string): Promise<AssignmentDetail> {
     const response = await apiClient.post<AssignmentDetail>(API_ENDPOINTS.ASSIGNMENTS.PUBLISH(id));
+    invalidateCachedPrefix("");
     return response.data;
   },
 
   async saveDraft(id: number | string): Promise<AssignmentDetail> {
     const response = await apiClient.post<AssignmentDetail>(API_ENDPOINTS.ASSIGNMENTS.DRAFT(id));
+    invalidateCachedPrefix("");
     return response.data;
   },
 
   async deleteAssignment(id: number | string): Promise<void> {
     await apiClient.delete(API_ENDPOINTS.ASSIGNMENTS.BY_ID(id));
+    invalidateCachedPrefix("");
   },
 
   async getAllAssignments(): Promise<AssignmentListItem[]> {
