@@ -11,9 +11,12 @@ import { UserCheck, Trash2, Check } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 import { apiClient } from "@/services/apiClient";
 import { Pagination } from "@/components/common/Pagination";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ApprovalsPage() {
   const { showToast } = useToast();
+  const { language, t, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
+  const isBn = language === "bn";
   const [registrationRequests, setRegistrationRequests] = useState<any[]>([]);
   const [approvingId, setApprovingId] = useState<string | null>(null);
   const [activeRoleTab, setActiveRoleTab] = useState<"Teacher" | "Student">("Teacher");
@@ -159,10 +162,12 @@ export default function ApprovalsPage() {
           <div>
             <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
               <UserCheck className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              Account Approvals
+              {isBn ? "অ্যাকাউন্ট অনুমোদন" : "Account Approvals"}
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Review user registration applications and authorize platform access credentials
+              {isBn
+                ? "ব্যবহারকারীর রেজিস্ট্রেশন আবেদনসমূহ পর্যালোচনা করুন এবং প্লাটফর্ম অ্যাক্সেস অনুমোদন করুন"
+                : "Review user registration applications and authorize platform access credentials"}
             </p>
           </div>
 
@@ -176,10 +181,10 @@ export default function ApprovalsPage() {
                   : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
-              <span>Teacher Applications</span>
+              <span>{isBn ? "শিক্ষক আবেদন" : "Teacher Applications"}</span>
               {teacherPendingCount > 0 && (
                 <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[10px] font-black bg-blue-500 text-white">
-                  {teacherPendingCount}
+                  {toBanglaDigits(teacherPendingCount)}
                 </span>
               )}
             </button>
@@ -191,10 +196,10 @@ export default function ApprovalsPage() {
                   : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
               }`}
             >
-              <span>Student Applications</span>
+              <span>{isBn ? "শিক্ষার্থী আবেদন" : "Student Applications"}</span>
               {studentPendingCount > 0 && (
                 <span className="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-500 text-white">
-                  {studentPendingCount}
+                  {toBanglaDigits(studentPendingCount)}
                 </span>
               )}
             </button>
@@ -205,16 +210,24 @@ export default function ApprovalsPage() {
           <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
             <div>
               <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                {activeRoleTab === "Teacher" ? "Teacher Registration Queue" : "Student Registration Queue"}
+                {isBn
+                  ? (activeRoleTab === "Teacher" ? "শিক্ষক রেজিস্ট্রেশন কিউ" : "শিক্ষার্থী রেজিস্ট্রেশন কিউ")
+                  : (activeRoleTab === "Teacher" ? "Teacher Registration Queue" : "Student Registration Queue")}
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                {activeRoleTab === "Teacher"
-                  ? "Pending educator account creation requests requiring subject verification"
-                  : "Pending student account creation requests requiring class placement"}
+                {isBn
+                  ? (activeRoleTab === "Teacher"
+                      ? "বিষয় যাচাইকরণের জন্য অপেক্ষমান শিক্ষক অ্যাকাউন্ট আবেদনসমূহ"
+                      : "শ্রেণী নির্ধারণের জন্য অপেক্ষমান শিক্ষার্থী অ্যাকাউন্ট আবেদনসমূহ")
+                  : (activeRoleTab === "Teacher"
+                      ? "Pending educator account creation requests requiring subject verification"
+                      : "Pending student account creation requests requiring class placement")}
               </p>
             </div>
             <Badge variant={activeRoleTab === "Teacher" ? "info" : "success"} size="sm">
-              {activeRoleTab === "Teacher" ? teacherPendingCount : studentPendingCount} Pending Review
+              {isBn
+                ? `${toBanglaDigits(activeRoleTab === "Teacher" ? teacherPendingCount : studentPendingCount)} টি পর্যালোচনা অপেক্ষমান`
+                : `${activeRoleTab === "Teacher" ? teacherPendingCount : studentPendingCount} Pending Review`}
             </Badge>
           </div>
 
@@ -228,10 +241,10 @@ export default function ApprovalsPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Applicant</TableHead>
-                    <TableHead>Subjects</TableHead>
-                    <TableHead>Notes</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>{isBn ? "আবেদনকারী" : "Applicant"}</TableHead>
+                    <TableHead>{isBn ? "বিষয় / শ্রেণী" : "Subjects"}</TableHead>
+                    <TableHead>{isBn ? "নোট" : "Notes"}</TableHead>
+                    <TableHead>{isBn ? "স্ট্যাটাস" : "Status"}</TableHead>
                     <TableHead className="text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
@@ -239,13 +252,15 @@ export default function ApprovalsPage() {
                   {paginatedRequests.map((req) => (
                     <TableRow key={req.id}>
                       <TableCell>
-                        <div className="font-semibold text-slate-900 dark:text-slate-100 text-sm">{req.fullName}</div>
+                        <div className="font-semibold text-slate-900 dark:text-slate-100 text-sm">
+                          {translateUserName(req.fullName)}
+                        </div>
                         <div className="text-xs text-slate-400 font-mono">{req.email}</div>
                       </TableCell>
                       <TableCell className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                         {req.role === "Student"
-                          ? `Class ${req.classLevel || 9}`
-                          : req.subjectSpecialization || "General Studies"}
+                          ? translateClass(req.classLevel || 9)
+                          : translateSubject(req.subjectSpecialization || "General Studies")}
                       </TableCell>
                       <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] truncate">
                         {req.notes || "—"}
@@ -260,7 +275,9 @@ export default function ApprovalsPage() {
                               ? "error"
                               : "warning"
                         }>
-                          {req.status}
+                          {isBn
+                            ? (req.status === "Approved" ? "অনুমোদিত" : req.status === "Declined" ? "বাতিল" : "অপেক্ষমান")
+                            : req.status}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
@@ -273,14 +290,14 @@ export default function ApprovalsPage() {
                               onClick={() => handleApproveRequest(req)}
                               leftIcon={<Check className="w-3.5 h-3.5" />}
                             >
-                              Approve
+                              {isBn ? "অনুমোদন করুন" : "Approve"}
                             </Button>
                           </div>
                         ) : (
                           <button
                             onClick={() => handleDeleteRequest(req.id)}
                             className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
-                            title="Delete record"
+                            title={isBn ? "মুছে ফেলুন" : "Delete record"}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>

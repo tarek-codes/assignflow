@@ -6,6 +6,7 @@ import { submissionService } from "@/services/submissionService";
 import { SubmissionListItem } from "@/types/submission";
 import { useCachedData } from "@/hooks/useCachedData";
 import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
@@ -55,6 +56,9 @@ function parseSubClassAndSubject(sub: SubmissionListItem) {
 
 export function SubmissionList() {
   const { user } = useAuth();
+  const { language, t, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
+  const isBn = language === "bn";
+
   const searchParams = useSearchParams();
   const rawParam = (searchParams.get("filter") || searchParams.get("status") || "").toLowerCase();
   const initialFilter = rawParam === "ungraded" ? "pending" : ["all", "pending", "graded", "late", "missing"].includes(rawParam) ? rawParam : "all";
@@ -63,17 +67,13 @@ export function SubmissionList() {
   const isAdmin = user?.role === ROLES.ADMIN;
   const isStudent = user?.role === ROLES.STUDENT;
 
-  const pageTitle = isStudent
-    ? "My Submissions"
-    : isTeacher
-    ? "Received Submissions"
-    : "Submissions Workspace";
+  const pageTitle = isBn
+    ? (isStudent ? "আমার জমা দেয়া অ্যাসাইনমেন্টসমূহ" : isTeacher ? "গৃহীত সাবমিশনসমূহ" : "সাবমিশন ওয়ার্কস্পেস")
+    : (isStudent ? "My Submissions" : isTeacher ? "Received Submissions" : "Submissions Workspace");
 
-  const pageSubtitle = isStudent
-    ? "Track your submitted coursework, status, and assigned marks"
-    : isTeacher
-    ? "Review and grade student submissions for your classrooms"
-    : "Audit student submissions across classrooms";
+  const pageSubtitle = isBn
+    ? (isStudent ? "আপনার জমাকৃত অ্যাসাইনমেন্ট, স্ট্যাটাস এবং নম্বর ট্র্যাক করুন" : isTeacher ? "আপনার শ্রেণীকক্ষের শিক্ষার্থীদের জমা দেয়া সাবমিশনসমূহ পর্যালোচনা ও নম্বর দিন" : "বিভিন্ন শ্রেণীর শিক্ষার্থী সাবমিশন নিরীক্ষা করুন")
+    : (isStudent ? "Track your submitted coursework, status, and assigned marks" : isTeacher ? "Review and grade student submissions for your classrooms" : "Audit student submissions across classrooms");
 
   const [page, setPage] = useState(1);
   const pageSize = 10;
@@ -95,7 +95,6 @@ export function SubmissionList() {
   const [selectedClass, setSelectedClass] = useState<string>("all");
   const [selectedSubject, setSelectedSubject] = useState<string>("all");
 
-  // Parse each item once
   const parsedItemsMap = useMemo(() => {
     const list = Array.isArray(allSubmissions) ? allSubmissions : [];
     return list.map((sub) => ({
@@ -104,7 +103,6 @@ export function SubmissionList() {
     }));
   }, [allSubmissions]);
 
-  // Unique lists dynamically generated from teacher's received submissions
   const allClassLevels = useMemo(() => {
     const levels = Array.from(new Set(parsedItemsMap.map((p) => p.parsed.classLevel).filter(Boolean)));
     return levels.sort((a, b) => a - b);
@@ -115,7 +113,6 @@ export function SubmissionList() {
     return subs.sort((a, b) => a.localeCompare(b));
   }, [parsedItemsMap]);
 
-  // Correlated available dropdown options
   const availableClasses = useMemo(() => {
     if (selectedSubject === "all") return allClassLevels;
     const levels = Array.from(
@@ -191,11 +188,9 @@ export function SubmissionList() {
         return matchesSearch && matchesStatus && matchesClass && matchesSubject;
       })
       .sort((a, b) => {
-        // Push "Missing" items to the end
         const aMissing = a.sub.status === "Missing" ? 1 : 0;
         const bMissing = b.sub.status === "Missing" ? 1 : 0;
         if (aMissing !== bMissing) return aMissing - bMissing;
-        // Then sort by most recently submitted first
         const aTime = a.sub.submittedAtUtc ? new Date(a.sub.submittedAtUtc).getTime() : 0;
         const bTime = b.sub.submittedAtUtc ? new Date(b.sub.submittedAtUtc).getTime() : 0;
         return bTime - aTime;
@@ -233,9 +228,9 @@ export function SubmissionList() {
               setPage(1);
             }}
             placeholder={
-              isStudent
-                ? "Search by assignment title..."
-                : "Search by student name, ID, or assignment..."
+              isBn
+                ? (isStudent ? "অ্যাসাইনমেন্টের শিরোনাম দিয়ে খুঁজুন..." : "শিক্ষার্থীর নাম, আইডি বা অ্যাসাইনমেন্ট দিয়ে খুঁজুন...")
+                : (isStudent ? "Search by assignment title..." : "Search by student name, ID, or assignment...")
             }
             className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-blue-500/30 transition-all"
           />
@@ -244,7 +239,7 @@ export function SubmissionList() {
         <div className="flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400">
             <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span>Filters:</span>
+            <span>{isBn ? "ফিল্টার:" : "Filters:"}</span>
           </div>
 
           {/* STATUS FILTER */}
@@ -256,11 +251,11 @@ export function SubmissionList() {
             }}
             className="text-xs font-semibold rounded-lg border border-blue-300 dark:border-blue-700 bg-blue-50/60 dark:bg-blue-950/30 px-2.5 py-1.5 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-blue-500/30 transition-all cursor-pointer"
           >
-            <option value="all">All Statuses</option>
-            <option value="pending">Ungraded Submissions</option>
-            <option value="graded">Graded Submissions</option>
-            <option value="late">Late Submissions</option>
-            <option value="missing">Missing / Overdue</option>
+            <option value="all">{isBn ? "সকল স্ট্যাটাস" : "All Statuses"}</option>
+            <option value="pending">{isBn ? "অমূল্যায়নকৃত সাবমিশন" : "Ungraded Submissions"}</option>
+            <option value="graded">{isBn ? "মূল্যায়নকৃত সাবমিশন" : "Graded Submissions"}</option>
+            <option value="late">{isBn ? "বিলম্বিত সাবমিশন" : "Late Submissions"}</option>
+            <option value="missing">{isBn ? "অনুপস্থিত / সময়োত্তীর্ণ" : "Missing / Overdue"}</option>
           </select>
 
           {/* CLASS DROPDOWN FILTER (TEACHER & ADMIN ONLY) */}
@@ -270,12 +265,12 @@ export function SubmissionList() {
               onChange={(e) => handleClassChange(e.target.value)}
               className="text-xs font-semibold rounded-lg border border-emerald-300 dark:border-emerald-700 bg-emerald-50/60 dark:bg-emerald-950/30 px-2.5 py-1.5 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all cursor-pointer"
             >
-              <option value="all">All Classes</option>
+              <option value="all">{isBn ? "সকল শ্রেণী" : "All Classes"}</option>
               {allClassLevels
                 .filter((lvl) => availableClasses.includes(lvl))
                 .map((lvl) => (
                   <option key={lvl} value={lvl}>
-                    Class {lvl}
+                    {translateClass(lvl)}
                   </option>
                 ))}
             </select>
@@ -287,12 +282,12 @@ export function SubmissionList() {
             onChange={(e) => handleSubjectChange(e.target.value)}
             className="text-xs font-semibold rounded-lg border border-violet-300 dark:border-violet-700 bg-violet-50/60 dark:bg-violet-950/30 px-2.5 py-1.5 text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-violet-500/30 transition-all cursor-pointer"
           >
-            <option value="all">All Subjects</option>
+            <option value="all">{isBn ? "সকল বিষয়" : "All Subjects"}</option>
             {allSubjects
               .filter((sub) => availableSubjects.includes(sub))
               .map((sub) => (
                 <option key={sub} value={sub}>
-                  {sub}
+                  {translateSubject(sub)}
                 </option>
               ))}
           </select>
@@ -300,7 +295,7 @@ export function SubmissionList() {
           {/* RESET BUTTON */}
           {isFiltered && (
             <Button size="sm" variant="ghost" onClick={resetFilters} leftIcon={<RotateCcw className="w-3.5 h-3.5" />}>
-              Reset
+              {isBn ? "রিসেট" : "Reset"}
             </Button>
           )}
         </div>
@@ -308,14 +303,16 @@ export function SubmissionList() {
 
       {/* SUBMISSIONS TABLE */}
       {isLoading ? (
-        <LoadingSpinner label="Loading submissions..." />
+        <LoadingSpinner label={isBn ? "সাবমিশন লোড করা হচ্ছে..." : "Loading submissions..."} />
       ) : filteredItems.length === 0 ? (
         <EmptyState
-          title="No submissions found"
+          title={isBn ? "কোন সাবমিশন পাওয়া যায়নি" : "No submissions found"}
           description={
-            isStudent
+            isBn
+              ? "আপনার অনুসন্ধানের সাথে মিল রেখে কোন সাবমিশন পাওয়া যায়নি।"
+              : (isStudent
               ? "You have not submitted any assignments matching the criteria yet."
-              : "No student submissions matched your search or selected filters."
+              : "No student submissions matched your search or selected filters.")
           }
           icon={<Upload className="w-10 h-10 text-slate-400" />}
         />
@@ -325,12 +322,12 @@ export function SubmissionList() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{isStudent ? "Subject" : "Class · Subject"}</TableHead>
-                  <TableHead>Assignment Title</TableHead>
-                  {!isStudent && <TableHead>Student Name</TableHead>}
-                  <TableHead>Submitted Date</TableHead>
-                  <TableHead>Marks</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{isStudent ? (isBn ? "বিষয়" : "Subject") : (isBn ? "শ্রেণী · বিষয়" : "Class · Subject")}</TableHead>
+                  <TableHead>{isBn ? "অ্যাসাইনমেন্ট শিরোনাম" : "Assignment Title"}</TableHead>
+                  {!isStudent && <TableHead>{isBn ? "শিক্ষার্থীর নাম" : "Student Name"}</TableHead>}
+                  <TableHead>{isBn ? "জমা দেওয়ার তারিখ" : "Submitted Date"}</TableHead>
+                  <TableHead>{isBn ? "নম্বর" : "Marks"}</TableHead>
+                  <TableHead>{isBn ? "স্ট্যাটাস" : "Status"}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -339,7 +336,7 @@ export function SubmissionList() {
                     <TableCell className="font-semibold text-slate-700 dark:text-slate-300 text-xs">
                       {isStudent ? (
                         <span className="text-slate-800 dark:text-slate-200 font-semibold">
-                          {parsed.subjectName}
+                          {translateSubject(parsed.subjectName)}
                         </span>
                       ) : (
                         <div className="flex items-center gap-2">
@@ -349,11 +346,11 @@ export function SubmissionList() {
                                 parsed.classLevel
                               )}`}
                             >
-                              Class {parsed.classLevel}
+                              {translateClass(parsed.classLevel)}
                             </span>
                           )}
                           <span className="text-slate-700 dark:text-slate-300 font-medium">
-                            {parsed.subjectName}
+                            {translateSubject(parsed.subjectName)}
                           </span>
                         </div>
                       )}
@@ -380,37 +377,48 @@ export function SubmissionList() {
                     </TableCell>
                     {!isStudent && (
                       <TableCell className="text-slate-700 dark:text-slate-300 font-medium">
-                        {sub.studentName}
+                        {translateUserName(sub.studentName)}
                       </TableCell>
                     )}
                     <TableCell className="text-slate-500 dark:text-slate-400 text-xs">
-                      {formatDate(sub.submittedAtUtc)}
+                      {formatDate(sub.submittedAtUtc, isBn ? "bn" : "en")}
                     </TableCell>
                     <TableCell>
                       {sub.status === "Graded" && sub.marks !== undefined ? (
                         <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-900/50">
-                          {sub.marks} / {sub.maxMarks}
+                          {toBanglaDigits(sub.marks)} / {toBanglaDigits(sub.maxMarks)}
                         </span>
                       ) : sub.status === "Missing" ? (
                         <span className="inline-flex items-center gap-1 rounded-md bg-red-50 px-2 py-0.5 text-xs font-bold text-red-700 dark:bg-red-950/40 dark:text-red-300 border border-red-200/60 dark:border-red-900/50">
-                          0 / {sub.maxMarks}
+                          ০ / {toBanglaDigits(sub.maxMarks)}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 rounded-md bg-amber-50 px-2 py-0.5 text-xs font-bold text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900/50">
-                          Pending
+                          {isBn ? "অপেক্ষমান" : "Pending"}
                         </span>
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant={
-                          sub.status === "Graded" ? "success" :
-                          (sub.status as string) === "Missing" ? "error" :
-                          sub.status === "Late" ? "warning" : "info"
-                        }
-                      >
-                        {sub.status}
-                      </Badge>
+                      {(() => {
+                        const sLabel = sub.status === "Graded"
+                          ? (isBn ? "মূল্যায়নকৃত" : "Graded")
+                          : (sub.status as string) === "Missing"
+                          ? (isBn ? "অনুপস্থিত" : "Missing")
+                          : sub.status === "Late"
+                          ? (isBn ? "বিলম্বিত" : "Late")
+                          : (isBn ? "জমা দেওয়া হয়েছে" : "Submitted");
+                        return (
+                          <Badge
+                            variant={
+                              sub.status === "Graded" ? "success" :
+                              (sub.status as string) === "Missing" ? "error" :
+                              sub.status === "Late" ? "warning" : "info"
+                            }
+                          >
+                            {sLabel}
+                          </Badge>
+                        );
+                      })()}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -430,4 +438,5 @@ export function SubmissionList() {
       )}
     </div>
   );
+};
 }

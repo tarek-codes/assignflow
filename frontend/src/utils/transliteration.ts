@@ -266,6 +266,25 @@ export function translateDetailText(text?: string, lang: "en" | "bn" = "en"): st
   if (NAME_DICTIONARY[key]) return NAME_DICTIONARY[key];
   if (DETAIL_PHRASE_MAP[key]) return DETAIL_PHRASE_MAP[key];
 
+  // Match "Submitted [assignment|submission] ['"]?Title['"]?" or "Submitted Title"
+  const submittedMatch = text.match(/^submitted(?:\s+(?:assignment|submission|solution))?\s*[:'"]?\s*(.+)$/i);
+  if (submittedMatch) {
+    const title = submittedMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    return `'${title}' জমা দেওয়া হয়েছে`;
+  }
+
+  const createdMatch = text.match(/^created(?:\s+(?:assignment|class|course))?\s*[:'"]?\s*(.+)$/i);
+  if (createdMatch) {
+    const title = createdMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    return `'${title}' তৈরি করা হয়েছে`;
+  }
+
+  const gradedMatch = text.match(/^graded(?:\s+(?:submission|assignment))?\s*[:'"]?\s*(.+)$/i);
+  if (gradedMatch) {
+    const title = gradedMatch[1].trim().replace(/^['"]|['"]$/g, "");
+    return `'${title}' মূল্যায়ন করা হয়েছে`;
+  }
+
   // Try replacing known phrase components inside sentence
   let result = text;
   Object.entries(DETAIL_PHRASE_MAP).forEach(([eng, bn]) => {
@@ -275,7 +294,7 @@ export function translateDetailText(text?: string, lang: "en" | "bn" = "en"): st
 
   if (result !== text) return result;
 
-  return translateUserName(text, lang);
+  return text; // Preserve title string cleanly instead of syllabic mangling
 }
 
 /**
