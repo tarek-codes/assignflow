@@ -20,17 +20,20 @@ import { ROUTES } from "@/constants/routes";
 import { ROLES } from "@/constants/roles";
 import { getClassSolidBadge, getCurriculumSubjectsForClass, canonicalizeSubjectName } from "@/utils/classLevelConfig";
 
+const normalizeBaseSubject = (name: string): string => {
+  if (!name) return "";
+  let s = name.toLowerCase().trim();
+  s = s.replace(/\s+(1st|2nd|3rd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim();
+  if (s === "bengali") return "bangla";
+  return s;
+};
+
 const isSameSubject = (subA: string, subB: string): boolean => {
-  if (!subA || !subB) return false;
-  if (subB === "All" || subA === "All" || subB === "all" || subA === "all") return true;
-  const a = subA.toLowerCase().trim();
-  const b = subB.toLowerCase().trim();
-  if (a === b || a.includes(b) || b.includes(a)) return true;
-  if ((a.includes("bangla") || a.includes("bengali")) && (b.includes("bangla") || b.includes("bengali"))) return true;
-  if (a.includes("english") && b.includes("english")) return true;
-  if (a.includes("math") && b.includes("math")) return true;
-  if ((a.includes("ict") || a.includes("digital") || a.includes("information")) && (b.includes("ict") || b.includes("digital") || b.includes("information"))) return true;
-  return false;
+  if (!subB || subB === "all" || subB === "All") return true;
+  if (!subA) return false;
+  const normA = normalizeBaseSubject(subA);
+  const normB = normalizeBaseSubject(subB);
+  return normA === normB;
 };
 
 function parseSubClassAndSubject(sub: SubmissionListItem) {

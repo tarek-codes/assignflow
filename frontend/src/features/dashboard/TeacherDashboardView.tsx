@@ -76,7 +76,7 @@ export function TeacherDashboardView() {
 
   const stats = [
     {
-      label: t("lblTotalAssignments"),
+      label: language === "bn" ? "মোট তৈরিকৃত অ্যাসাইনমেন্ট" : "Total Created Assignments",
       value: toBanglaDigits(data.totalAssignments),
       helper: t("navCreatedAssignments"),
       icon: BookOpenCheck,

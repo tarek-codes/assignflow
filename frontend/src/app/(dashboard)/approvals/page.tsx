@@ -118,6 +118,7 @@ export default function ApprovalsPage() {
           password: initialPassword,
           studentNumber: "BD-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 8999),
           classLevel: req.classLevel || 9,
+          group: req.group || (req.classLevel >= 9 ? "Science" : undefined),
         });
       }
 
@@ -260,7 +261,7 @@ export default function ApprovalsPage() {
                       </TableCell>
                       <TableCell className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                         {req.role === "Student"
-                          ? translateClass(req.classLevel || 9)
+                          ? `${translateClass(req.classLevel || 9)}${req.group ? ` (${req.group})` : ""}`
                           : translateSubject(req.subjectSpecialization || "General Studies")}
                       </TableCell>
                       <TableCell className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] truncate">

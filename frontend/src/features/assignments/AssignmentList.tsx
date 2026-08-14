@@ -20,6 +20,22 @@ import { ROLES } from "@/constants/roles";
 import { getClassSolidBadge } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
 
+const normalizeBaseSubject = (name: string): string => {
+  if (!name) return "";
+  let s = name.toLowerCase().trim();
+  s = s.replace(/\s+(1st|2nd|3rd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim();
+  if (s === "bengali") return "bangla";
+  return s;
+};
+
+const isSameSubject = (subA: string, subB: string): boolean => {
+  if (!subB || subB === "all" || subB === "All") return true;
+  if (!subA) return false;
+  const normA = normalizeBaseSubject(subA);
+  const normB = normalizeBaseSubject(subB);
+  return normA === normB;
+};
+
 export function AssignmentList() {
   const { user } = useAuth();
   const { language, t, translateSubject, translateClass, toBanglaDigits } = useLanguage();
@@ -65,7 +81,7 @@ export function AssignmentList() {
     const levels = Array.from(
       new Set(
         allAssignments
-          .filter((a) => a.subjectName?.toLowerCase() === selectedSubject.toLowerCase())
+          .filter((a) => isSameSubject(a.subjectName || "", selectedSubject))
           .map((a) => a.classLevel)
           .filter(Boolean)
       )
@@ -89,27 +105,11 @@ export function AssignmentList() {
   const handleClassChange = (val: string) => {
     setSelectedClass(val);
     setPage(1);
-    if (selectedSubject !== "all" && val !== "all") {
-      const validSubs = allAssignments
-        .filter((a) => String(a.classLevel) === String(val))
-        .map((a) => a.subjectName?.toLowerCase());
-      if (!validSubs.includes(selectedSubject.toLowerCase())) {
-        setSelectedSubject("all");
-      }
-    }
   };
 
   const handleSubjectChange = (val: string) => {
     setSelectedSubject(val);
     setPage(1);
-    if (selectedClass !== "all" && val !== "all") {
-      const validClasses = allAssignments
-        .filter((a) => a.subjectName?.toLowerCase() === val.toLowerCase())
-        .map((a) => String(a.classLevel));
-      if (!validClasses.includes(String(selectedClass))) {
-        setSelectedClass("all");
-      }
-    }
   };
 
   const resetFilters = () => {
@@ -122,16 +122,23 @@ export function AssignmentList() {
 
   const filteredAssignments = useMemo(() => {
     return allAssignments.filter((ass) => {
+      const q = searchTerm.toLowerCase().trim();
       const matchesSearch =
-        !searchTerm.trim() ||
-        ass.title.toLowerCase().includes(searchTerm.toLowerCase().trim()) ||
-        ass.subjectName?.toLowerCase().includes(searchTerm.toLowerCase().trim());
+        !q ||
+        ass.title.toLowerCase().includes(q) ||
+        (ass.subjectName && ass.subjectName.toLowerCase().includes(q));
 
       const matchesClass = selectedClass === "all" || String(ass.classLevel) === String(selectedClass);
-      const matchesSubject =
-        selectedSubject === "all" || ass.subjectName?.toLowerCase() === selectedSubject.toLowerCase();
+      const matchesSubject = isSameSubject(ass.subjectName || "", selectedSubject);
+
+      const isClosed = (ass.deadlineUtc && new Date(ass.deadlineUtc).getTime() < Date.now()) || ass.status === "Closed";
+      const statusLower = ass.status?.toLowerCase();
+
       const matchesStatus =
-        selectedStatus === "all" || ass.status?.toLowerCase() === selectedStatus.toLowerCase();
+        selectedStatus === "all" ||
+        (selectedStatus === "published" && statusLower === "published" && !isClosed) ||
+        (selectedStatus === "draft" && (statusLower === "draft" || !statusLower) && !isClosed) ||
+        (selectedStatus === "closed" && isClosed);
 
       return matchesSearch && matchesClass && matchesSubject && matchesStatus;
     });

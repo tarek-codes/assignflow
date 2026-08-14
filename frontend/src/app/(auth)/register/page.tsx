@@ -105,6 +105,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [gender, setGender] = useState<"Male" | "Female">("Male");
   const [classLevel, setClassLevel] = useState("9");
+  const [group, setGroup] = useState("Science");
 
   // Multi-subject state for teachers
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(["General Mathematics", "Physics"]);
@@ -202,6 +203,7 @@ export default function RegisterPage() {
         gender,
         role,
         classLevel: role === "Student" ? parseInt(classLevel) : undefined,
+        group: role === "Student" && parseInt(classLevel) >= 9 ? group : undefined,
         subjectSpecialization: role === "Teacher" ? selectedSubjects.join(", ") : undefined,
         taughtSubjects: role === "Teacher" ? selectedSubjects : undefined,
         notes: notes.trim(),
@@ -456,19 +458,38 @@ export default function RegisterPage() {
                   </div>
 
                   {role === "Student" ? (
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-700 dark:text-slate-300">{t("authClassLevelLabel")}</label>
-                      <select
-                        value={classLevel}
-                        onChange={(e) => setClassLevel(e.target.value)}
-                        className="w-full px-3 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30"
-                      >
-                        {[6, 7, 8, 9, 10, 11, 12].map((lvl) => (
-                          <option key={lvl} value={lvl}>
-                            {translateClass(lvl)}
-                          </option>
-                        ))}
-                      </select>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold text-slate-700 dark:text-slate-300">{t("authClassLevelLabel")}</label>
+                        <select
+                          value={classLevel}
+                          onChange={(e) => setClassLevel(e.target.value)}
+                          className="w-full px-3 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30 cursor-pointer"
+                        >
+                          {[6, 7, 8, 9, 10, 11, 12].map((lvl) => (
+                            <option key={lvl} value={lvl}>
+                              {translateClass(lvl)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {parseInt(classLevel, 10) >= 9 && (
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                            {language === "bn" ? "বিভাগ / গ্রুপ *" : "Academic Group *"}
+                          </label>
+                          <select
+                            value={group}
+                            onChange={(e) => setGroup(e.target.value)}
+                            className="w-full px-3 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900 text-slate-900 dark:text-slate-100 outline-none focus:ring-2 focus:ring-blue-500/30 cursor-pointer"
+                          >
+                            <option value="Science">{language === "bn" ? "বিজ্ঞান (Science)" : "Science"}</option>
+                            <option value="Humanities">{language === "bn" ? "মানবিক (Humanities)" : "Humanities"}</option>
+                            <option value="Business Studies">{language === "bn" ? "ব্যবসায় শিক্ষা (Business Studies)" : "Business Studies"}</option>
+                          </select>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="space-y-2">
