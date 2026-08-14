@@ -1,8 +1,8 @@
-export function formatDate(dateString?: string | Date): string {
+export function formatDate(dateString?: string | Date, lang: "en" | "bn" = "en"): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return "N/A";
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat(lang === "bn" ? "bn-BD" : "en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
