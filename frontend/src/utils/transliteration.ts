@@ -118,6 +118,7 @@ const NAME_DICTIONARY: Record<string, string> = {
   "sharmin": "শারমিন",
   "shirin": "শিরিন",
   "admin": "অ্যাডমিন",
+  "system": "সিস্টেম",
   "teacher": "শিক্ষক",
   "student": "শিক্ষার্থী",
   "dr.": "ডঃ",

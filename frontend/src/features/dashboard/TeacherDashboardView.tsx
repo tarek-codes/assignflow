@@ -35,7 +35,7 @@ import { classService } from "@/services/classService";
 
 export function TeacherDashboardView() {
   const { user } = useAuth();
-  const { t, language, translateUserName } = useLanguage();
+  const { t, language, translateUserName, toBanglaDigits } = useLanguage();
   const { data, isLoading, error, refetch } = useCachedData("dashboard:teacher", () => dashboardService.getTeacherDashboard());
 
   // Proactive background prefetching immediately after teacher dashboard loads
@@ -43,7 +43,7 @@ export function TeacherDashboardView() {
     if (!isLoading && data && user) {
       const timer = setTimeout(() => {
         assignmentService.getAllAssignments().catch(() => {});
-        submissionService.getAllSubmissionsFull().catch(() => {});
+        submissionService.getMySubmissionsFull().catch(() => {});
         classService.getAllClasses().catch(() => {});
       }, 100);
 
@@ -51,7 +51,7 @@ export function TeacherDashboardView() {
     }
   }, [isLoading, data, user]);
 
-  if (isLoading) return <LoadingSpinner label="Loading dashboard…" />;
+  if (isLoading) return <LoadingSpinner fullScreen label="Loading teacher dashboard..." />;
   if (!data) return (
     <div className="flex flex-col items-center justify-center py-20 gap-4">
       <p className="text-sm text-slate-500 dark:text-slate-400">{error?.message || "Failed to load dashboard."}</p>
@@ -64,22 +64,25 @@ export function TeacherDashboardView() {
     </div>
   );
 
-  const firstName = user?.fullName?.split(" ")[0] || "Teacher";
-  const completionTotal = data.totalGraded + data.totalPendingReviews;
-  const reviewProgress = completionTotal > 0 ? Math.round((data.totalGraded / completionTotal) * 100) : 100;
+  const displayName = user?.fullName || "Teacher";
+  const firstName = displayName.split(" ")[0];
+
+  const totalReviewed = data.totalGraded;
+  const totalSubmissionsToReview = data.totalPendingReviews + data.totalGraded;
+  const reviewProgress = totalSubmissionsToReview > 0 ? Math.round((totalReviewed / totalSubmissionsToReview) * 100) : 0;
 
   const stats = [
     {
-      label: t("navAssignments"),
-      value: data.totalAssignments,
-      helper: "View Created Assignments",
-      icon: FileText,
+      label: t("lblTotalAssignments"),
+      value: toBanglaDigits(data.totalAssignments),
+      helper: t("navCreatedAssignments"),
+      icon: BookOpenCheck,
       color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300",
       href: ROUTES.ASSIGNMENTS,
     },
     {
       label: "Ungraded Submissions",
-      value: data.totalPendingReviews,
+      value: toBanglaDigits(data.totalPendingReviews),
       helper: "To Be Graded",
       icon: Clock3,
       color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300",
@@ -87,8 +90,8 @@ export function TeacherDashboardView() {
     },
     {
       label: t("lblGradedSubmissions"),
-      value: data.totalGraded,
-      helper: `${reviewProgress}% completion`,
+      value: toBanglaDigits(data.totalGraded),
+      helper: `${toBanglaDigits(reviewProgress)}% completion`,
       icon: ClipboardCheck,
       color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300",
       href: `${ROUTES.SUBMISSIONS}?filter=graded`,

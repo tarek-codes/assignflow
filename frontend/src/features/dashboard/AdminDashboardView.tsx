@@ -51,7 +51,7 @@ type ActiveModalType = "users" | "teachers" | "students" | "assignments" | "subm
 
 export function AdminDashboardView() {
   const { user } = useAuth();
-  const { t, language, translateUserName } = useLanguage();
+  const { t, language, translateUserName, toBanglaDigits } = useLanguage();
   const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
   const [barClassFilter, setBarClassFilter] = useState("all");
   const [barSubjectFilter, setBarSubjectFilter] = useState("all");
@@ -569,11 +569,11 @@ export function AdminDashboardView() {
   };
 
   const stats = [
-    { label: t("lblTotalUsers"), value: data.totalUsers, key: "users" as const, icon: Users, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", textColor: "text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300", actionMsg: "View Users" },
-    { label: t("navTeachers"), value: data.totalTeachers, key: "teachers" as const, icon: GraduationCap, color: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300", textColor: "text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300", actionMsg: "View Teachers" },
-    { label: t("navStudents"), value: data.totalStudents, key: "students" as const, icon: BookOpen, color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50 dark:text-cyan-300", textColor: "text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-300", actionMsg: "View Students" },
-    { label: t("lblTotalAssignments"), value: data.totalAssignments, key: "assignments" as const, icon: ClipboardList, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", textColor: "text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300", actionMsg: "View Assignments" },
-    { label: t("lblTotalSubmissions"), value: data.totalSubmissions, key: "submissions" as const, icon: Inbox, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", textColor: "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300", actionMsg: "View Submissions" },
+    { label: t("lblTotalUsers"), value: toBanglaDigits(data.totalUsers), key: "users" as const, icon: Users, color: "bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300", textColor: "text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300", actionMsg: "View Users" },
+    { label: t("navTeachers"), value: toBanglaDigits(data.totalTeachers), key: "teachers" as const, icon: GraduationCap, color: "bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300", textColor: "text-violet-600 dark:text-violet-400 group-hover:text-violet-700 dark:group-hover:text-violet-300", actionMsg: "View Teachers" },
+    { label: t("navStudents"), value: toBanglaDigits(data.totalStudents), key: "students" as const, icon: BookOpen, color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-950/50 dark:text-cyan-300", textColor: "text-cyan-600 dark:text-cyan-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-300", actionMsg: "View Students" },
+    { label: t("lblTotalAssignments"), value: toBanglaDigits(data.totalAssignments), key: "assignments" as const, icon: ClipboardList, color: "bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300", textColor: "text-amber-600 dark:text-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300", actionMsg: "View Assignments" },
+    { label: t("lblTotalSubmissions"), value: toBanglaDigits(data.totalSubmissions), key: "submissions" as const, icon: Inbox, color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-300", textColor: "text-emerald-600 dark:text-emerald-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300", actionMsg: "View Submissions" },
   ];
 
   const firstName = user?.fullName?.split(" ")[0] || "Admin";

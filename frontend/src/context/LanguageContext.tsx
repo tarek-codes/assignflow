@@ -50,8 +50,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     let text = dict[key] || translations.en[key] || key;
 
     if (params) {
-      Object.entries(params).forEach(([paramKey, value]) => {
-        text = text.replace(new RegExp(`{\\s*${paramKey}\\s*}`, "g"), String(value));
+      Object.entries(params).forEach(([paramKey, rawVal]) => {
+        const valStr = language === "bn" ? toBanglaDigits(rawVal) : String(rawVal);
+        text = text.replace(new RegExp(`{\\s*${paramKey}\\s*}`, "g"), valStr);
       });
     }
 
