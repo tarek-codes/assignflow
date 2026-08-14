@@ -17,24 +17,8 @@ import { Search, Plus, FileText, Eye, Filter, RotateCcw, ArrowUpRight } from "lu
 import { formatDate } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
 import { ROLES } from "@/constants/roles";
-import { getClassSolidBadge } from "@/utils/classLevelConfig";
+import { getClassSolidBadge, canonicalizeSubjectName, isSameSubject } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
-
-const normalizeBaseSubject = (name: string): string => {
-  if (!name) return "";
-  let s = name.toLowerCase().trim();
-  s = s.replace(/\s+(1st|2nd|3rd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim();
-  if (s === "bengali") return "bangla";
-  return s;
-};
-
-const isSameSubject = (subA: string, subB: string): boolean => {
-  if (!subB || subB === "all" || subB === "All") return true;
-  if (!subA) return false;
-  const normA = normalizeBaseSubject(subA);
-  const normB = normalizeBaseSubject(subB);
-  return normA === normB;
-};
 
 export function AssignmentList() {
   const { user } = useAuth();
@@ -72,8 +56,13 @@ export function AssignmentList() {
   }, [allAssignments]);
 
   const allSubjects = useMemo(() => {
-    const subs = Array.from(new Set(allAssignments.map((a) => a.subjectName).filter(Boolean)));
-    return subs.sort((a, b) => a.localeCompare(b));
+    const set = new Set<string>();
+    allAssignments.forEach((a) => {
+      if (a.subjectName) {
+        set.add(canonicalizeSubjectName(a.subjectName));
+      }
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [allAssignments]);
 
   const availableClasses = useMemo(() => {
@@ -91,15 +80,15 @@ export function AssignmentList() {
 
   const availableSubjects = useMemo(() => {
     if (selectedClass === "all") return allSubjects;
-    const subs = Array.from(
-      new Set(
-        allAssignments
-          .filter((a) => String(a.classLevel) === String(selectedClass))
-          .map((a) => a.subjectName)
-          .filter(Boolean)
-      )
-    );
-    return subs.sort((a, b) => a.localeCompare(b));
+    const set = new Set<string>();
+    allAssignments
+      .filter((a) => String(a.classLevel) === String(selectedClass))
+      .forEach((a) => {
+        if (a.subjectName) {
+          set.add(canonicalizeSubjectName(a.subjectName));
+        }
+      });
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [allAssignments, selectedClass, allSubjects]);
 
   const handleClassChange = (val: string) => {

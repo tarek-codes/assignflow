@@ -18,36 +18,34 @@ import { Pagination } from "@/components/common/Pagination";
 import { formatDate } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
 import { ROLES } from "@/constants/roles";
-import { getClassSolidBadge, getCurriculumSubjectsForClass, canonicalizeSubjectName } from "@/utils/classLevelConfig";
-
-const normalizeBaseSubject = (name: string): string => {
-  if (!name) return "";
-  let s = name.toLowerCase().trim();
-  s = s.replace(/\s+(1st|2nd|3rd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim();
-  if (s === "bengali") return "bangla";
-  return s;
-};
-
-const isSameSubject = (subA: string, subB: string): boolean => {
-  if (!subB || subB === "all" || subB === "All") return true;
-  if (!subA) return false;
-  const normA = normalizeBaseSubject(subA);
-  const normB = normalizeBaseSubject(subB);
-  return normA === normB;
-};
+import { getClassSolidBadge, getCurriculumSubjectsForClass, canonicalizeSubjectName, isSameSubject } from "@/utils/classLevelConfig";
 
 function parseSubClassAndSubject(sub: SubmissionListItem) {
   let level = (sub as any).classLevel;
   let subject = (sub as any).subjectName;
 
-  if ((!level || !subject) && sub.classSubject) {
+  if (!level && sub.classSubject) {
     const matchClass = sub.classSubject.match(/Class\s*(\d+)/i);
     if (matchClass) {
       level = parseInt(matchClass[1], 10);
     }
+  }
+
+  if (!subject && sub.classSubject) {
     const parts = sub.classSubject.split(/[-·—(]/);
     if (parts.length > 1) {
       subject = parts[1].replace(/\)$/, "").trim();
+    } else {
+      const stripped = sub.classSubject.replace(/Class\s*\d+/i, "").trim();
+      if (stripped) subject = stripped;
+    }
+  }
+
+  // Fallback: Infer subject from assignment title if subject is missing or General
+  if ((!subject || subject.toLowerCase() === "general") && sub.assignmentTitle) {
+    const inferred = canonicalizeSubjectName(sub.assignmentTitle);
+    if (inferred && inferred !== "General") {
+      subject = inferred;
     }
   }
 
@@ -112,8 +110,13 @@ export function SubmissionList() {
   }, [parsedItemsMap]);
 
   const allSubjects = useMemo(() => {
-    const subs = Array.from(new Set(parsedItemsMap.map((p) => p.parsed.subjectName).filter(Boolean)));
-    return subs.sort((a, b) => a.localeCompare(b));
+    const set = new Set<string>();
+    parsedItemsMap.forEach((p) => {
+      if (p.parsed.subjectName) {
+        set.add(canonicalizeSubjectName(p.parsed.subjectName));
+      }
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [parsedItemsMap]);
 
   const availableClasses = useMemo(() => {
@@ -146,8 +149,12 @@ export function SubmissionList() {
           .map((p) => p.parsed.subjectName)
           .filter(Boolean);
 
-    const subs = Array.from(new Set([...curriculum, ...subsFromSubmissions]));
-    return subs.sort((a, b) => a.localeCompare(b));
+    const set = new Set<string>();
+    [...curriculum, ...subsFromSubmissions].forEach((s) => {
+      if (s) set.add(canonicalizeSubjectName(s));
+    });
+
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
   }, [parsedItemsMap, selectedClass, isStudent, user?.classLevel, user?.group]);
 
   const handleClassChange = (val: string) => {

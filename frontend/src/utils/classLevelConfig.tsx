@@ -368,6 +368,25 @@ export function canonicalizeSubjectName(rawName?: string): string {
   return trimmed;
 }
 
+export function isSameSubject(subA?: string, subB?: string): boolean {
+  if (!subB || subB === "all" || subB === "All") return true;
+  if (!subA) return false;
+
+  const canonA = canonicalizeSubjectName(subA);
+  const canonB = canonicalizeSubjectName(subB);
+
+  // Exact canonical match (e.g. "Physics" === "Physics", "Higher Mathematics" === "Higher Mathematics")
+  if (canonA.toLowerCase() === canonB.toLowerCase()) return true;
+
+  // Base subject comparison without paper suffix (e.g., "Physics 1st Paper" base is "Physics")
+  const baseA = canonA.replace(/\s+(1st|2nd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim().toLowerCase();
+  const baseB = canonB.replace(/\s+(1st|2nd|\d+(?:st|nd|rd|th)?)\s+paper$/i, "").trim().toLowerCase();
+
+  if (baseA === baseB) return true;
+
+  return false;
+}
+
 export function getCurriculumSubjectsForClass(classLevel: number, group?: string): string[] {
   let list: string[] = [];
 

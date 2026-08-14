@@ -45,9 +45,9 @@ export function TeacherDashboardView() {
   useEffect(() => {
     if (!isLoading && data && user) {
       const timer = setTimeout(() => {
-        assignmentService.getAllAssignments().catch(() => {});
-        submissionService.getMySubmissionsFull().catch(() => {});
-        classService.getAllClasses().catch(() => {});
+        assignmentService.getAllAssignments().catch(() => { });
+        submissionService.getMySubmissionsFull().catch(() => { });
+        classService.getAllClasses().catch(() => { });
       }, 100);
 
       return () => clearTimeout(timer);
@@ -227,7 +227,7 @@ export function TeacherDashboardView() {
                 <BookOpenCheck className="h-4.5 w-4.5" />
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Recent Assignments</h2>
+                <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Recentlty Created Assignments</h2>
                 <p className="text-xs text-slate-400">Your latest published assignments</p>
               </div>
             </div>
