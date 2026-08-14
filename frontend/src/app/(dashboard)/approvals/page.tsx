@@ -175,11 +175,10 @@ export default function ApprovalsPage() {
           <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
             <button
               onClick={() => setActiveRoleTab("Teacher")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                activeRoleTab === "Teacher"
-                  ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
-                  : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${activeRoleTab === "Teacher"
+                ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+                }`}
             >
               <span>{isBn ? "শিক্ষক আবেদন" : "Teacher Applications"}</span>
               {teacherPendingCount > 0 && (
@@ -190,11 +189,10 @@ export default function ApprovalsPage() {
             </button>
             <button
               onClick={() => setActiveRoleTab("Student")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                activeRoleTab === "Student"
-                  ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
-                  : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${activeRoleTab === "Student"
+                ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm"
+                : "text-slate-500 hover:text-slate-900 dark:hover:text-slate-200"
+                }`}
             >
               <span>{isBn ? "শিক্ষার্থী আবেদন" : "Student Applications"}</span>
               {studentPendingCount > 0 && (
@@ -217,11 +215,11 @@ export default function ApprovalsPage() {
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 {isBn
                   ? (activeRoleTab === "Teacher"
-                      ? "বিষয় যাচাইকরণের জন্য অপেক্ষমান শিক্ষক অ্যাকাউন্ট আবেদনসমূহ"
-                      : "শ্রেণী নির্ধারণের জন্য অপেক্ষমান শিক্ষার্থী অ্যাকাউন্ট আবেদনসমূহ")
+                    ? "অপেক্ষমান শিক্ষক অ্যাকাউন্ট আবেদনসমূহ"
+                    : "অপেক্ষমান শিক্ষার্থী অ্যাকাউন্ট আবেদনসমূহ")
                   : (activeRoleTab === "Teacher"
-                      ? "Pending educator account creation requests requiring subject verification"
-                      : "Pending student account creation requests requiring class placement")}
+                    ? "Teachers waiting for verification and approval for account creation"
+                    : "Studens waiting for verification and approval for account creation")}
               </p>
             </div>
             <Badge variant={activeRoleTab === "Teacher" ? "info" : "success"} size="sm">
@@ -272,9 +270,9 @@ export default function ApprovalsPage() {
                             req.status === "Approved"
                               ? "success"
                               : req.status === "Declined"
-                              ? "error"
-                              : "warning"
-                        }>
+                                ? "error"
+                                : "warning"
+                          }>
                           {isBn
                             ? (req.status === "Approved" ? "অনুমোদিত" : req.status === "Declined" ? "বাতিল" : "অপেক্ষমান")
                             : req.status}
