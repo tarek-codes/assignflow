@@ -182,7 +182,7 @@ export default function HomePage() {
             <div className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-blue-200/90 dark:border-blue-800/80 bg-blue-50/90 dark:bg-blue-950/60 px-3 py-1.5 text-[11px] font-bold text-blue-700 dark:text-blue-300 shadow-xs backdrop-blur-md sm:gap-2 sm:px-4 sm:text-xs">
               <Sparkles className="h-3 w-3 shrink-0 text-blue-500 sm:h-3.5 sm:w-3.5" />
               <span className="sm:hidden">Next-Gen Assignment Platform</span>
-              <span className="hidden sm:inline">Next-Generation Assignment Management System</span>
+              <span className="hidden sm:inline">Assignment & Submission Management System</span>
             </div>
 
             {/* Brand emblem & Main heading */}

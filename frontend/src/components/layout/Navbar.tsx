@@ -5,6 +5,7 @@ import { Menu, LogOut, User as UserIcon, Settings, ChevronDown } from "lucide-re
 import { useAuth } from "@/context/AuthContext";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LanguageToggle } from "@/components/ui/LanguageToggle";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
 import { useLanguage } from "@/context/LanguageContext";
 import { Avatar } from "@/components/ui/Avatar";
@@ -47,6 +48,7 @@ export function Navbar({ onMenuClick }: NavbarProps) {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <FullscreenToggle className="hidden sm:flex" />
           <LanguageToggle variant="compact" />
           <ThemeToggle />
           <NotificationDropdown />

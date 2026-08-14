@@ -219,7 +219,7 @@ export default function ApprovalsPage() {
                     : "অপেক্ষমান শিক্ষার্থী অ্যাকাউন্ট আবেদনসমূহ")
                   : (activeRoleTab === "Teacher"
                     ? "Teachers waiting for verification and approval for account creation"
-                    : "Studens waiting for verification and approval for account creation")}
+                    : "Students waiting for verification and approval for account creation")}
               </p>
             </div>
             <Badge variant={activeRoleTab === "Teacher" ? "info" : "success"} size="sm">
