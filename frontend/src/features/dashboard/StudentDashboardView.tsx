@@ -202,7 +202,7 @@ export function StudentDashboardView() {
   const { t, language, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
   const { showToast } = useToast();
   const { data, isLoading, refetch: refetchDashboard } = useCachedData(
-    "dashboard:student",
+    user?.id ? `dashboard:student:${user.id}` : "dashboard:student",
     () => dashboardService.getStudentDashboard()
   );
 

@@ -36,7 +36,10 @@ import { classService } from "@/services/classService";
 export function TeacherDashboardView() {
   const { user } = useAuth();
   const { t, language, translateUserName, toBanglaDigits } = useLanguage();
-  const { data, isLoading, error, refetch } = useCachedData("dashboard:teacher", () => dashboardService.getTeacherDashboard());
+  const { data, isLoading, error, refetch } = useCachedData(
+    user?.id ? `dashboard:teacher:${user.id}` : "dashboard:teacher",
+    () => dashboardService.getTeacherDashboard()
+  );
 
   // Proactive background prefetching immediately after teacher dashboard loads
   useEffect(() => {

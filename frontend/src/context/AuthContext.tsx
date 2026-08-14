@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { authService } from "@/services/authService";
 import { AuthResponse, LoginRequest, User } from "@/types/auth";
+import { invalidateCachedPrefix } from "@/hooks/useCachedData";
 
 interface AuthContextType {
   user: User | null;
@@ -47,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = async (credentials: LoginRequest): Promise<AuthResponse> => {
+    invalidateCachedPrefix("");
     const response = await authService.login(credentials);
     const storedAvatar = localStorage.getItem("user_avatar_" + response.userId);
     const userData: User = {
@@ -95,6 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async (): Promise<void> => {
+    invalidateCachedPrefix("");
     await authService.logout();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

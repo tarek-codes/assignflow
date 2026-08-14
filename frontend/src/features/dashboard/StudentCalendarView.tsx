@@ -47,7 +47,7 @@ export function StudentCalendarView() {
   const { showToast } = useToast();
   const { language, translateSubject } = useLanguage();
   const { data, isLoading, refetch } = useCachedData(
-    "dashboard:student",
+    user?.id ? `dashboard:student:${user.id}` : "dashboard:student",
     () => dashboardService.getStudentDashboard()
   );
 

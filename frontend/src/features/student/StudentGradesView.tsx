@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Award, BookOpen, CheckCircle2, Filter, MessageSquare, Search, Sparkles, TrendingUp, ArrowUpRight } from "lucide-react";
 import { dashboardService } from "@/services/dashboardService";
 import { useCachedData } from "@/hooks/useCachedData";
+import { useAuth } from "@/context/AuthContext";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Badge } from "@/components/ui/Badge";
@@ -34,8 +35,12 @@ const isSameSubject = (subA: string, subB: string): boolean => {
 
 export function StudentGradesView() {
   const router = useRouter();
+  const { user } = useAuth();
   const { t, language, translateSubject } = useLanguage();
-  const { data, isLoading } = useCachedData("dashboard:student", () => dashboardService.getStudentDashboard());
+  const { data, isLoading } = useCachedData(
+    user?.id ? `dashboard:student:${user.id}` : "dashboard:student",
+    () => dashboardService.getStudentDashboard()
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState<string>("All");
   const [currentPage, setCurrentPage] = useState(1);
