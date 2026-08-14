@@ -23,6 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 import { Avatar } from "@/components/ui/Avatar";
 import { formatDate, formatFullDateTime } from "@/utils/formatters";
 import { ROUTES } from "@/constants/routes";
@@ -130,6 +131,7 @@ export function TeacherDashboardView() {
 
           <div className="flex items-center gap-3 self-start sm:self-center">
             <ThemeToggle variant="banner" />
+            <FullscreenToggle />
             <Link href={ROUTES.CREATE_ASSIGNMENT}>
               <Button size="lg" className="w-full bg-white text-blue-600 shadow-lg hover:bg-blue-50 dark:bg-white dark:text-blue-600 dark:hover:bg-blue-50 sm:w-auto font-medium" leftIcon={<Plus className="h-4 w-4" />}>
                 {t("btnCreateAssignment")}

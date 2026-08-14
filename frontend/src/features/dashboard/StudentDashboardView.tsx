@@ -25,6 +25,7 @@ import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { NotificationDropdown } from "@/components/layout/NotificationDropdown";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 import { Avatar } from "@/components/ui/Avatar";
 import {
   Award,
@@ -415,9 +416,10 @@ export function StudentDashboardView() {
               </div>
             </div>
 
-            {/* NOTIFICATION BELL & THEME TOGGLE ON THE RIGHT SIDE OF CLASS CARD */}
+            {/* NOTIFICATION BELL, THEME TOGGLE & FULLSCREEN TOGGLE */}
             <NotificationDropdown variant="banner" />
             <ThemeToggle variant="banner" />
+            <FullscreenToggle />
           </div>
         </div>
       </section>

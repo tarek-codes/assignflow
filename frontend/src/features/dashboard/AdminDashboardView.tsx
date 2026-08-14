@@ -42,6 +42,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Avatar } from "@/components/ui/Avatar";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { FullscreenToggle } from "@/components/ui/FullscreenToggle";
 import { getCurriculumSubjectsForClass } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
 
@@ -625,8 +626,9 @@ export function AdminDashboardView() {
               </span>
             </div>
             <div className="h-7 w-px bg-white/20 dark:bg-slate-700/80 mx-0.5 self-center" />
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-2">
               <ThemeToggle variant="banner" />
+              <FullscreenToggle />
             </div>
           </div>
 
