@@ -558,28 +558,25 @@ public static class DbInitializer
                 });
             }
 
-            // --- 4. 2 Active 10-Mark Upcoming Assignments per Class (Deadlines 7 & 14 days in future) ---
-            for (int actIdx = 0; actIdx < 2; actIdx++)
-            {
-                var createdActive = now.AddDays(-1);
-                var deadlineActive = now.AddDays(7 * (actIdx + 1));
-                var titleActive = GetRealisticAssignmentTitle(subName, cls.ClassLevel, actIdx + 85);
-                var detailsActive = GetRealisticAssignmentDetails(titleActive, subName, cls.ClassLevel);
+            // --- 4. 1 Active 10-Mark Upcoming Assignment per Class (Deadline 7 days in future) ---
+            var createdActive = now.AddDays(-1);
+            var deadlineActive = now.AddDays(7);
+            var titleActive = GetRealisticAssignmentTitle(subName, cls.ClassLevel, 85);
+            var detailsActive = GetRealisticAssignmentDetails(titleActive, subName, cls.ClassLevel);
 
-                assignmentsList.Add(new Assignment
-                {
-                    ClassId = cls.Id,
-                    Title = titleActive,
-                    Description = detailsActive.Description,
-                    Instructions = detailsActive.Instructions,
-                    MaxMarks = 10, // Explicitly 10 marks to minimize weight in total calculations
-                    DeadlineUtc = deadlineActive,
-                    Status = AssignmentStatus.Published,
-                    AllowResubmission = true,
-                    CreatedAtUtc = createdActive,
-                    UpdatedAtUtc = createdActive,
-                });
-            }
+            assignmentsList.Add(new Assignment
+            {
+                ClassId = cls.Id,
+                Title = titleActive,
+                Description = detailsActive.Description,
+                Instructions = detailsActive.Instructions,
+                MaxMarks = 10,
+                DeadlineUtc = deadlineActive,
+                Status = AssignmentStatus.Published,
+                AllowResubmission = true,
+                CreatedAtUtc = createdActive,
+                UpdatedAtUtc = createdActive,
+            });
 
             assignmentCounter++;
         }
@@ -710,7 +707,7 @@ public static class DbInitializer
                     // 1. Future / Active Assignments (Deadline in future)
                     if (asgn.DeadlineUtc > now)
                     {
-                        if (studentSubmittedCount < 5)
+                        if (studentSubmittedCount < 10)
                         {
                             studentSubmittedCount++;
                             submissionsList.Add(new Submission
