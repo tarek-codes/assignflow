@@ -242,13 +242,40 @@ export function translateUserName(name?: string, lang: "en" | "bn" = "en"): stri
   return translatedTokens.join(" ");
 }
 
+const DETAIL_PHRASE_MAP: Record<string, string> = {
+  "created a new assignment": "একটি নতুন অ্যাসাইনমেন্ট তৈরি করেছে",
+  "submitted assignment": "অ্যাসাইনমেন্ট জমা দিয়েছে",
+  "submitted an assignment": "একটি অ্যাসাইনমেন্ট জমা দিয়েছে",
+  "graded a submission": "একটি সাবমিশন মূল্যায়ন করেছে",
+  "graded submission": "সাবমিশন মূল্যায়ন করেছে",
+  "created assignment": "অ্যাসাইনমেন্ট তৈরি করেছে",
+  "joined class": "ক্লাসে যোগ দিয়েছে",
+  "joined a class": "একটি ক্লাসে যোগ দিয়েছে",
+  "account registered": "অ্যাকাউন্ট রেজিস্টার হয়েছে",
+  "account approved": "অ্যাকাউন্ট অনুমোদিত হয়েছে",
+  "logged in": "লগ ইন করেছে",
+};
+
 /**
- * Translates general detail texts
+ * Translates general detail texts and event sentences smoothly into Bengali
  */
 export function translateDetailText(text?: string, lang: "en" | "bn" = "en"): string {
   if (!text || lang === "en") return text || "";
   const key = text.trim().toLowerCase();
-  return NAME_DICTIONARY[key] || translateUserName(text, lang);
+  
+  if (NAME_DICTIONARY[key]) return NAME_DICTIONARY[key];
+  if (DETAIL_PHRASE_MAP[key]) return DETAIL_PHRASE_MAP[key];
+
+  // Try replacing known phrase components inside sentence
+  let result = text;
+  Object.entries(DETAIL_PHRASE_MAP).forEach(([eng, bn]) => {
+    const reg = new RegExp(eng, "gi");
+    result = result.replace(reg, bn);
+  });
+
+  if (result !== text) return result;
+
+  return translateUserName(text, lang);
 }
 
 /**

@@ -611,11 +611,13 @@ export function AdminDashboardView() {
             </div>
             <div className="flex flex-col justify-center text-left">
               <span className="text-sm font-extrabold text-white tracking-tight leading-none">
-                {language === "bn" ? translateUserName(user?.fullName || "Admin") : (user?.fullName || "Admin")}
+                {language === "bn" ? translateUserName(user?.fullName || "System Admin") : (user?.fullName || "System Admin")}
               </span>
-              <span className="text-[11px] font-semibold text-blue-100 dark:text-blue-300 capitalize mt-1">
-                {String(user?.role || "").includes("Admin") ? t("roleSystemAdmin") : (user?.role || t("roleAdmin"))}
-              </span>
+              {user?.fullName && user.fullName.toLowerCase() !== "system admin" && (
+                <span className="text-[11px] font-semibold text-blue-100 dark:text-blue-300 capitalize mt-1">
+                  {String(user?.role || "").includes("Admin") ? t("roleSystemAdmin") : (user?.role || t("roleAdmin"))}
+                </span>
+              )}
             </div>
             <div className="h-7 w-px bg-white/20 dark:bg-slate-700/80 mx-0.5 self-center" />
             <div className="flex items-center justify-center gap-2">

@@ -19,6 +19,7 @@ import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@
 import { Avatar } from "@/components/ui/Avatar";
 import { getCurriculumSubjectsForClass, canonicalizeSubjectName } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface StudentResultItem {
   studentId: number;
@@ -66,6 +67,9 @@ function parseSubClassAndSubject(sub: SubmissionListItem) {
 }
 
 export function AdminResultsView() {
+  const { language, t, translateSubject, translateClass, translateUserName, toBanglaDigits } = useLanguage();
+  const isBn = language === "bn";
+
   const { data: students = [], isLoading: studentsPending } = useCachedData(
     "students:all",
     () => userService.getAllStudents(),
@@ -90,9 +94,9 @@ export function AdminResultsView() {
     (assignmentsPending && assignments.length === 0);
 
   // Filters
-  const [selectedClass, setSelectedClass] = useState<string>("6"); // Class 6 default view
-  const [selectedSubject, setSelectedSubject] = useState<string>("All"); // Subject filter
-  const [selectedGroup, setSelectedGroup] = useState<string>("All"); // Group filter for class 9-12
+  const [selectedClass, setSelectedClass] = useState<string>("6");
+  const [selectedSubject, setSelectedSubject] = useState<string>("All");
+  const [selectedGroup, setSelectedGroup] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState("");
 
   // 7 record pagination state
@@ -113,7 +117,6 @@ export function AdminResultsView() {
     const newClass = e.target.value;
     setSelectedClass(newClass);
     setSelectedSubject("All");
-    // Default to Science for classes 9-12
     const classNum = Number(newClass);
     if (!isNaN(classNum) && classNum >= 9) {
       setSelectedGroup("Science");
@@ -155,11 +158,13 @@ export function AdminResultsView() {
 
     return sortedLevels.map((lvl) => ({
       value: String(lvl),
-      label: lvl === 6 ? `Class ${lvl} (Default)` : `Class ${lvl}`,
+      label: isBn
+        ? (lvl === 6 ? `${translateClass(lvl)} (ডিফল্ট)` : translateClass(lvl))
+        : (lvl === 6 ? `Class ${lvl} (Default)` : `Class ${lvl}`),
     }));
-  }, [classes, students]);
+  }, [classes, students, isBn, translateClass]);
 
-  // Subject options for dropdown: updates dynamically based on selectedClass
+  // Subject options for dropdown
   const subjectOptions = useMemo(() => {
     let curriculumSubjects: string[] = [];
     if (selectedClass === "All") {
@@ -190,11 +195,11 @@ export function AdminResultsView() {
 
     const opts = allSubjects.map((sub) => ({
       value: sub,
-      label: sub,
+      label: isBn ? translateSubject(sub) : sub,
     }));
 
-    return [{ value: "All", label: "All Subjects" }, ...opts];
-  }, [classes, assignments, selectedClass]);
+    return [{ value: "All", label: isBn ? "সকল বিষয়" : "All Subjects" }, ...opts];
+  }, [classes, assignments, selectedClass, isBn, translateSubject]);
 
   // Roster maps for instant class level & class ID resolution
   const studentClassMap = useMemo(() => {
@@ -243,7 +248,6 @@ export function AdminResultsView() {
     return 6;
   };
 
-  // Total available max marks for posted assignments matching selectedClass and selectedSubject by classLevel & group
   const classGroupPostedMaxMarks = useMemo(() => {
     const maxMap: Record<string, number> = {};
     assignments.forEach((a) => {
@@ -273,7 +277,6 @@ export function AdminResultsView() {
     return maxMap;
   }, [assignments, selectedClass, selectedSubject, classIdToLevelMap, studentClassMap]);
 
-  // Total task count posted matching selectedClass and selectedSubject by classLevel & group
   const classGroupTotalTaskCount = useMemo(() => {
     const countMap: Record<string, number> = {};
     assignments.forEach((a) => {
@@ -302,7 +305,6 @@ export function AdminResultsView() {
     return countMap;
   }, [assignments, selectedClass, selectedSubject, classIdToLevelMap, studentClassMap]);
 
-  // Compute student rankings dynamically based on TOTAL CUMULATIVE MARKS
   const studentResults = useMemo(() => {
     const subAggMap: Record<string, { totalMarks: number; totalMaxMarks: number; totalGraded: number }> = {};
 
@@ -318,7 +320,6 @@ export function AdminResultsView() {
       const subSubj =
         targetAssignment?.subjectName || (s as any).subjectName || parseSubClassAndSubject(s).subjectName;
 
-      // Filter by Class and Subject
       const matchClass = selectedClass === "All" || Number(subClassLvl) === Number(selectedClass);
       const matchSubject =
         selectedSubject === "All" || subSubj.toLowerCase() === selectedSubject.toLowerCase();
@@ -343,13 +344,11 @@ export function AdminResultsView() {
       subAggMap[primaryKey].totalMaxMarks += maxM;
       subAggMap[primaryKey].totalGraded += 1;
 
-      // Map all candidate aliases to the same metrics object
       keys.forEach((k) => {
         subAggMap[k] = subAggMap[primaryKey];
       });
     });
 
-    // Build base student list
     let roster: any[] = [];
 
     const getGroupForStudent = (stId: number, rawGrp?: string) => {
@@ -358,7 +357,6 @@ export function AdminResultsView() {
       }
       return "Science";
     };
-
 
     if (students && students.length > 0) {
       roster = students.map((st) => {
@@ -389,7 +387,6 @@ export function AdminResultsView() {
       roster = Object.values(unique);
     }
 
-    // Filter roster by selectedClass
     let filteredRoster = roster.filter((st) => {
       if (selectedClass === "All") return true;
       return Number(st.classLevel) === Number(selectedClass);
@@ -399,7 +396,6 @@ export function AdminResultsView() {
       filteredRoster = roster;
     }
 
-    // Pass 1: Compute uniform maximum available marks per (Class + Group) key
     const uniformClassMaxMap: Record<string, number> = {};
 
     filteredRoster.forEach((st) => {
@@ -421,7 +417,6 @@ export function AdminResultsView() {
       uniformClassMaxMap[groupKey] = Math.max(uniformClassMaxMap[groupKey] || 0, effectiveMax);
     });
 
-    // Pass 2: Build student result list using uniform class/group max marks
     const resultList: StudentResultItem[] = filteredRoster.map((st) => {
       const candidates = [
         st.studentNumber,
@@ -461,11 +456,8 @@ export function AdminResultsView() {
         totalMaxMarks: Math.round(totalMax * 100) / 100,
         positionInClass: 0,
       };
-
     });
 
-    // Groupwise ranking for grouped classes (Class 9, 10, 11, 12)
-    // Group students by ClassLevel & Group key for position assignment
     const groupedRanksMap: Record<string, StudentResultItem[]> = {};
 
     resultList.forEach((item) => {
@@ -477,7 +469,6 @@ export function AdminResultsView() {
       groupedRanksMap[rankGroupKey].push(item);
     });
 
-    // Sort and assign groupwise rank (#1, #2, #3...) within each group based on percentage mark (highest to lowest)
     Object.values(groupedRanksMap).forEach((groupItems) => {
       groupItems.sort((a, b) => {
         if (b.avgPercentage !== a.avgPercentage) return b.avgPercentage - a.avgPercentage;
@@ -490,7 +481,6 @@ export function AdminResultsView() {
       });
     });
 
-    // Also sort the overall resultList by percentage mark (avgPercentage) descending from highest to lowest
     resultList.sort((a, b) => {
       if (b.avgPercentage !== a.avgPercentage) return b.avgPercentage - a.avgPercentage;
       if (b.totalMarks !== a.totalMarks) return b.totalMarks - a.totalMarks;
@@ -500,13 +490,11 @@ export function AdminResultsView() {
     return resultList;
   }, [students, submissions, classes, assignments, selectedClass, selectedSubject, classGroupPostedMaxMarks, classGroupTotalTaskCount, assignmentMap, classIdToLevelMap, studentClassMap]);
 
-  // Whether to show group filter (only for class 9, 10, 11, 12)
   const showGroupFilter = useMemo(() => {
     const lvl = Number(selectedClass);
     return !isNaN(lvl) && lvl >= 9;
   }, [selectedClass]);
 
-  // Filter list by search term and group, sorted by avgPercentage descending
   const filteredResults = useMemo(() => {
     return studentResults
       .filter((st) => {
@@ -514,7 +502,6 @@ export function AdminResultsView() {
           st.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           st.studentNumber.toLowerCase().includes(searchTerm.toLowerCase());
 
-        // Group filter: only applied when class is 9+ and selectedGroup is not "All"
         const matchesGroup =
           !showGroupFilter ||
           selectedGroup === "All" ||
@@ -529,15 +516,12 @@ export function AdminResultsView() {
       });
   }, [studentResults, searchTerm, selectedGroup, showGroupFilter]);
 
-
-  // 7 Record Paginated Results
   const totalPages = Math.ceil(filteredResults.length / pageSize);
   const paginatedResults = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     return filteredResults.slice(start, start + pageSize);
   }, [filteredResults, currentPage]);
 
-  // Assigned Teacher display logic
   const assignedTeacherDisplay = useMemo(() => {
     const targetClasses = classes.filter((c) => {
       const matchClass = selectedClass === "All" || c.classLevel === Number(selectedClass);
@@ -551,24 +535,24 @@ export function AdminResultsView() {
     );
 
     if (teacherNames.length === 0) {
-      return selectedSubject !== "All" ? "Anisur Rahman" : "Anisur, Sarah (+2 more)";
+      const raw = selectedSubject !== "All" ? "Anisur Rahman" : "Anisur, Sarah (+2 more)";
+      return isBn ? translateUserName(raw) : raw;
     }
 
     if (selectedSubject !== "All") {
-      return teacherNames.join(", ");
+      return isBn ? teacherNames.map((n) => translateUserName(n)).join(", ") : teacherNames.join(", ");
     }
 
     const firstNames = teacherNames.map((name) => name.trim().split(" ")[0]);
     if (firstNames.length <= 2) {
-      return firstNames.join(", ");
+      return isBn ? firstNames.map((n) => translateUserName(n)).join(", ") : firstNames.join(", ");
     }
 
-    const top2 = firstNames.slice(0, 2).join(", ");
+    const top2 = isBn ? firstNames.slice(0, 2).map((n) => translateUserName(n)).join(", ") : firstNames.slice(0, 2).join(", ");
     const remaining = firstNames.length - 2;
-    return `${top2} (+${remaining} more)`;
-  }, [classes, selectedClass, selectedSubject]);
+    return isBn ? `${top2} (+${toBanglaDigits(remaining)} জন)` : `${top2} (+${remaining} more)`;
+  }, [classes, selectedClass, selectedSubject, isBn, translateUserName, toBanglaDigits]);
 
-  // Dynamic Total Assignments count matching active filters
   const totalAssignmentsCount = useMemo(() => {
     return assignments.filter((a) => {
       const matchClass = selectedClass === "All" || Number(a.classLevel) === Number(selectedClass);
@@ -578,7 +562,6 @@ export function AdminResultsView() {
     }).length;
   }, [assignments, selectedClass, selectedSubject]);
 
-  // Dynamic summary stats for cards (calculates dynamically based on active filters & group selections)
   const stats = useMemo(() => {
     if (filteredResults.length === 0) {
       return {
@@ -593,7 +576,6 @@ export function AdminResultsView() {
     const totalEval = filteredResults.reduce((acc, st) => acc + st.totalGraded, 0);
     const passingStudents = filteredResults.filter((st) => st.avgPercentage >= 60).length;
 
-    // Find rank #1 student within active filtered set
     const rank1Student = [...filteredResults].sort((a, b) => {
       if (a.positionInClass !== b.positionInClass) return a.positionInClass - b.positionInClass;
       return b.totalMarks - a.totalMarks;
@@ -607,7 +589,7 @@ export function AdminResultsView() {
     };
   }, [filteredResults]);
 
-  if (isLoading) return <LoadingSpinner label="Loading student class results & standings..." />;
+  if (isLoading) return <LoadingSpinner label={isBn ? "শ্রেণীর ফলাফল ও অবস্থান লোড করা হচ্ছে..." : "Loading student class results & standings..."} />;
 
   return (
     <div className="space-y-7">
@@ -615,10 +597,12 @@ export function AdminResultsView() {
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-            Class Results & Standings
+            {isBn ? "শ্রেণীর ফলাফল ও অবস্থান" : "Class Results & Standings"}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Review student class rankings by total cumulative marks, percentage scores, and realistic performance grades.
+            {isBn
+              ? "মোট অর্জিত নম্বর, শতাংশ স্কোর এবং পারফরম্যান্স গ্রেড অনুযায়ী শিক্ষার্থীদের অবস্থান পর্যালোচনা করুন।"
+              : "Review student class rankings by total cumulative marks, percentage scores, and realistic performance grades."}
           </p>
         </div>
       </div>
@@ -629,9 +613,11 @@ export function AdminResultsView() {
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Class Average Score</p>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {isBn ? "শ্রেণীর গড় স্কোর" : "Class Average Score"}
+              </p>
               <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums dark:text-white sm:text-3xl">
-                {stats.classAvg.toFixed(2)}%
+                {toBanglaDigits(stats.classAvg.toFixed(2))}%
               </p>
             </div>
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300">
@@ -639,7 +625,9 @@ export function AdminResultsView() {
             </div>
           </div>
           <p className="mt-3 text-[11px] text-slate-400 dark:text-slate-500">
-            {selectedClass === "All" ? "Overall average score across all classes" : `Class ${selectedClass} average score`}
+            {isBn
+              ? (selectedClass === "All" ? "সকল শ্রেণীর সার্বিক গড় নম্বর" : `${translateClass(selectedClass)} এর গড় নম্বর`)
+              : (selectedClass === "All" ? "Overall average score across all classes" : `Class ${selectedClass} average score`)}
           </p>
         </div>
 
@@ -648,10 +636,12 @@ export function AdminResultsView() {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                {showGroupFilter && selectedGroup !== "All" ? `${selectedGroup} Rank #1` : "Class Rank #1"}
+                {isBn
+                  ? (showGroupFilter && selectedGroup !== "All" ? `${selectedGroup === "Science" ? "বিজ্ঞান" : selectedGroup === "Business Studies" ? "ব্যবসায় শিক্ষা" : "মানবিক"} বিভাগ ১ম অবস্থান` : "শ্রেণীতে ১ম অবস্থান")
+                  : (showGroupFilter && selectedGroup !== "All" ? `${selectedGroup} Rank #1` : "Class Rank #1")}
               </p>
               <p className="mt-2 text-lg font-bold tracking-tight text-slate-950 dark:text-white truncate">
-                {stats.topStudent ? stats.topStudent.studentName : "N/A"}
+                {stats.topStudent ? translateUserName(stats.topStudent.studentName) : (isBn ? "প্রযোজ্য নয়" : "N/A")}
               </p>
             </div>
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-300">
@@ -660,8 +650,10 @@ export function AdminResultsView() {
           </div>
           <p className="mt-3 text-xs font-semibold text-amber-600 dark:text-amber-400">
             {stats.topStudent
-              ? `${stats.topStudent.totalMarks.toFixed(2)} Marks (${stats.topStudent.avgPercentage.toFixed(2)}%)`
-              : "No graded students"}
+              ? (isBn
+                  ? `${toBanglaDigits(stats.topStudent.totalMarks.toFixed(2))} নম্বর (${toBanglaDigits(stats.topStudent.avgPercentage.toFixed(2))}%)`
+                  : `${stats.topStudent.totalMarks.toFixed(2)} Marks (${stats.topStudent.avgPercentage.toFixed(2)}%)`)
+              : (isBn ? "কোন মূল্যায়নকৃত শিক্ষার্থী নেই" : "No graded students")}
           </p>
         </div>
 
@@ -669,7 +661,9 @@ export function AdminResultsView() {
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Assigned Teacher</p>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {isBn ? "দায়িত্বপ্রাপ্ত শিক্ষক" : "Assigned Teacher"}
+              </p>
               <p className={`mt-2 font-bold tracking-tight text-slate-950 dark:text-white truncate ${selectedSubject !== "All" ? "text-lg" : "text-base font-extrabold"}`}>
                 {assignedTeacherDisplay}
               </p>
@@ -679,11 +673,13 @@ export function AdminResultsView() {
             </div>
           </div>
           <p className="mt-3 text-[11px] text-slate-400 dark:text-slate-500">
-            {selectedSubject === "All"
-              ? selectedClass === "All"
-                ? "All Class Teachers"
-                : `Class ${selectedClass} Teachers`
-              : `${selectedSubject} Instructor`}
+            {isBn
+              ? (selectedSubject === "All"
+                  ? (selectedClass === "All" ? "সকল বিষয়ের বিষয়ভিত্তিক শিক্ষকগণ" : `${translateClass(selectedClass)} এর শিক্ষকগণ`)
+                  : `${translateSubject(selectedSubject)} ইনস্ট্রাক্টর`)
+              : (selectedSubject === "All"
+                  ? (selectedClass === "All" ? "All Class Teachers" : `Class ${selectedClass} Teachers`)
+                  : `${selectedSubject} Instructor`)}
           </p>
         </div>
 
@@ -691,9 +687,11 @@ export function AdminResultsView() {
         <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Total Assignments</p>
+              <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                {isBn ? "মোট অ্যাসাইনমেন্ট" : "Total Assignments"}
+              </p>
               <p className="mt-2 text-2xl font-semibold tracking-tight text-slate-950 tabular-nums dark:text-white sm:text-3xl">
-                {totalAssignmentsCount}
+                {toBanglaDigits(totalAssignmentsCount)}
               </p>
             </div>
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600 dark:bg-violet-950/50 dark:text-violet-300">
@@ -701,13 +699,16 @@ export function AdminResultsView() {
             </div>
           </div>
           <p className="mt-3 text-[11px] text-slate-400 dark:text-slate-500">
-            {selectedClass === "All" && selectedSubject === "All"
-              ? "Total active coursework assignments"
-              : `Assignments for ${selectedClass === "All" ? "All Classes" : `Class ${selectedClass}`}${selectedSubject !== "All" ? ` (${selectedSubject})` : ""}`}
+            {isBn
+              ? (selectedClass === "All" && selectedSubject === "All"
+                  ? "মোট সক্রিয় শিক্ষাক্রম অ্যাসাইনমেন্ট"
+                  : `${selectedClass === "All" ? "সকল শ্রেণী" : translateClass(selectedClass)} এর অ্যাসাইনমেন্ট${selectedSubject !== "All" ? ` (${translateSubject(selectedSubject)})` : ""}`)
+              : (selectedClass === "All" && selectedSubject === "All"
+                  ? "Total active coursework assignments"
+                  : `Assignments for ${selectedClass === "All" ? "All Classes" : `Class ${selectedClass}`}${selectedSubject !== "All" ? ` (${selectedSubject})` : ""}`)}
           </p>
         </div>
       </div>
-
 
       {/* ─── FILTERS & SEARCH ─── */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -715,7 +716,7 @@ export function AdminResultsView() {
           <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <Input
             type="text"
-            placeholder="Search by student name or ID..."
+            placeholder={isBn ? "শিক্ষার্থীর নাম বা আইডি দিয়ে খুঁজুন..." : "Search by student name or ID..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10"
@@ -724,7 +725,7 @@ export function AdminResultsView() {
 
         <div className="flex items-center gap-3 shrink-0">
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
-            <Filter className="h-4 w-4 text-blue-600 shrink-0" /> Class:
+            <Filter className="h-4 w-4 text-blue-600 shrink-0" /> {isBn ? "শ্রেণী:" : "Class:"}
             <Select
               options={classOptions}
               value={selectedClass}
@@ -734,7 +735,7 @@ export function AdminResultsView() {
           </div>
 
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
-            Subject:
+            {isBn ? "বিষয়:" : "Subject:"}
             <Select
               options={subjectOptions}
               value={selectedSubject}
@@ -743,10 +744,9 @@ export function AdminResultsView() {
             />
           </div>
 
-          {/* GROUP FILTER — only shows for class 9, 10, 11, 12 */}
           {showGroupFilter && (
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400 animate-in fade-in slide-in-from-top-1 duration-200">
-              <span className="text-violet-600 dark:text-violet-400 font-bold">Group:</span>
+              <span className="text-violet-600 dark:text-violet-400 font-bold">{isBn ? "বিভাগ:" : "Group:"}</span>
               <select
                 value={selectedGroup}
                 onChange={(e) => {
@@ -755,9 +755,9 @@ export function AdminResultsView() {
                 }}
                 className="text-xs font-semibold rounded-lg border border-violet-300 dark:border-violet-700 bg-violet-50 dark:bg-violet-950/30 px-2.5 py-1.5 text-violet-900 dark:text-violet-200 outline-none focus:ring-2 focus:ring-violet-500/30 transition-all cursor-pointer shadow-sm"
               >
-                <option value="Science">Science</option>
-                <option value="Business Studies">Business Studies</option>
-                <option value="Humanities">Humanities</option>
+                <option value="Science">{isBn ? "বিজ্ঞান" : "Science"}</option>
+                <option value="Business Studies">{isBn ? "ব্যবসায় শিক্ষা" : "Business Studies"}</option>
+                <option value="Humanities">{isBn ? "মানবিক" : "Humanities"}</option>
               </select>
             </div>
           )}
@@ -768,21 +768,25 @@ export function AdminResultsView() {
       {filteredResults.length === 0 ? (
         <EmptyState
           icon={<Award className="w-10 h-10 text-slate-400" />}
-          title="No Student Results Found"
-          description={`No student records found for ${selectedClass === "All" ? "all classes" : `Class ${selectedClass}`}${showGroupFilter && selectedGroup !== "All" ? ` (${selectedGroup})` : ""}${selectedSubject !== "All" ? ` · ${selectedSubject}` : ""}.`}
+          title={isBn ? "কোন শিক্ষার্থীর ফলাফল পাওয়া যায়নি" : "No Student Results Found"}
+          description={
+            isBn
+              ? `কোন রেকর্ড পাওয়া যায় নি (${selectedClass === "All" ? "সকল শ্রেণী" : translateClass(selectedClass)}${showGroupFilter && selectedGroup !== "All" ? ` · ${selectedGroup === "Science" ? "বিজ্ঞান" : selectedGroup === "Business Studies" ? "ব্যবসায় শিক্ষা" : "মানবিক"}` : ""}${selectedSubject !== "All" ? ` · ${translateSubject(selectedSubject)}` : ""})`
+              : `No student records found for ${selectedClass === "All" ? "all classes" : `Class ${selectedClass}`}${showGroupFilter && selectedGroup !== "All" ? ` (${selectedGroup})` : ""}${selectedSubject !== "All" ? ` · ${selectedSubject}` : ""}.`
+          }
         />
       ) : (
         <div className="space-y-4">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-24">Position</TableHead>
-                <TableHead>Student Name</TableHead>
-                <TableHead>Student ID</TableHead>
-                <TableHead>Class</TableHead>
-                <TableHead>Total Cumulative Marks</TableHead>
-                <TableHead>Percentage Mark</TableHead>
-                <TableHead className="text-right">Performance Grade</TableHead>
+                <TableHead className="w-24">{isBn ? "অবস্থান" : "Position"}</TableHead>
+                <TableHead>{isBn ? "শিক্ষার্থীর নাম" : "Student Name"}</TableHead>
+                <TableHead>{isBn ? "শিক্ষার্থী আইডি" : "Student ID"}</TableHead>
+                <TableHead>{isBn ? "শ্রেণী" : "Class"}</TableHead>
+                <TableHead>{isBn ? "মোট অর্জিত নম্বর" : "Total Cumulative Marks"}</TableHead>
+                <TableHead>{isBn ? "শতাংশ নম্বর" : "Percentage Mark"}</TableHead>
+                <TableHead className="text-right">{isBn ? "পারফরম্যান্স গ্রেড" : "Performance Grade"}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -801,26 +805,26 @@ export function AdminResultsView() {
                   crownIcon = <Medal className="h-3.5 w-3.5 inline mr-1 text-amber-200" />;
                 }
 
-                let gradeLabel = "Satisfactory (C)";
+                let gradeLabel = isBn ? "সন্তোষজনক (C)" : "Satisfactory (C)";
                 let gradeClass = "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border-amber-300/70 dark:border-amber-800/70";
 
                 if (st.avgPercentage >= 90) {
-                  gradeLabel = "Outstanding (A+)";
+                  gradeLabel = isBn ? "অসাধারণ (A+)" : "Outstanding (A+)";
                   gradeClass = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border-emerald-300/70 dark:border-emerald-800/70";
                 } else if (st.avgPercentage >= 80) {
-                  gradeLabel = "Excellent (A)";
+                  gradeLabel = isBn ? "উৎকৃষ্ট (A)" : "Excellent (A)";
                   gradeClass = "bg-teal-100 text-teal-800 dark:bg-teal-950/70 dark:text-teal-300 border-teal-300/70 dark:border-teal-800/70";
                 } else if (st.avgPercentage >= 70) {
-                  gradeLabel = "Good (B)";
+                  gradeLabel = isBn ? "ভাল (B)" : "Good (B)";
                   gradeClass = "bg-blue-100 text-blue-800 dark:bg-blue-950/70 dark:text-blue-300 border-blue-300/70 dark:border-blue-800/70";
                 } else if (st.avgPercentage >= 60) {
-                  gradeLabel = "Satisfactory (C)";
+                  gradeLabel = isBn ? "সন্তোষজনক (C)" : "Satisfactory (C)";
                   gradeClass = "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border-amber-300/70 dark:border-amber-800/70";
                 } else if (st.avgPercentage >= 50) {
-                  gradeLabel = "Below Average (D)";
+                  gradeLabel = isBn ? "গড়ের নিচে (D)" : "Below Average (D)";
                   gradeClass = "bg-orange-100 text-orange-800 dark:bg-orange-950/70 dark:text-orange-300 border-orange-300/70 dark:border-orange-800/70";
                 } else {
-                  gradeLabel = "Needs Improvement (F)";
+                  gradeLabel = isBn ? "উন্নতি প্রয়োজন (F)" : "Needs Improvement (F)";
                   gradeClass = "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 border-rose-300/70 dark:border-rose-800/70";
                 }
 
@@ -830,7 +834,7 @@ export function AdminResultsView() {
                     <TableCell>
                       <span className={`inline-flex items-center rounded-xl px-3 py-1 text-xs font-extrabold ${badgeBg}`}>
                         {crownIcon}
-                        #{st.positionInClass}
+                        #{toBanglaDigits(st.positionInClass)}
                       </span>
                     </TableCell>
 
@@ -839,8 +843,12 @@ export function AdminResultsView() {
                       <div className="flex items-center gap-3">
                         <Avatar name={st.studentName} className="h-9 w-9 text-xs font-bold" />
                         <div>
-                          <p className="font-semibold text-slate-900 dark:text-white">{st.studentName}</p>
-                          <p className="text-xs text-slate-400">Student Account</p>
+                          <p className="font-semibold text-slate-900 dark:text-white">
+                            {translateUserName(st.studentName)}
+                          </p>
+                          <p className="text-xs text-slate-400">
+                            {isBn ? "শিক্ষার্থী অ্যাকাউন্ট" : "Student Account"}
+                          </p>
                         </div>
                       </div>
                     </TableCell>
@@ -848,7 +856,7 @@ export function AdminResultsView() {
                     {/* Student ID */}
                     <TableCell>
                       <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
-                        {st.studentNumber}
+                        {toBanglaDigits(st.studentNumber)}
                       </span>
                     </TableCell>
 
@@ -856,7 +864,7 @@ export function AdminResultsView() {
                     <TableCell>
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <Badge variant="default" className="font-medium">
-                          Class {st.classLevel}
+                          {translateClass(st.classLevel)}
                         </Badge>
                         {st.classLevel >= 9 && (
                           <span
@@ -868,7 +876,7 @@ export function AdminResultsView() {
                                 : "bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border-blue-300 dark:border-blue-800"
                             }`}
                           >
-                            {st.group || "Science"}
+                            {isBn ? (st.group?.toLowerCase().includes("business") || st.group?.toLowerCase().includes("commerce") ? "ব্যবসায় শিক্ষা" : st.group?.toLowerCase().includes("humanities") || st.group?.toLowerCase().includes("arts") ? "মানবিক" : "বিজ্ঞান") : (st.group || "Science")}
                           </span>
                         )}
                       </div>
@@ -877,7 +885,7 @@ export function AdminResultsView() {
                     {/* Total Cumulative Marks */}
                     <TableCell>
                       <span className="font-extrabold text-slate-900 dark:text-white tabular-nums">
-                        {st.totalMarks.toFixed(2)} {st.totalMaxMarks > 0 ? `/ ${st.totalMaxMarks.toFixed(2)}` : ""}
+                        {toBanglaDigits(st.totalMarks.toFixed(2))} {st.totalMaxMarks > 0 ? `/ ${toBanglaDigits(st.totalMaxMarks.toFixed(2))}` : ""}
                       </span>
                     </TableCell>
 
@@ -885,7 +893,7 @@ export function AdminResultsView() {
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-slate-900 dark:text-white tabular-nums">
-                          {st.avgPercentage.toFixed(2)}%
+                          {toBanglaDigits(st.avgPercentage.toFixed(2))}%
                         </span>
                         <div className="h-2 w-20 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                           <div
