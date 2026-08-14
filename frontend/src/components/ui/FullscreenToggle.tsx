@@ -16,9 +16,18 @@ export function FullscreenToggle({ className }: FullscreenToggleProps) {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "F11") {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+    };
+
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 

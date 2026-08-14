@@ -31,12 +31,15 @@ import { useToast } from "@/context/ToastContext";
 import { getClassLevelConfig, getSubjectTheme, SubjectLogo } from "@/utils/classLevelConfig";
 import { Pagination } from "@/components/common/Pagination";
 
+import { useLanguage } from "@/context/LanguageContext";
+
 interface ClassLevelGroup {
   classLevel: number;
   subjects: ClassListItem[];
 }
 
 export function ManageClassesView() {
+  const { t, translateSubject, translateUserName } = useLanguage();
   const { showToast } = useToast();
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [subjectPage, setSubjectPage] = useState(1);
@@ -218,11 +221,11 @@ export function ManageClassesView() {
         </div>
         <div className="relative z-10">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-blue-100">
-            <Layers className="h-3.5 w-3.5" /> Class management
+            <Layers className="h-3.5 w-3.5" /> {t("manageClassManagementTag")}
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Manage & Assign Teachers</h1>
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t("manageAssignTeachersTitle")}</h1>
           <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
-            Browse each class level with subjects, & assign the right teacher.
+            {t("manageAssignTeachersDesc")}
           </p>
         </div>
       </section>
@@ -386,9 +389,9 @@ export function ManageClassesView() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-2/5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Subject</TableHead>
-                  <TableHead className="w-2/5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Assigned Teacher</TableHead>
-                  <TableHead className="text-right px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Action</TableHead>
+                  <TableHead className="w-2/5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">{t("thSubject")}</TableHead>
+                  <TableHead className="w-2/5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">{t("thTeacher")}</TableHead>
+                  <TableHead className="text-right px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">{t("thAction")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -415,7 +418,7 @@ export function ManageClassesView() {
                               </div>
                               <div>
                                 <span className="font-bold text-slate-900 dark:text-slate-100 text-sm">
-                                  {subject.subjectName}
+                                  {translateSubject(subject.subjectName)}
                                 </span>
                                 <div className="mt-0.5 sm:hidden">
                                   <Badge size="sm" variant={isAssigned ? "success" : "warning"}>
@@ -433,7 +436,7 @@ export function ManageClassesView() {
                                 <Avatar name={subject.teacherName || "Teacher"} size="sm" />
                                 <div className="min-w-0">
                                   <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">
-                                    {subject.teacherName}
+                                    {translateUserName(subject.teacherName)}
                                   </p>
                                   <Badge size="sm" variant="success" className="mt-0.5 font-medium">
                                     Assigned

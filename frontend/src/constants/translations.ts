@@ -169,6 +169,7 @@ export const englishTranslations = {
 
   thStudent: "Student",
   thStudentId: "Student ID / Roll",
+  thTeacher: "Teacher",
   thEmail: "Email",
   thClassLevel: "Class Level",
   thStatus: "Status",
@@ -177,6 +178,11 @@ export const englishTranslations = {
   thDeadline: "Deadline",
   thMaxMarks: "Max Marks",
   thResubmission: "Resubmission",
+  thName: "Name",
+  thRole: "Role",
+  thSubject: "Subject",
+  thDesignation: "Designation",
+  thAction: "Action",
 
   // Dashboards
   studentDashboardTitle: "Student Dashboard",
@@ -185,6 +191,12 @@ export const englishTranslations = {
   teacherDashboardWelcome: "Manage your classrooms, assignments, and grade student submissions.",
   adminDashboardTitle: "Admin Dashboard",
   adminDashboardWelcome: "System overview, user management, and classroom allocations.",
+  adminBannerDesc: "A real-time overview of academic performance, system activity, and user analytics.",
+
+  // Manage Classes
+  manageAssignTeachersTitle: "Manage & Assign Teachers",
+  manageAssignTeachersDesc: "Browse each class level with subjects, & assign the right teacher.",
+  manageClassManagementTag: "Class management",
 
   // Toast / Messages
   msgLangSwitchedEn: "Language set to English",
@@ -362,6 +374,7 @@ export const banglaTranslations: Record<TranslationKey, string> = {
 
   thStudent: "শিক্ষার্থী",
   thStudentId: "শিক্ষার্থী আইডি / রোল",
+  thTeacher: "শিক্ষক",
   thEmail: "ইমেইল",
   thClassLevel: "শ্রেণী",
   thStatus: "অবস্থা",
@@ -370,6 +383,11 @@ export const banglaTranslations: Record<TranslationKey, string> = {
   thDeadline: "ডেডলাইন",
   thMaxMarks: "সর্বোচ্চ নম্বর",
   thResubmission: "পুনরায় জমা",
+  thName: "নাম",
+  thRole: "ভূমিকা / রোল",
+  thSubject: "বিষয়",
+  thDesignation: "পদবী",
+  thAction: "পদক্ষেপ",
 
   // Dashboards
   studentDashboardTitle: "শিক্ষার্থী ড্যাশবোর্ড",
@@ -378,6 +396,12 @@ export const banglaTranslations: Record<TranslationKey, string> = {
   teacherDashboardWelcome: "আপনার শ্রেণীকক্ষ, অ্যাসাইনমেন্ট এবং শিক্ষার্থীর উত্তরপত্র মূল্যায়ন পরিচালনা করুন।",
   adminDashboardTitle: "অ্যাডমিন ড্যাশবোর্ড",
   adminDashboardWelcome: "সিস্টেম সারসংক্ষেপ, ব্যবহারকারী ব্যবস্থাপনা এবং শ্রেণীকক্ষ বরাদ্দ।",
+  adminBannerDesc: "অ্যাকাডেমিক পারফরম্যান্স, সিস্টেম কার্যক্রম এবং ব্যবহারকারী বিশ্লেষণের রিয়েল-টাইম সারসংক্ষেপ।",
+
+  // Manage Classes
+  manageAssignTeachersTitle: "শিক্ষক পরিচালনা ও বরাদ্দ",
+  manageAssignTeachersDesc: "বিষয়সহ প্রতিটি ক্লাসের স্তর দেখুন এবং সঠিক শিক্ষক বরাদ্দ করুন।",
+  manageClassManagementTag: "ক্লাস ব্যবস্থাপনা",
 
   // Toast / Messages
   msgLangSwitchedEn: "Language set to English",

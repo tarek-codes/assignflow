@@ -35,7 +35,7 @@ import { classService } from "@/services/classService";
 
 export function TeacherDashboardView() {
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language, translateUserName } = useLanguage();
   const { data, isLoading, error, refetch } = useCachedData("dashboard:teacher", () => dashboardService.getTeacherDashboard());
 
   // Proactive background prefetching immediately after teacher dashboard loads
@@ -114,9 +114,11 @@ export function TeacherDashboardView() {
             {/* WELCOME TEXT (SHIFTED TO THE RIGHT) */}
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Hi, {firstName}</h1>
+                <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+                  {language === "bn" ? `হ্যালো, ${translateUserName(firstName)}` : `Hi, ${firstName}`}
+                </h1>
                 <span className="inline-flex items-center rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold text-white border border-white/30 shadow-xs">
-                  Teacher
+                  {t("navRoleTeacher")}
                 </span>
               </div>
               <div className="mt-1.5 flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-100">
