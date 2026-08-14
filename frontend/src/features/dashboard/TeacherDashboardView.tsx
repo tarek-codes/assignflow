@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -70,6 +70,19 @@ export function TeacherDashboardView() {
   const displayName = user?.fullName || "Teacher";
   const firstName = displayName.split(" ")[0];
 
+  const sortedPendingReviews = useMemo(() => {
+    return [...(data?.pendingReviews || [])].sort((a, b) => {
+      const timeA = a.submittedAtUtc ? new Date(a.submittedAtUtc).getTime() : (a.submissionId || 0);
+      const timeB = b.submittedAtUtc ? new Date(b.submittedAtUtc).getTime() : (b.submissionId || 0);
+      return timeB - timeA;
+    });
+  }, [data?.pendingReviews]);
+
+  const sortedRecentAssignments = useMemo(() => {
+    return [...(data?.recentAssignments || [])]
+      .filter((a) => a.status === "Published" || a.status === "Draft")
+      .sort((a, b) => (b.id || 0) - (a.id || 0));
+  }, [data?.recentAssignments]);
   const totalReviewed = data.totalGraded;
   const totalSubmissionsToReview = data.totalPendingReviews + data.totalGraded;
   const reviewProgress = totalSubmissionsToReview > 0 ? Math.round((totalReviewed / totalSubmissionsToReview) * 100) : 0;
@@ -190,7 +203,7 @@ export function TeacherDashboardView() {
             </Link>
           </div>
 
-          {data.pendingReviews.length === 0 ? (
+          {sortedPendingReviews.length === 0 ? (
             <div className="flex flex-col items-center px-5 py-12 text-center">
               <CheckCircle2 className="mb-3 h-8 w-8 text-emerald-500" />
               <p className="text-sm font-medium text-slate-700 dark:text-slate-200">Review queue complete</p>
@@ -198,7 +211,7 @@ export function TeacherDashboardView() {
             </div>
           ) : (
             <div className="divide-y divide-slate-100 dark:divide-slate-800">
-              {data.pendingReviews.slice(0, 5).map((review) => (
+              {sortedPendingReviews.slice(0, 5).map((review) => (
                 <div key={review.submissionId} className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
@@ -227,7 +240,7 @@ export function TeacherDashboardView() {
                 <BookOpenCheck className="h-4.5 w-4.5" />
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Recentlty Created Assignments</h2>
+                <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Recently Created Assignments</h2>
                 <p className="text-xs text-slate-400">Your latest published assignments</p>
               </div>
             </div>
@@ -236,7 +249,7 @@ export function TeacherDashboardView() {
             </Link>
           </div>
 
-          {data.recentAssignments.filter((a) => a.status === "Published" || a.status === "Draft").length === 0 ? (
+          {sortedRecentAssignments.length === 0 ? (
             <div className="flex flex-col items-center px-5 py-12 text-center">
               <BookOpenCheck className="mb-3 h-8 w-8 text-slate-300 dark:text-slate-600" />
               <p className="text-sm font-medium text-slate-700 dark:text-slate-200">No assignments yet</p>
@@ -244,9 +257,7 @@ export function TeacherDashboardView() {
             </div>
           ) : (
             <div className="divide-y divide-slate-100 dark:divide-slate-800">
-              {data.recentAssignments
-                .filter((a) => a.status === "Published" || a.status === "Draft")
-                .map((assignment) => (
+              {sortedRecentAssignments.map((assignment) => (
                   <div key={assignment.id} className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">

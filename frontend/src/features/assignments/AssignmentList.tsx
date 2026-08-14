@@ -110,7 +110,7 @@ export function AssignmentList() {
   };
 
   const filteredAssignments = useMemo(() => {
-    return allAssignments.filter((ass) => {
+    const filtered = allAssignments.filter((ass) => {
       const q = searchTerm.toLowerCase().trim();
       const matchesSearch =
         !q ||
@@ -130,6 +130,12 @@ export function AssignmentList() {
         (selectedStatus === "closed" && isClosed);
 
       return matchesSearch && matchesClass && matchesSubject && matchesStatus;
+    });
+
+    return filtered.sort((a, b) => {
+      const timeA = a.createdAtUtc ? new Date(a.createdAtUtc).getTime() : (a.id || 0);
+      const timeB = b.createdAtUtc ? new Date(b.createdAtUtc).getTime() : (b.id || 0);
+      return timeB - timeA;
     });
   }, [allAssignments, searchTerm, selectedClass, selectedSubject, selectedStatus]);
 

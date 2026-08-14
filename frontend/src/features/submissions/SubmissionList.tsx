@@ -198,12 +198,9 @@ export function SubmissionList() {
         return matchesSearch && matchesStatus && matchesClass && matchesSubject;
       })
       .sort((a, b) => {
-        const aMissing = a.sub.status === "Missing" ? 1 : 0;
-        const bMissing = b.sub.status === "Missing" ? 1 : 0;
-        if (aMissing !== bMissing) return aMissing - bMissing;
-        const aTime = a.sub.submittedAtUtc ? new Date(a.sub.submittedAtUtc).getTime() : 0;
-        const bTime = b.sub.submittedAtUtc ? new Date(b.sub.submittedAtUtc).getTime() : 0;
-        return bTime - aTime;
+        const timeA = a.sub.submittedAtUtc ? new Date(a.sub.submittedAtUtc).getTime() : (a.sub.updatedAtUtc ? new Date(a.sub.updatedAtUtc).getTime() : a.sub.id || 0);
+        const timeB = b.sub.submittedAtUtc ? new Date(b.sub.submittedAtUtc).getTime() : (b.sub.updatedAtUtc ? new Date(b.sub.updatedAtUtc).getTime() : b.sub.id || 0);
+        return timeB - timeA;
       });
   }, [parsedItemsMap, searchQuery, statusFilter, selectedClass, selectedSubject]);
 
