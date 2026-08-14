@@ -114,9 +114,27 @@ export function AdminDashboardView() {
   const [modalSearch, setModalSearch] = useState("");
   const [modalFilter, setModalFilter] = useState("all");
   const [modalGenderFilter, setModalGenderFilter] = useState("all");
+  const [modalClassFilter, setModalClassFilter] = useState("all");
   const [modalSubjectFilter, setModalSubjectFilter] = useState("all");
   const [modalSortBy, setModalSortBy] = useState("default");
   const [modalSortOrder, setModalSortOrder] = useState<"asc" | "desc">("asc");
+
+  const openModal = (type: ActiveModalType) => {
+    setActiveModal(type);
+    setModalPage(1);
+    setModalSearch("");
+    setModalFilter("all");
+    setModalGenderFilter("all");
+    setModalClassFilter("all");
+    setModalSubjectFilter("all");
+    setModalSortBy("default");
+    setModalSortOrder("asc");
+  };
+
+  // Reset to page 1 whenever search, filter, or sorting changes
+  useEffect(() => {
+    setModalPage(1);
+  }, [modalSearch, modalFilter, modalGenderFilter, modalClassFilter, modalSubjectFilter, modalSortBy, modalSortOrder]);
 
   const usersData = useMemo<PagedResult<UserListItem> | null>(() => {
     if (!allUsers.length) return null;
@@ -323,20 +341,6 @@ export function AdminDashboardView() {
 
   const PAGE_SIZE = 10;
 
-  const openModal = (type: ActiveModalType) => {
-    setActiveModal(type);
-    setModalPage(1);
-    setModalSearch("");
-    setModalFilter("all");
-    setModalSortBy("default");
-    setModalSortOrder("asc");
-  };
-
-  // Reset to page 1 whenever search, filter, or sorting changes
-  useEffect(() => {
-    setModalPage(1);
-  }, [modalSearch, modalFilter, modalSortBy, modalSortOrder]);
-
   const handlePageChange = (p: number) => {
     setModalPage(p);
   };
@@ -425,13 +429,16 @@ export function AdminDashboardView() {
         (s.email && s.email.toLowerCase().includes(q)) ||
         (s.studentNumber && s.studentNumber.toLowerCase().includes(q));
 
-      const matchesFilter =
-        modalFilter === "all" ||
-        (modalFilter === "male" && (s.gender || "Male").toLowerCase() === "male") ||
-        (modalFilter === "female" && (s.gender || "").toLowerCase() === "female") ||
-        (modalFilter.startsWith("class_") && s.classLevel === parseInt(modalFilter.replace("class_", "")));
+      const matchesGender =
+        modalGenderFilter === "all" ||
+        (modalGenderFilter === "male" && (s.gender || "Male").toLowerCase() === "male") ||
+        (modalGenderFilter === "female" && (s.gender || "").toLowerCase() === "female");
 
-      return matchesSearch && matchesFilter;
+      const matchesClass =
+        modalClassFilter === "all" ||
+        (s.classLevel || 9) === parseInt(modalClassFilter, 10);
+
+      return matchesSearch && matchesGender && matchesClass;
     });
 
     if (modalSortBy === "name") {
@@ -446,7 +453,7 @@ export function AdminDashboardView() {
 
     if (modalSortOrder === "desc") items.reverse();
     return items;
-  }, [studentsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+  }, [studentsData?.items, modalSearch, modalGenderFilter, modalClassFilter, modalSortBy, modalSortOrder]);
 
   // Filtered & Sorted Assignments
   const filteredAssignments = useMemo(() => {
@@ -460,13 +467,20 @@ export function AdminDashboardView() {
         (a.teacherName && a.teacherName.toLowerCase().includes(q));
 
       const statusLower = (a.status || "").toLowerCase();
-      const matchesFilter =
+      const matchesStatus =
         modalFilter === "all" ||
         (modalFilter === "published" && statusLower === "published") ||
-        (modalFilter === "draft" && statusLower === "draft") ||
-        (modalFilter.startsWith("class_") && a.classLevel === parseInt(modalFilter.replace("class_", "")));
+        (modalFilter === "draft" && statusLower === "draft");
 
-      return matchesSearch && matchesFilter;
+      const matchesClass =
+        modalClassFilter === "all" ||
+        a.classLevel === parseInt(modalClassFilter, 10);
+
+      const matchesSubject =
+        modalSubjectFilter === "all" ||
+        (a.subjectName && a.subjectName.toLowerCase().includes(modalSubjectFilter.toLowerCase()));
+
+      return matchesSearch && matchesStatus && matchesClass && matchesSubject;
     });
 
     if (modalSortBy === "title") {
@@ -481,7 +495,7 @@ export function AdminDashboardView() {
 
     if (modalSortOrder === "desc") items.reverse();
     return items;
-  }, [assignmentsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+  }, [assignmentsData?.items, modalSearch, modalFilter, modalClassFilter, modalSubjectFilter, modalSortBy, modalSortOrder]);
 
   // Filtered & Sorted Submissions
   const filteredSubmissions = useMemo(() => {
@@ -496,14 +510,24 @@ export function AdminDashboardView() {
         (sub.classSubject && sub.classSubject.toLowerCase().includes(q));
 
       const statusLower = (sub.status || "").toLowerCase();
-      const matchesFilter =
+      const matchesStatus =
         modalFilter === "all" ||
         (modalFilter === "graded" && statusLower === "graded") ||
         (modalFilter === "submitted" && (statusLower === "submitted" || statusLower === "underreview")) ||
         (modalFilter === "late" && statusLower === "late") ||
         ((modalFilter === "missing" || modalFilter === "notsubmitted") && (statusLower === "missing" || statusLower === "notsubmitted"));
 
-      return matchesSearch && matchesFilter;
+      let subClassLevel: number | null = sub.classLevel || null;
+      if (!subClassLevel && sub.classSubject) {
+        const matchLevel = sub.classSubject.match(/\d+/);
+        if (matchLevel) subClassLevel = parseInt(matchLevel[0], 10);
+      }
+
+      const matchesClass =
+        modalClassFilter === "all" ||
+        (subClassLevel !== null && subClassLevel === parseInt(modalClassFilter, 10));
+
+      return matchesSearch && matchesStatus && matchesClass;
     });
 
     if (modalSortBy === "title") {
@@ -518,7 +542,7 @@ export function AdminDashboardView() {
 
     if (modalSortOrder === "desc") items.reverse();
     return items;
-  }, [submissionsData?.items, modalSearch, modalFilter, modalSortBy, modalSortOrder]);
+  }, [submissionsData?.items, modalSearch, modalFilter, modalClassFilter, modalSortBy, modalSortOrder]);
 
   // Get active filtered list
   const activeFilteredList = useMemo(() => {
@@ -696,9 +720,9 @@ export function AdminDashboardView() {
         title={activeModal ? modalTitle[activeModal] : ""}
         maxWidth="7xl"
         headerControls={
-          <div className="flex items-center gap-2.5 w-full">
+          <div className="flex flex-wrap items-center gap-2.5 w-full">
             {/* Search Input */}
-            <div className="relative flex-1">
+            <div className="relative flex-1 min-w-[180px]">
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
               <input
                 type="text"
@@ -713,10 +737,30 @@ export function AdminDashboardView() {
               />
             </div>
 
-            {/* Filter Dropdowns */}
-            {activeModal === "teachers" ? (
+            {/* USERS MODAL FILTERS */}
+            {activeModal === "users" && (
+              <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
+                <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                <select
+                  value={modalFilter}
+                  onChange={(e) => setModalFilter(e.target.value)}
+                  className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                >
+                  <option value="all">{isBn ? "ফিল্টার: সকল" : "Filter: All"}</option>
+                  <optgroup label={isBn ? "ব্যবহারকারীর ভূমিকা ও স্থিতি" : "User Roles & Status"}>
+                    <option value="admin">{isBn ? "অ্যাডমিন ভূমিকা" : "Admin Role"}</option>
+                    <option value="teacher">{isBn ? "শিক্ষক ভূমিকা" : "Teacher Role"}</option>
+                    <option value="student">{isBn ? "শিক্ষার্থী ভূমিকা" : "Student Role"}</option>
+                    <option value="active">{isBn ? "শুধুমাত্র সক্রিয়" : "Active Only"}</option>
+                    <option value="inactive">{isBn ? "শুধুমাত্র নিষ্ক্রিয়" : "Inactive Only"}</option>
+                  </optgroup>
+                </select>
+              </div>
+            )}
+
+            {/* TEACHERS MODAL FILTERS: Gender & Subject */}
+            {activeModal === "teachers" && (
               <>
-                {/* Teacher Gender Filter */}
                 <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
                   <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
                   <select
@@ -729,8 +773,6 @@ export function AdminDashboardView() {
                     <option value="female">{isBn ? "মহিলা (♀)" : "Female (♀)"}</option>
                   </select>
                 </div>
-
-                {/* Teacher Subject Filter (All Curriculum Subjects) */}
                 <div className="flex items-center gap-1.5 shrink-0 bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-300 dark:border-indigo-700 rounded-xl px-2.5 py-1">
                   <BookOpen className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
                   <select
@@ -761,76 +803,142 @@ export function AdminDashboardView() {
                   </select>
                 </div>
               </>
-            ) : (
-              <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
-                <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                <select
-                  value={modalFilter}
-                  onChange={(e) => setModalFilter(e.target.value)}
-                  className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
-                >
-                  <option value="all">{isBn ? "ফিল্টার: সকল" : "Filter: All"}</option>
+            )}
 
-                  {/* USERS FILTERS */}
-                  {activeModal === "users" && (
-                    <optgroup label={isBn ? "ব্যবহারকারীর ভূমিকা ও স্থিতি" : "User Roles & Status"}>
-                      <option value="admin">{isBn ? "অ্যাডমিন ভূমিকা" : "Admin Role"}</option>
-                      <option value="teacher">{isBn ? "শিক্ষক ভূমিকা" : "Teacher Role"}</option>
-                      <option value="student">{isBn ? "শিক্ষার্থী ভূমিকা" : "Student Role"}</option>
-                      <option value="active">{isBn ? "শুধুমাত্র সক্রিয়" : "Active Only"}</option>
-                      <option value="inactive">{isBn ? "শুধুমাত্র নিষ্ক্রিয়" : "Inactive Only"}</option>
-                    </optgroup>
-                  )}
+            {/* STUDENTS MODAL FILTERS: Gender & Class Level */}
+            {activeModal === "students" && (
+              <>
+                <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
+                  <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                  <select
+                    value={modalGenderFilter}
+                    onChange={(e) => setModalGenderFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "লিঙ্গ: সকল" : "Gender: All"}</option>
+                    <option value="male">{isBn ? "পুরুষ (♂)" : "Male (♂)"}</option>
+                    <option value="female">{isBn ? "মহিলা (♀)" : "Female (♀)"}</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-700 rounded-xl px-2.5 py-1">
+                  <GraduationCap className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <select
+                    value={modalClassFilter}
+                    onChange={(e) => setModalClassFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "শ্রেণী: সকল" : "Class: All"}</option>
+                    <option value="6">{translateClass(6)}</option>
+                    <option value="7">{translateClass(7)}</option>
+                    <option value="8">{translateClass(8)}</option>
+                    <option value="9">{translateClass(9)}</option>
+                    <option value="10">{translateClass(10)}</option>
+                    <option value="11">{translateClass(11)}</option>
+                    <option value="12">{translateClass(12)}</option>
+                  </select>
+                </div>
+              </>
+            )}
 
-                  {/* STUDENTS FILTERS */}
-                  {activeModal === "students" && (
-                    <>
-                      <optgroup label={isBn ? "লিঙ্গ" : "Gender"}>
-                        <option value="male">{isBn ? "পুরুষ (♂)" : "Male (♂)"}</option>
-                        <option value="female">{isBn ? "মহিলা (♀)" : "Female (♀)"}</option>
-                      </optgroup>
-                      <optgroup label={isBn ? "শ্রেণী পর্যায়" : "Class Level"}>
-                        <option value="class_6">{translateClass(6)}</option>
-                        <option value="class_7">{translateClass(7)}</option>
-                        <option value="class_8">{translateClass(8)}</option>
-                        <option value="class_9">{translateClass(9)}</option>
-                        <option value="class_10">{translateClass(10)}</option>
-                        <option value="class_11">{translateClass(11)}</option>
-                        <option value="class_12">{translateClass(12)}</option>
-                      </optgroup>
-                    </>
-                  )}
+            {/* ASSIGNMENTS MODAL FILTERS: Status, Class Level & Subject */}
+            {activeModal === "assignments" && (
+              <>
+                <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
+                  <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                  <select
+                    value={modalFilter}
+                    onChange={(e) => setModalFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "অবস্থা: সকল" : "Status: All"}</option>
+                    <option value="published">{isBn ? "প্রকাশিত" : "Published Only"}</option>
+                    <option value="draft">{isBn ? "খসড়া" : "Draft Only"}</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-700 rounded-xl px-2.5 py-1">
+                  <GraduationCap className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <select
+                    value={modalClassFilter}
+                    onChange={(e) => setModalClassFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "শ্রেণী: সকল" : "Class: All"}</option>
+                    <option value="6">{translateClass(6)}</option>
+                    <option value="7">{translateClass(7)}</option>
+                    <option value="8">{translateClass(8)}</option>
+                    <option value="9">{translateClass(9)}</option>
+                    <option value="10">{translateClass(10)}</option>
+                    <option value="11">{translateClass(11)}</option>
+                    <option value="12">{translateClass(12)}</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0 bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-300 dark:border-indigo-700 rounded-xl px-2.5 py-1">
+                  <BookOpen className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+                  <select
+                    value={modalSubjectFilter}
+                    onChange={(e) => setModalSubjectFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "বিষয়: সকল" : "Subject: All"}</option>
+                    <option value="Bangla">{translateSubject("Bangla")}</option>
+                    <option value="English">{translateSubject("English")}</option>
+                    <option value="Mathematics">{translateSubject("Mathematics")}</option>
+                    <option value="Higher Mathematics">{translateSubject("Higher Mathematics")}</option>
+                    <option value="Physics">{translateSubject("Physics")}</option>
+                    <option value="Chemistry">{translateSubject("Chemistry")}</option>
+                    <option value="Biology">{translateSubject("Biology")}</option>
+                    <option value="ICT">{translateSubject("ICT")}</option>
+                    <option value="Bangladesh & Global Studies">{translateSubject("Bangladesh & Global Studies")}</option>
+                    <option value="Science">{translateSubject("Science")}</option>
+                    <option value="Religion">{translateSubject("Religion")}</option>
+                    <option value="Accounting">{translateSubject("Accounting")}</option>
+                    <option value="Finance & Banking">{translateSubject("Finance & Banking")}</option>
+                    <option value="Business Entrepreneurship">{translateSubject("Business Entrepreneurship")}</option>
+                    <option value="Economics">{translateSubject("Economics")}</option>
+                    <option value="Civics">{translateSubject("Civics")}</option>
+                    <option value="Geography">{translateSubject("Geography")}</option>
+                    <option value="History">{translateSubject("History")}</option>
+                    <option value="General Studies">{isBn ? "সাধারণ শিক্ষা / অন্যান্য" : "General Studies / Other"}</option>
+                  </select>
+                </div>
+              </>
+            )}
 
-                  {/* ASSIGNMENTS FILTERS */}
-                  {activeModal === "assignments" && (
-                    <>
-                      <optgroup label={isBn ? "প্রকাশনা অবস্থা" : "Publishing Status"}>
-                        <option value="published">{isBn ? "শুধুমাত্র প্রকাশিত" : "Published Only"}</option>
-                        <option value="draft">{isBn ? "শুধুমাত্র খসড়া" : "Draft Only"}</option>
-                      </optgroup>
-                      <optgroup label={isBn ? "শ্রেণী পর্যায়" : "Class Level"}>
-                        <option value="class_6">{translateClass(6)}</option>
-                        <option value="class_7">{translateClass(7)}</option>
-                        <option value="class_8">{translateClass(8)}</option>
-                        <option value="class_9">{translateClass(9)}</option>
-                        <option value="class_10">{translateClass(10)}</option>
-                        <option value="class_11">{translateClass(11)}</option>
-                        <option value="class_12">{translateClass(12)}</option>
-                      </optgroup>
-                    </>
-                  )}
-
-                  {/* SUBMISSIONS FILTERS */}
-                  {activeModal === "submissions" && (
-                    <optgroup label={isBn ? "সাবমিশন অবস্থা" : "Submission Status"}>
-                      <option value="graded">{isBn ? "মূল্যায়িত" : "Graded"}</option>
-                      <option value="submitted">{isBn ? "পর্যালোচনার অপেক্ষায়" : "Pending Review"}</option>
-                      <option value="late">{isBn ? "বিলম্বিত সাবমিশন" : "Late Submissions"}</option>
-                      <option value="missing">{isBn ? "অনুপস্থিত / সময়োত্তীর্ণ" : "Missing / Overdue"}</option>
-                    </optgroup>
-                  )}
-                </select>
-              </div>
+            {/* SUBMISSIONS MODAL FILTERS: Status & Class Level */}
+            {activeModal === "submissions" && (
+              <>
+                <div className="flex items-center gap-1.5 shrink-0 bg-blue-50/60 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-700 rounded-xl px-2.5 py-1">
+                  <Filter className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+                  <select
+                    value={modalFilter}
+                    onChange={(e) => setModalFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "অবস্থা: সকল" : "Status: All"}</option>
+                    <option value="graded">{isBn ? "মূল্যায়িত" : "Graded"}</option>
+                    <option value="submitted">{isBn ? "পর্যালোচনার অপেক্ষায়" : "Pending Review"}</option>
+                    <option value="late">{isBn ? "বিলম্বিত সাবমিশন" : "Late Submissions"}</option>
+                    <option value="missing">{isBn ? "অনুপস্থিত / সময়োত্তীর্ণ" : "Missing / Overdue"}</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-300 dark:border-emerald-700 rounded-xl px-2.5 py-1">
+                  <GraduationCap className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <select
+                    value={modalClassFilter}
+                    onChange={(e) => setModalClassFilter(e.target.value)}
+                    className="text-xs font-bold bg-transparent text-slate-800 dark:text-slate-200 outline-none cursor-pointer pr-1"
+                  >
+                    <option value="all">{isBn ? "শ্রেণী: সকল" : "Class: All"}</option>
+                    <option value="6">{translateClass(6)}</option>
+                    <option value="7">{translateClass(7)}</option>
+                    <option value="8">{translateClass(8)}</option>
+                    <option value="9">{translateClass(9)}</option>
+                    <option value="10">{translateClass(10)}</option>
+                    <option value="11">{translateClass(11)}</option>
+                    <option value="12">{translateClass(12)}</option>
+                  </select>
+                </div>
+              </>
             )}
 
             {/* Sort Dropdown */}
