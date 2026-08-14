@@ -19,6 +19,11 @@ public static class DbInitializer
             await context.Database.ExecuteSqlRawAsync("ALTER TABLE users ADD COLUMN IF NOT EXISTS gender VARCHAR(20) DEFAULT 'Male';");
         }
         catch { }
+        try
+        {
+            await context.Database.ExecuteSqlRawAsync("ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT NULL;");
+        }
+        catch { }
 
         // Skip seeding if data already exists — prevents expensive re-seed on every cold start
         if (await context.Users.AnyAsync())

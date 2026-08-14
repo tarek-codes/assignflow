@@ -12,5 +12,7 @@ public interface IAuthService
 
     Task ChangePasswordAsync(ChangePasswordRequestDto request, CancellationToken cancellationToken = default);
 
+    Task UpdateAvatarAsync(UpdateAvatarRequestDto request, CancellationToken cancellationToken = default);
+
     Task<bool> CheckEmailExistsAsync(string email, CancellationToken cancellationToken = default);
 }

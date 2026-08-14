@@ -36,4 +36,8 @@ export const authService = {
       return false;
     }
   },
+
+  async updateAvatar(avatarUrl: string | null): Promise<void> {
+    await apiClient.put(API_ENDPOINTS.AUTH.AVATAR, { avatarUrl });
+  },
 };

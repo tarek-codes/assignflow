@@ -46,6 +46,14 @@ public sealed class AuthController : BaseApiController
         return Ok(new { message = "Password changed successfully." });
     }
 
+    [HttpPut("avatar")]
+    [Authorize]
+    public async Task<IActionResult> UpdateAvatar([FromBody] UpdateAvatarRequestDto request, CancellationToken cancellationToken)
+    {
+        await _authService.UpdateAvatarAsync(request, cancellationToken);
+        return Ok(new { message = "Avatar updated successfully." });
+    }
+
     [HttpGet("check-email")]
     [AllowAnonymous]
     public async Task<IActionResult> CheckEmail([FromQuery] string email, CancellationToken cancellationToken)

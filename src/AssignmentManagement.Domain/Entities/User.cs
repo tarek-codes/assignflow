@@ -26,6 +26,8 @@ public sealed class User : EntityBase
     [MaxLength(20)]
     public string Gender { get; set; } = "Male";
 
+    public string? AvatarUrl { get; set; }
+
     public UserRole Role { get; set; }
 
     public bool IsActive { get; set; }

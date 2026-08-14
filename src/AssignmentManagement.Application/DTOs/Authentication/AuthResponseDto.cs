@@ -12,6 +12,8 @@ public sealed class AuthResponseDto
 
     public string Gender { get; set; } = "Male";
 
+    public string? AvatarUrl { get; set; }
+
     public string AccessToken { get; set; } = string.Empty;
 
     public string RefreshToken { get; set; } = string.Empty;

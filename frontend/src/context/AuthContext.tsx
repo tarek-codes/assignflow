@@ -50,19 +50,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (credentials: LoginRequest): Promise<AuthResponse> => {
     invalidateCachedPrefix("");
     const response = await authService.login(credentials);
-    const storedAvatar = localStorage.getItem("user_avatar_" + response.userId);
+    const dbAvatar = response.avatarUrl || undefined;
+    const storedAvatar = typeof window !== "undefined" ? localStorage.getItem("user_avatar_" + response.userId) : null;
+    const avatarUrl = dbAvatar || storedAvatar || undefined;
+
     const userData: User = {
       id: response.userId,
       email: response.email,
       fullName: response.fullName,
       role: response.role,
       gender: response.gender,
-      avatarUrl: storedAvatar || undefined,
+      avatarUrl: avatarUrl,
     };
 
     localStorage.setItem("accessToken", response.accessToken);
     localStorage.setItem("refreshToken", response.refreshToken);
     localStorage.setItem("user", JSON.stringify(userData));
+    if (avatarUrl) {
+      localStorage.setItem("user_avatar_" + response.userId, avatarUrl);
+    }
 
     setAccessToken(response.accessToken);
     setUser(userData);
@@ -75,9 +81,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const updatedUser = { ...user, avatarUrl };
     setUser(updatedUser);
 
+    authService.updateAvatar(avatarUrl).catch((err) => {
+      console.error("Failed to persist avatar in backend database:", err);
+    });
+
     try {
-      const { avatarUrl: _, ...userNoAvatar } = updatedUser;
-      localStorage.setItem("user", JSON.stringify(userNoAvatar));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       localStorage.setItem("user_avatar_" + user.id, avatarUrl);
     } catch (err) {
       console.warn("Storage quota limit reached when persisting avatar:", err);
@@ -88,6 +97,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!user) return;
     const { avatarUrl, ...restUser } = user;
     setUser(restUser);
+
+    authService.updateAvatar(null).catch((err) => {
+      console.error("Failed to remove avatar from backend database:", err);
+    });
+
     try {
       localStorage.setItem("user", JSON.stringify(restUser));
       localStorage.removeItem("user_avatar_" + user.id);

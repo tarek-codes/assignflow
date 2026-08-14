@@ -30,6 +30,7 @@ export interface AuthResponse {
   email: string;
   role: UserRole;
   gender?: string;
+  avatarUrl?: string | null;
   accessToken: string;
   refreshToken: string;
   accessTokenExpiresAtUtc: string;

@@ -66,6 +66,7 @@ public sealed class AuthService : IAuthService
             Email = user.Email,
             Role = user.Role.ToString(),
             Gender = user.Gender ?? "Male",
+            AvatarUrl = user.AvatarUrl,
             AccessToken = tokens.AccessToken,
             RefreshToken = tokens.RefreshToken,
             AccessTokenExpiresAtUtc = tokens.AccessTokenExpiresAtUtc,
@@ -97,6 +98,7 @@ public sealed class AuthService : IAuthService
             Email = user.Email,
             Role = user.Role.ToString(),
             Gender = user.Gender ?? "Male",
+            AvatarUrl = user.AvatarUrl,
             AccessToken = tokens.AccessToken,
             RefreshToken = tokens.RefreshToken,
             AccessTokenExpiresAtUtc = tokens.AccessTokenExpiresAtUtc,
@@ -151,6 +153,28 @@ public sealed class AuthService : IAuthService
         _userRepository.Update(user);
         var rowsAffected = await _userRepository.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("Password changed successfully for user {UserId} ({Email}). Rows affected: {Rows}. New hash prefix: {Hash}", user.Id, user.Email, rowsAffected, newHash.Substring(0, Math.Min(15, newHash.Length)));
+    }
+
+    public async Task UpdateAvatarAsync(UpdateAvatarRequestDto request, CancellationToken cancellationToken = default)
+    {
+        var userId = _currentUserService.UserId;
+        if (!userId.HasValue)
+        {
+            throw new UnauthorizedAccessException("User is not authenticated.");
+        }
+
+        var user = await _userRepository.GetByIdAsync(userId.Value, cancellationToken);
+        if (user is null)
+        {
+            throw new UnauthorizedAccessException("User not found.");
+        }
+
+        user.AvatarUrl = request.AvatarUrl;
+        user.UpdatedAtUtc = DateTime.UtcNow;
+
+        _userRepository.Update(user);
+        await _userRepository.SaveChangesAsync(cancellationToken);
+        _logger.LogInformation("Avatar updated successfully in database for user {UserId} ({Email})", user.Id, user.Email);
     }
 
     public async Task<bool> CheckEmailExistsAsync(string email, CancellationToken cancellationToken = default)
