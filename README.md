@@ -3,7 +3,7 @@
 > A modern, full-stack enterprise academic platform for managing assignments, submissions, grading, and curriculum analytics across **Admin**, **Teacher**, and **Student** roles — built with **Next.js 16**, **ASP.NET Core 10 Web API**, and **PostgreSQL**.
 
 **🌐 Live Demo:** [https://assignflow-bd.vercel.app/](https://assignflow-bd.vercel.app/)  
-**🔌 API (Production):** `https://assignflow-api-tq42.onrender.com/api`
+**🔌 Swagger API (Production):** `https://assignflow-api-tq42.onrender.com`
 
 ---
 
@@ -14,8 +14,8 @@ All seeded demo accounts share the password **`Password123!`**:
 | Role | Email | Default Password | Notes |
 |------|-------|------------------|-------|
 | 🛡️ **Admin** | `admin@example.com` | `Password123!` | System Administrator |
-| 👨‍🏫 **Teacher** | `teacher@example.com` | `Password123!` | Mathematics Lead Teacher |
-| 🎓 **Student** | `student@example.com` | `Password123!` | Grade 10 Student |
+| 👨‍🏫 **Teacher** | `teacher@example.com` | `Password123!` | Teacher - Nazifa ( Subjects Taught - English 1st Paper & 2nd Paper ) |
+| 🎓 **Student** | `student@example.com` | `Password123!` | Student - Safwan ( Class 11 - Science ) |
 
 ---
 
